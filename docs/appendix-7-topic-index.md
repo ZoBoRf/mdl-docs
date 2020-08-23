@@ -3,7 +3,7 @@
 Parenthesized words refer to other items in this index. 
 
 |                  |                                                                                                                                                                   |
-| ---              | ---                                                                                                                                                               |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------                                        |
 | arguments        | `"OPTIONAL"` `"TUPLE"` `"ARGS"` (parameter)                                                                                                                       |
 | arithmetic       | `+` `-` `*` `/` `ABS` `EXP` `LOG` `SIN` `COS` `ATAN` `MIN` `MAX` `RANDOM` `0?` `1?` `==?` `L?` `G?` `L=?` `G=?` `N==?`                                            |
 | array            | `VECTOR` `UVECTOR` `TUPLE` `STRING` `BYTES` `TEMPLATE`                                                                                                            |

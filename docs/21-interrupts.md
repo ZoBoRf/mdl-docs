@@ -33,14 +33,14 @@ it; then, as far as MDL is concerned, that interrupt does not occur.
 
 Each interrupt has a **name** which is either a `STRING` (for example,
 `"GC"`, `"CHAR"`, `"WRITE"`) or an `ATOM` with that `PNAME` in a
-special `OBLIST`, named `INTERRUPTS!-`. (This `OBLIST` is returned by
+special `OBLIST`, named `INTERRUPTS!-`\index{\texttt{INTERRUPTS}|textbf}. (This `OBLIST` is returned by
 `<INTERRUPTS>`.) Certain names must always be further specified by a
 `CHANNEL` or a `LOCATIVE` to tell **which** interrupt by that name is
 meant.
 
 When an interrupt occurs, the interpreter looks for an association on
 the interrupt's name. If there is an association, its `AVALUE` should
-be an `IHEADER`, which heads a list of actions to be performed. In
+be an `IHEADER`\index{\texttt{IHEADER}}, which heads a list of actions to be performed. In
 each `IHEADER` is the name of the interrupt with which the `IHEADER`
 is or was associated.
 
@@ -58,7 +58,7 @@ higher-priority (larger-numbered) interrupt will supersede the
 processing of a lower-priority (smaller-numbered) interrupt until the
 high-priority interrupt has been handled.
 
-In each `IHEADER` is a (possibly empty) list of `HANDLER`s. (This list
+In each `IHEADER` is a (possibly empty) list of `HANDLER`s\index{\texttt{HANDLER}}. (This list
 is not a MDL `LIST`.) Each `HANDLER` corresponds to an action to
 perform. There are `SUBR`s for creating a `HANDLER`, adding it to an
 `IHEADER`'s list, and later removing it.
@@ -75,7 +75,7 @@ performed.
 
     <EVENT name priority which>
 
-creates and returns an enabled `IHEADER` with no `HANDLER`s. The
+\index{\texttt{EVENT}|textbf} creates and returns an enabled `IHEADER` with no `HANDLER`s. The
 *name* may be an `ATOM` in the `INTERRUPTS` `OBLIST` or a `STRING`; if
 it is a `STRING`, `EVENT` does a `LOOKUP` or `INSERT` in
 `<INTERRUPTS>`. If there already is an `IHEADER` associated with
@@ -89,7 +89,7 @@ it is a `STRING`, `EVENT` does a `LOOKUP` or `INSERT` in
 cause the interrupt to occur, or the output `CHANNEL` to the
 pseudo-terminal or Network socket whose desired characters will cause
 the interrupt to occur. (See below. Pseudo-terminals are not available
-in the Tenex and Tops-20 versions.)
+in the Tenex\index{\texttt{Tenex}} and Tops-20\index{\texttt{Tops-20}} versions.)
 * The argument must be a `LOCATIVE` if and only if *name* is `"READ"`
 (or `READ!-INTERRUPTS`) or `"WRITE"` (or `WRITE!-INTERRUPTS`). In this
 case it specifies an object to be "monitored" for usage by
@@ -102,7 +102,7 @@ signal its occurrences.
 
     <HANDLER iheader applicable process>
 
-creates a `HANDLER`, adds it to the front of *iheader*'s `HANDLER`
+\index{\texttt{HANDLER}|textbf} creates a `HANDLER`, adds it to the front of *iheader*'s `HANDLER`
 list (first action to be performed), and returns it as a value.
 *applicable* may be any `APPLICABLE` object that takes the proper
 number of arguments. (None of the arguments can be `QUOTE`d; they must
@@ -111,7 +111,7 @@ the handler will be applied, by default whatever `PROCESS` was running
 when the interrupt occurred.
 
 The value returned by the handler is ignored, unless it is of `TYPE`
-`DISMISS` (`PRIMTYPE` `ATOM`), in which case none of the remaining
+`DISMISS`\index{\texttt{DISMISS}|textbf} (`PRIMTYPE` `ATOM`), in which case none of the remaining
 actions in the list will be performed.
 
 The processing of an interrupt's actions can terminate prematurely if
@@ -121,7 +121,7 @@ a handler calls the `SUBR` `DISMISS` (see below.)
 
     <OFF iheader>
 
-removes the association between *iheader* and the name of its
+\index{\texttt{OFF}|textbf} removes the association between *iheader* and the name of its
 interrupt, and then disables *iheader* and returns it. (An error
 occurs if there is no association.) If the interrupt is external, MDL
 arranges for the operating system not to signal its occurrences.
@@ -130,13 +130,13 @@ arranges for the operating system not to signal its occurrences.
 
 finds the `IHEADER` associated with *name* and proceeds as above,
 returning the `IHEADER`. *which* must be given only for certain
-*names*, as for `EVENT`. Caution: if you `<OFF "CHAR" ,INCHAN>`, MDL
+*names*, as for `EVENT`\index{\texttt{EVENT}}. Caution: if you `<OFF "CHAR" ,INCHAN>`, MDL
 will become deaf.
 
     <OFF handler>
 
 returns *handler* after removing it from its list of actions. There is
-no effect on any other `HANDLER`s in the list.
+no effect on any other `HANDLER`s\index{\texttt{HANDLER}} in the list.
 
 Now that you know how to remove `IHEADER`s and `HANDLER`s from their
 normal places, you need to know how to put them back:
@@ -159,7 +159,7 @@ that way, since they are self-referencing. Instead they `PRINT` as
 
     #type most-interesting-component
 
-The contents of `IHEADER`s and `HANDLER`s can be changed by `PUT`, and
+The contents of `IHEADER`s\index{\texttt{IHEADER}|textbf} and `HANDLER`s\index{\texttt{HANDLER}|textbf} can be changed by `PUT`, and
 the new values will then determine the behavior of MDL.
 
 Before describing the elements of these `TYPE`s in detail, here are a
@@ -191,9 +191,9 @@ The elements of an `IHEADER` are as follows:
 
 If you lose track of an `IHEADER`, you can get it via the association:
 
-* For `"CHAR"` interrupts, `<GET channel INTERRUPT>` returns the
+* For `"CHAR"` interrupts, `<GET channel INTERRUPT>`\index{\texttt{INTERRUPT}|textbf} returns the
 `IHEADER` or `#FALSE ()` if there is no association; `<EVENT "CHAR" 0
-channel>` returns the `IHEADER`, creating it if there is no
+channel>`\index{\texttt{EVENT}} returns the `IHEADER`, creating it if there is no
 association.
 * For `"READ"` interrupts, `<GET locative READ!-INTERRUPTS>` returns
 the `IHEADER` or `#FALSE ()` if there is no association; `<EVENT
@@ -219,7 +219,7 @@ interrupt. The elements of a `HANDLER` are as follows:
 interrupt form a "doubly-linked list" chaining between each other and
 back to the `IHEADER`.)
 3. handler to be applied (anything but `APPLICABLE` that evaluates its
-arguments -- the application is done not by `APPLY` but by `RUNINT`,
+arguments -- the application is done not by `APPLY` but by `RUNINT`\index{\texttt{RUNINT}|textbf},
 which can take a `PROCESS` argument: see next line)
 4. `PROCESS` in which the handler will be applied, or `#PROCESS 0`,
 meaning whatever `PROCESS` was running when the interrupt occurred (In
@@ -234,7 +234,7 @@ example `RESUMER`) are changed.)
 
     <ON name applicable priority:fix process which>
 
-is equivalent to
+\index{\texttt{ON}|textbf} is equivalent to
 
     <HANDLER <EVENT name priority which>
              applicable process>
@@ -245,12 +245,12 @@ front the list (first to be performed), and returns the `HANDLER`.
 
     <DISABLE iheader>
 
-is effectively `<PUT iheader 2 #LOSE -1>`. Actually the `TYPE` `LOSE`
+\index{\texttt{DISABLE}|textbf} is effectively `<PUT iheader 2 #LOSE -1>`. Actually the `TYPE` `LOSE`
 is unimportant, but the `-1` signifies that *iheader* is disabled.
 
     <ENABLE iheader>
 
-is effectively `<PUT iheader 2 #LOSE 0>`. Actually the `TYPE` `LOSE`
+\index{\texttt{ENABLE}|textbf} is effectively `<PUT iheader 2 #LOSE 0>`. Actually the `TYPE` `LOSE`
 is unimportant, but the `0` signfies that *iheader* is enabled.
 
 ## 21.7. Priorities and Interrupt Levels
@@ -267,7 +267,7 @@ equal to the interrupt's priority.
 Interrupts "actually" only occur at well-defined points in time:
 during a call to a Subroutine, or at critical places within
 Subroutines (for example, during each iteration of `MAPF` on a `LIST`,
-which may be circular), or while a `PROCESS` is `"BLOCKED"` (see
+which may be circular), or while a `PROCESS` is `"BLOCKED"` \index{\texttt{""BLOCKED""}} (see
 below). No interrupts can occur during garbage collection.
 
 What actually happens when an enabled interrupt occurs is that the
@@ -292,7 +292,7 @@ occurrence.
 
 ### 21.7.2. INT-LEVEL
 
-The `SUBR` `INT-LEVEL` is used to examine and change the current
+The `SUBR` `INT-LEVEL`\index{\texttt{INT-LEVEL}|textbf} is used to examine and change the current
 interrupt level directly.
 
     <INT-LEVEL>
@@ -312,15 +312,15 @@ Setting the `INT-LEVEL` extremely high (for example, `<INT-LEVEL
 <CHTPE <MIN> FIX>>`) effectively disables all interrupts (but
 occurrences of enabled interrupts will still be queued).
 
-If `LISTEN` or `ERROR` is called when the `INT-LEVEL` is not zero,
+If `LISTEN`\index{\texttt{LISTEN}} or `ERROR`\index{\texttt{ERROR}} is called when the `INT-LEVEL` is not zero,
 then the typeout will be
 
     LISTENING-AT-LEVEL I PROCESS p INT-LEVEL i
 
 ### 21.7.3. DISMISS
 
-`DISMISS` permits a handler to return an arbitrary value for an
-arbitrary `ACTIVATION` at an arbitrary interrupt level. The call is as
+`DISMISS`\index{\texttt{DISMISS}|textbf} permits a handler to return an arbitrary value for an
+arbitrary `ACTIVATION` \index{\texttt{ACTIVATION}} at an arbitrary interrupt level. The call is as
 follows:
 
     <DISMISS value:any activation int-level:fix>
@@ -332,7 +332,7 @@ is restored.
 
 ## 21.8. Specific Interrupts
 
-Descriptions of the characteristics of particular "built-in" MDL
+ \index{\texttt{""CHAR""}|textbf} Descriptions of the characteristics of particular "built-in" MDL
 interrupts follow. Each is named by its `STRING` name. Expect this
 list to be incomplete yesterday.
 
@@ -345,11 +345,11 @@ MDL is communicating with a person or another processor. Each `"CHAR"`
 and the mode of the `CHANNEL` tells what kinds of `"CHAR"` interrupts
 occur to be handled through that `IHEADER`.
 
-1. If the `CHANNEL` is for `INPUT`, "CHAR" occurs every time an
+1. If the `CHANNEL` is for `INPUT`, `"CHAR"` occurs every time an
 "interesting" character (see below) is received from the `CHANNEL`'s
 real terminal, or any character is received from the `CHANNEL`'s
 pseudo-terminal, or a character or word is received from the
-`CHANNEL`'s Network socket, or indeed (in the ITS version) the
+`CHANNEL`'s Network socket, or indeed (in the ITS\index{\texttt{ITS}} version) the
 operating system generates an interrupt for any reason.
 2. If the `CHANNEL` is for output to a pseudo-terminal or Network
 socket, `"CHAR"` occurs every time a character or word is wanted.
@@ -363,40 +363,41 @@ A handler for an input `"CHAR"` interrupt on a real terminal must take
 two arguments: the `CHARACTER` which was typed, and the `CHANNEL` on
 which it was typed.
 
-In the ITS version, the "interesting" characters are those "enabled
+In the ITS\index{\texttt{ITS}} version, the "interesting" characters are those "enabled
 for interrupts" on a real terminal, namely <kbd>^@</kbd> through
-<kbd>^G</kbd>, <kbd>^K</kbd> through <kbd>^_</kbd>, and
+<kbd>^G</kbd>\index{\texttt{"\^{}G}}, <kbd>^K</kbd> through <kbd>^_</kbd>, and
 <kbd>DEL</kbd> (that is, ASCII codes 0-7, 13-37, and 177 octal.)
 
-In the Tenex and Tops-20 versions, the operating system can be told
+In the Tenex\index{\texttt{Tenex}} and Tops-20\index{\texttt{Tops-20}} versions, the operating system can be told
 which characters typed on a terminal should cause this interrupt to
-occur, by calling the `SUBR` `ACTIVATE-CHARS` with a `STRING`
+occur, by calling the `SUBR` `ACTIVATE-CHARS` \index{\texttt{ACTIVATE-CHARS}|textbf} with a `STRING`
 argument containing those characters (no more than six, all with
 ASCII codes less than 33 octal). If called with no argument,
 `ACTIVATE-CHARS` returns a `STRING` containing the characters that
-currently interrupt. Initially, only <kbd>^G</kbd>, <kbd>^S</kbd>,
+currently interrupt. Initially, only <kbd>^G</kbd>, <kbd>^S</kbd>\index{\texttt{"\^{}S}},
 and <kbd>^O</kbd> interrupt.
 
 An initial MDL already has `"CHAR"` enabled on `,INCHAN` with a
-priority 8 (eight), the `SUBR` `QUITTER` for a handler to run in
+priority 8 (eight), the `SUBR` `QUITTER`\index{\texttt{QUITTER}|textbf} for a handler to run in
 `#PROCESS 0` (the running `PROCESS`); this is how <kbd>`^G`</kbd> and
 <kbd>`^S`</kbd> are processed. In addition, every time a new
-`CHANNEL` is `OPEN`ed in `"READ"` mode to a terminal, a similar
-`IHEADER` and `HANDLER` are associated with that new `CHANNEL`
+`CHANNEL` is `OPEN`ed\index{\texttt{OPEN}} in `"READ"` \index{\texttt{""READ""}} mode to a terminal, a similar
+`IHEADER` and `HANDLER`\index{\texttt{HANDLER}} are associated with that new `CHANNEL`
 automatically. These automatically-generated `IHEADER`s and
 `HANDLER`s use the standard machinery, and they can be `DISABLE`d or
 `OFF`ed at will. **However**, the `IHEADER` for `,INCHAN` should not
-be `OFF`ed: MDL knows that `$` is typed only by an interrupt!
+be `OFF`ed: MDL knows that `$` \index{\texttt{\$}|textbf} is typed only by an interrupt!
 
 Example: the following causes the given message to be printed out
 whenever a <kbd>`^Y`</kbd> is typed on `.INCHAN`:
+\index{\texttt{AND}}
 
 ```
 <SET H <HANDLER <GET .INCHAN INTERRUPT>
      #FUNCTION ((CHAR CHAN)
       #DECL ((VALUE) ANY (CHAR) CHARACTER (CHAN) CHANNEL)
       <AND <==? .CHAR !\^Y>
-           <PRINC " [Some of the best friends are ^Ys.] ">>)>>$
+           <PRINC " [Some of my best friends are ^Ys.] ">>)>>$
 #HANDLER #FUNCTION **CHAR CHAN) ...)
 <+ 2 ^Y [Some of my best friends are ^Ys.] 2>$
 4
@@ -417,7 +418,7 @@ an input `CHANNEL` open to a pseudo-terminal ("STY" device and
 friends). An interrupt occurs when a character is available for
 input. These interrupts are set up in exactly the same way as
 real-terminal interrupts, except that a handler gets applied to only
-**one** argument, the `CHANNEL`. Pseudo-terminal are not available in
+**one** argument, the `CHANNEL`. Pseudo-terminals are not available in
 the Tenex and Tops-20 versions.
 
 For any other flavor of ITS channel interrupt, a handler gets applied
@@ -446,20 +447,20 @@ for a line-feed; if only one argument is supplied (only in the ITS
 version), it is the `CHANNEL`, and the interrupt is for a full
 terminal screen. Note: the supplied line number comes from the
 `CHANNEL`, and it may not be accurate if the program alters it in
-subtle ways, for example, via `IMAGE` calls or special control
+subtle ways, for example, via `IMAGE`\index{\texttt{IMAGE}} calls or special control
 characters. (The program can compensate by putting the proper line
 number into the `CHANNEL`.)
 
 ### 21.8.4. "GC"
 
-`"GC"` occurs just **after** every garbage collection. Enabling this
+`"GC"` \index{\texttt{""GC""}|textbf} occurs just **after** every garbage collection. Enabling this
 interrupt is the only way a program can know that a garbage collection
 has occurred. A handler for `"GC"` takes three arguments. The first is
 a FLOAT indicating the number of seconds the garbage collection took.
 The second argument is a FIX indicating the cause of the garbage
 collection, as follows (chapter 22):
 
-0. Program called GC.
+0. Program called GC\index{\texttt{GC}}.
 1. Movable storage was exhausted.
 2. Control stack overflowed.
 3. Top-level LVALs overflowed.
@@ -472,14 +473,14 @@ collection, as follows (chapter 22):
 10. Second, exhaustive garbage collection occurred.
 
 The third argument is an ATOM indicating what initiated the garbage
-collection: `GC-READ`, `BLOAT`, `GROW`, `LIST`, `VECTOR`, `SET`,
-`SETG`, `FREEZE`, `GC`, `NEWTYPE`, `PURIFY`, `PURE-PAGE-LOADER` (pure
-storage was exhausted), or `INTERRUPT-HANDLER` (stack overflow,
+collection: `GC-READ`\index{\texttt{GC-READ}}, `BLOAT`\index{\texttt{BLOAT}}, `GROW`\index{\texttt{GROW}}, `LIST`\index{\texttt{LIST}}, `VECTOR`\index{\texttt{VECTOR}}, `SET`\index{\texttt{SET}},
+`SETG`\index{\texttt{SETG}}, `FREEZE`\index{\texttt{FREEZE}}, `GC`, `NEWTYPE`\index{\texttt{NEWTYPE}}, `PURIFY`\index{\texttt{PURIFY}}, `PURE-PAGE-LOADER`\index{\texttt{PURE-PAGE-LOADER}|textbf} (pure
+storage was exhausted), or `INTERRUPT-HANDLER`\index{\texttt{INTERRUPT-HANDLER}|textbf} (stack overflow,
 unfortunately).
 
 ### 21.8.5. "DIVERT-AGC"
 
-`"DIVERT-AGC"` ("Automatic Garbage Collection") occurs just **before**
+`"DIVERT-AGC"` \index{\texttt{""DIVERT-AGC""}|textbf} ("Automatic Garbage Collection") occurs just **before**
 a deferrable garbage collection that is needed because of exhausted
 movable garbage-collected storage. Enabling this interrupt is the only
 way a program can know that a garbage collection is about to occur. A
@@ -488,24 +489,24 @@ words needed and an `ATOM` telling what initiated the garbage
 collection (see above). If it wishes, a handler can try to prevent a
 garbage collection by calling `BLOAT` with the `FIX` argument. If the
 pending request for garbage-collected storage cannot then be
-satisfied, a garbage collection occurs anyway. `AGC-FLAG` is `SET` to
+satisfied, a garbage collection occurs anyway. `AGC-FLAG` \index{\texttt{AGC-FLAG}|textbf} is `SET` to
 `T` while the handler is running, so that new storage requests do not
 try to cause a garbage collection.
 
 ### 21.8.6. "CLOCK"
 
-`"CLOCK"`, when enabled, occurs every half second (the ITS
-"slow-clock" tick.) It is not available in the Tenex or Tops-20
+`"CLOCK"`, \index{\texttt{""CLOCK""}|textbf} when enabled, occurs every half second (the ITS\index{\texttt{ITS}}
+"slow-clock" tick.) It is not available in the Tenex\index{\texttt{Tenex}} or Tops-20\index{\texttt{Tops-20}}
 versions. It wants handlers which take no arguments. Example:
 
     <ON "CLOCK" <FUNCTION () <PRINC "TICK ">> 1>
 
 ### 21.8.7. "BLOCKED"
 
-`"BLOCKED"` occurs whenever **any** `PROCESS` (not only the `PROCESS`
+`"BLOCKED"` \index{\texttt{""BLOCKED""}|textbf} occurs whenever **any** `PROCESS` (not only the `PROCESS`
 which may be in a `HANDLER`) starts waiting or terminal input: that
-is, an occurrence indicates that somewhere, somebody did a `READ`,
-`READCHR`, `NEXTCHR`, `TYI`, etc. to a console. The handler for a
+is, an occurrence indicates that somewhere, somebody did a `READ`\index{\texttt{READ}},
+`READCHR`\index{\texttt{READCHR}}, `NEXTCHR`\index{\texttt{NEXTCHR}}, `TYI`\index{\texttt{TYI}}, etc. to a console. The handler for a
 `"BLOCKED"` interrupt should take one argument, namely the `PROCESS`
 which started waiting (which will also be the `PROCESS` in which the
 handler runs, if no specific one is in the `HANDLER`).
@@ -517,19 +518,19 @@ character.
 
 ### 21.8.8. "UNBLOCKED"
 
-`"UNBLOCKED"` occurs whenever a `$` (<kbd>`ESC`</kbd>) is typed on a
+`"UNBLOCKED"` \index{\texttt{""UNBLOCKED""}|textbf} occurs whenever a `$` \index{\texttt{\$}} (<kbd>`ESC`</kbd>) is typed on a
 terminal if a program was hanging and waiting for input, or when a
-TYI call (which see) is satisfied. A handler takes one argument: the
+TYI\index{\texttt{TYI}} call (which see) is satisfied. A handler takes one argument: the
 `CHANNEL` via which the `$` or character is input.
 
 ### 21.8.9. "READ" and "WRITE"
 
-`"READ"` and `"WRITE"` are associated with read or write references to
+`"READ"` \index{\texttt{""READ""}|textbf} and `"WRITE"` \index{\texttt{""WRITE""}|textbf} are associated with read or write references to
 MDL objects. These interrupts are often called "monitors", and
 enabling the interrupt is often called "monitoring" the associated
 object. A "read reference" to an `ATOM`'s local value includes
-applying `BOUND?` or `ASSIGNED?` to the `ATOM`; similarly for a global
-value and `GASSIGNED?`. If the `INT-LEVEL` is too high when `"READ"`
+applying `BOUND?`\index{\texttt{BOUND?}} or `ASSIGNED?`\index{\texttt{ASSIGNED?}} to the `ATOM`; similarly for a global
+value and `GASSIGNED?`\index{\texttt{GASSIGNED?}}. If the `INT-LEVEL` is too high when `"READ"`
 or `"WRITE"` occurs, an error occurs, because occurrences of these
 interrupts cannot be queued.
 
@@ -568,8 +569,8 @@ Program changed #LOCL 2 to 20 via #FRAME PUT
 
 ### 21.8.10. "SYSDOWN"
 
-`"SYSDOWN"` occurs when a system-going-down or system-revived signal
-is received from ITS. It is not available in the Tenex or Tops-20
+`"SYSDOWN"` \index{\texttt{""SYSDOWN""}|textbf} occurs when a system-going-down or system-revived signal
+is received from ITS\index{\texttt{ITS}}. It is not available in the Tenex\index{\texttt{Tenex}} or Tops-20\index{\texttt{Tops-20}}
 versions. If no `IHEADER` is associated and enabled, a warning message
 is printed on the terminal. A handler takes one argument: a `FIX`
 giving the number of thirtieths of a second until the shutdown (-1
@@ -577,7 +578,7 @@ for a reprieve).
 
 ### 21.8.11. "ERROR"
 
-In an effort to simplify error handling by programs, MDL has a
+\index{\texttt{""ERROR""}|textbf} In an effort to simplify error handling by programs, MDL has a
 facility allowing errors to be handled like interrupts. `SETG`ing
 `ERROR` to a user function is a distasteful method, not safe if any
 bugs are around. An `"ERROR"` interrupt wants a handler that takes any
@@ -594,29 +595,29 @@ the `"ERROR"` interrupt, real `ERROR` will be called, because
 
 ### 21.8.12. "IPC"
 
-`"IPC"` occurs when a message is received on the ITS IPC device
-(chapter 23). It is not available in the Tenex and Tops-20 versions.
+`"IPC"` \index{\texttt{""IPC""}} occurs when a message is received on the ITS\index{\texttt{ITS}} IPC device
+(chapter 23). It is not available in the Tenex\index{\texttt{Tenex}} and Tops-20\index{\texttt{Tops-20}} versions.
 
 ### 21.8.13. "INFERIOR"
 
-`"INFERIOR"` occurs when an inferior ITS process interrupts the MDL
-process. It is not available in the Tenex and Tops-20 versions. A
+`"INFERIOR"` \index{\texttt{""INFERIOR""}|textbf} occurs when an inferior ITS\index{\texttt{ITS}} process interrupts the MDL
+process. It is not available in the Tenex\index{\texttt{Tenex}} and Tops-20\index{\texttt{Tops-20}} versions. A
 handler takes one argument: A `FIX` between `0` and `7` inclusive,
 telling which inferior process is interrupting.
 
 ### 21.8.14. "RUNT and "REALT"
 
-These are not available in the Tenex and Tops-20 versions.
+These are not available in the Tenex\index{\texttt{Tenex}} and Tops-20\index{\texttt{Tops-20}} versions.
 
-`"RUNT"`, if enabled, occurs **once**, *N* seconds of MDL running
-time (CPU time) after calling `<RUNTIMER N:fix-or-float>`, which
+`"RUNT"`, \index{\texttt{""RUNT""}|textbf} if enabled, occurs **once**, *N* seconds of MDL running
+time (CPU time) after calling `<RUNTIMER N:fix-or-float>`\index{\texttt{RUNTIMER}|textbf}, which
 returns its argument. A handler takes no arguments. If `RUNTIMER` is
 called with no argument, it returns a `FIX`, the number of run-time
 seconds left until the interrupt occurs, or `#FALSE ()` if the
 interrupt is not going to occur.
 
-`"REALT"`, if enabled, occurs **every** *N* seconds of real-world time
-after calling `<REALTIMER N:fix-or-float>`, which returns its
+`"REALT"`, \index{\texttt{""REALT""}|textbf} if enabled, occurs **every** *N* seconds of real-world time
+after calling `<REALTIMER N:fix-or-float>`\index{\texttt{REALTIMER}|textbf}, which returns its
 argument. A handler takes no arguments. `<REALTIMER 0>` tells the
 operating system not to generate real-time interrupts. If `REALTIMER`
 is called with no argument, it returns a `FIX`, the number of
@@ -625,28 +626,28 @@ argument, or `#FALSE ()` if `REALTIMER` has not been called.
 
 ### 21.8.15. "Dangerous" Interrupts
 
-`"MPV"` ("memory protection violation") occurs if MDL tries to refer
-to a storage address not in its address space. `"PURE"` occurs if MDL
-tries to alter read-only storage. `"ILOPR"` occurs if MDL executes and
-illegal instruction ("operator"). `"PARITY"` occurs if the CPU detects
+`"MPV"` \index{\texttt{""MPV""}|textbf} ("memory protection violation") occurs if MDL tries to refer
+to a storage address not in its address space. `"PURE"` \index{\texttt{""PURE""}|textbf} occurs if MDL
+tries to alter read-only storage. `"ILOPR"` \index{\texttt{""ILOPR""}|textbf} occurs if MDL executes and
+illegal instruction ("operator"). `"PARITY"` \index{\texttt{""PARITY""}|textbf} occurs if the CPU detects
 a parity error in MDL's address space. All of these require a handler
 that takes one argument: the address (`TYPE` `WORD`) following the
 instruction that was being executed at the time.
 
-`"IOC"` occurs if MDL tries to deal illegally with an I/O channel. A
+`"IOC"` \index{\texttt{""IOC""}|textbf} occurs if MDL tries to deal illegally with an I/O channel. A
 handler must take two arguments: a three-element `FALSE` like one
 that `OPEN` might return, and the `CHANNEL` that got the error.
 
-Ideally these interrupts should never occur. In fact, in the Tenex and
-Tops-20 versions, these interrupts always go to the superior operating
-system process instead of to MDL. In the ITS version, if and when a
+Ideally these interrupts should never occur. In fact, in the Tenex\index{\texttt{Tenex}} and
+Tops-20\index{\texttt{Tops-20}} versions, these interrupts always go to the superior operating
+system process instead of to MDL. In the ITS\index{\texttt{ITS}} version, if and when a
 "dangerous" interrupt does occur:
 
 * If no `IHEADER` is associated with the interrupt, then the interrupt
 goes to the superior operating system process.
 * If an `IHEADER` is associated but disabled, the error
 `DANGEROUS-INTERRUPT-NOT-HANDLED` occurs (`FILE-SYSTEM-ERROR` for
-`"IOC").
+`"IOC"`).
 * If an `IHEADER` is associated and enabled, but the `INT-LEVEL` is
 too high, the error `ATTEMPT-TO-DEFER-UNDEFERABLE-INTERRUPT` occurs.
 
@@ -658,7 +659,7 @@ standard predefined interrupts of MDL, they will gleefully create an
 the assumption that you are setting up a "program-defined" interrupt.
 
 Program-defined interrupts are made to occur by applying the `SUBR`
-`INTERRUPT`, as in
+`INTERRUPT`\index{\texttt{INTERRUPT}|textbf}, as in
 
     <INTERRUPT name arg1 ... argN>
 
@@ -691,10 +692,10 @@ handled by an unknown number of independent and "nameless" functions.
 The functions are "nameless" because the caller doesn't know their
 name, only the name of the interrupt. This programming style is
 modular and event-driven, and it is one way of implementing
-"heuristic" algorithms. In addition, each `HANDLER` has a `PROCESS`
+"heuristic" algorithms. In addition, each `HANDLER` has a `PROCESS`\index{\texttt{PROCESS}}
 in which to run its handler, and so the different handlers for a
 given condition can do their thing in different environments quite
-easily, with less explicit control than when using `RESUME`.
+easily, with less explicit control than when using `RESUME`\index{\texttt{RESUME}}.
 
 ## 21.10. Waiting for Interrupts
 
@@ -702,7 +703,7 @@ easily, with less explicit control than when using `RESUME`.
 
     <HANG pred>
 
-hangs interruptibly, without consuming any CPU time, potentially
+\index{\texttt{HANG}|textbf} hangs interruptibly, without consuming any CPU time, potentially
 forever. `HANG` is nice for a program that cannot do anything until an
 interrupt occurs. If the optional *pred* is given, it is evaluated
 every time an interrupt occurs and is dismissed back into the `HANG`;
@@ -714,6 +715,6 @@ it as a value. If *pred* is not given, there had better be a named
 
     <SLEEP time:fix-or-float pred>
 
-suspends execution, interruptibly, without consuming any CPU time,
+\index{\texttt{SLEEP}|textbf} suspends execution, interruptibly, without consuming any CPU time,
 for *time* seconds, where *time* is non-negative, and then returns
 `T`. *pred* is the same as for `HANG`.

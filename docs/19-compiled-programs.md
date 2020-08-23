@@ -2,7 +2,7 @@
 
 ## 19.1. RSUBR (the TYPE)
 
-`RSUBR`s ("relocatable subroutines") are machine-language programs
+\index{\texttt{RSUBR}|textbf} `RSUBR`s ("relocatable subroutines") are machine-language programs
 written to run in the MDL environment. They are usually produced by
 the MDL assembler (often from output produced by the compiler)
 although this is not necessary. All `RSUBR`s have two components: the
@@ -46,26 +46,26 @@ whose G/LVAL is the called object. The calling mechanism (UUO handler)
 causes control to be transferred to the called object and, depending
 on the state of the `RSUBR`-link flag, the `ATOM` will be replaced by
 its G/LVAL. (If the call is of the "quick" variety, the called `RSUBR`
-or `RSUBR-ENTRY` will be `CHTYPE`d to a `QUICK-RSUBR` or
-`QUICK-ENTRY`, respectively, before replacement.) Regardless of the
+or `RSUBR-ENTRY` will be `CHTYPE`d to a `QUICK-RSUBR`\index{\texttt{QUICK-RSUBR}} or
+`QUICK-ENTRY`\index{\texttt{QUICK-ENTRY}}, respectively, before replacement.) Regardless of the
 `RSUBR`-link flag's state, calls to `FUNCTION`s are never permanently
 linked. A call to a non-Subroutine generates an extra `FRAME`, whose
-`FUNCT` is the dummy `ATOM` `CALLER`.
+`FUNCT` is the dummy `ATOM` `CALLER`\index{\texttt{CALLER}|textbf}.
 
 `RSUBR`s are linked together for faster execution, but linking may not
 be desirable if the `RSUBR`s are being debugged, and various revisions
 are being re-loaded. A linked call will forever after go to the same
 code, regardless of the current G/LVAL of the called `ATOM`. Thus,
 while testing `RSUBR`s, you may want to disable linking, by calling
-the `RSUBR-LINK` `SUBR` with a `FALSE` argument. Calling it with a
+the `RSUBR-LINK`\index{\texttt{RSUBR-LINK}|textbf} `SUBR` with a `FALSE` argument. Calling it with a
 non-`FALSE` argument enables linking thereafter. It returns the
 previous state of the link flag, either `T` or `#FALSE ()`. Calling it
 with no argument returns the current state.
 
 ## 19.4. Pure and Impure Code
 
-The first element of an `RSUBR` is the code vector, of `TYPE` `CODE`
-or `PCODE`. `TYPE` `CODE` is of `PRIMTYPE` `UVECTOR`, and the `UTYPE`
+The first element of an `RSUBR` is the code vector, of `TYPE` `CODE` \index{\texttt{CODE}|textbf}
+or `PCODE`\index{\texttt{PCODE}|textbf}. `TYPE` `CODE` is of `PRIMTYPE` `UVECTOR`, and the `UTYPE`
 should be of `PRIMTYPE` `WORD`. The code vector is simply a block of
 words that are the instructions which comprise the `RSUBR`. Since the
 code vector is stored just like a standard `UVECTOR`, it will be moved
@@ -77,7 +77,7 @@ to the beginning of the code vector and causing instructions that
 refer to labels to index automatically off the PDP-10 accumulator
 symbolically named `M`. `M`, like `R`, is set up by the UUO handler,
 but it points to the code vector instead of the reference vector. The
-code vector of an `RSUBR` can be frozen (using the `FREEZE` `SUBR`) to
+code vector of an `RSUBR` can be frozen (using the `FREEZE`\index{\texttt{FREEZE}} `SUBR`) to
 prevent it from moving during debugging by DDT in the superior
 operating-system process.
 
@@ -99,18 +99,18 @@ location-independent address referencing. Individual pure code vectors
 can be "unmapped" (marked as being not in primary storage but in their
 original pure-code disk files) if the space in storage allocated for
 pure code is exhausted. An unmapped `RSUBR` is mapped in again
-whenever needed. All pure `RSUBR`s are unmapped before a `SAVE` file
+whenever needed. All pure `RSUBR`s are unmapped before a `SAVE`\index{\texttt{SAVE}} file
 is written, so that the code is not duplicated on disk. A purified
-`RSUBR` must use `RGLOC` ("relative GLOC") instead of `GLOC`. `RGLOC`
-produces objects of `TYPE` `LOCR` instead of `LOCD`.
+`RSUBR` must use `RGLOC`\index{\texttt{RGLOC}|textbf} ("relative GLOC") instead of `GLOC`\index{\texttt{GLOC}}. `RGLOC`
+produces objects of `TYPE` `LOCR`\index{\texttt{LOCR}|textbf} instead of `LOCD`.
 
 ## 19.5. TYPE-C and TYPE-W
 
-In order to handle user `NEWTYPE`s reasonably, the internal `TYPE`
+In order to handle user `NEWTYPE`s\index{\texttt{NEWTYPE}} reasonably, the internal `TYPE`
 codes for them have to be able to be different from one MDL run to
 another. Therefore, references to the `TYPE` codes must be in the
 reference vector rather than the code vector. To help handle this
-problem, two `TYPE`s exist, `TYPE-C` ("type code") and `TYPE-W` ("type
+problem, two `TYPE`s exist, `TYPE-C`\index{\texttt{TYPE-C}|textbf} ("type code") and `TYPE-W`\index{\texttt{TYPE-W}|textbf} ("type
 word"), both of `PRIMTYPE` `WORD`. They print as:
 
     %<TYPE-C type primtype:atom>
@@ -128,7 +128,7 @@ To be complete, a similar `SUBR` and `TYPE` should be mentioned here.
 
     <PRIMTYPE-C type>
 
-produces an internal "storage allocation code" (appendix 1) for the
+\index{\texttt{PRIMTYPE-C}|textbf} produces an internal "storage allocation code" (appendix 1) for the
 *type*. The value is of `TYPE` `PRIMTYPE-C`, `PRIMTYPE` `WORD`. In
 almost all cases the `SUBR` `TYPEPRIM` gives just as much information,
 except in the case of `TEMPLATE`s: all `TYPE`s of `TEMPLATE`s have the
@@ -138,7 +138,7 @@ same `TYPEPRIM`, but they all have different `PRIMTYPE-C`s.
 
     <RSUBR [code name decl ref ref ...]>
 
-`CHTYPE`s its argument to an `RSUBR`, after checking it for legality.
+\index{\texttt{RSUBR}|textbf} `CHTYPE`s its argument to an `RSUBR`, after checking it for legality.
 `RSUBR` is rarely called other than in the MDL Assembler (Lebling,
 1979). It can be used if changes must be made to an `RSUBR` that are
 prohibited by MDL's built-in safety mechanisms. For example, if the
@@ -159,19 +159,19 @@ applied to arguments exactly like an `RSUBR`.
 
     <RSUBR-ENTRY [rsubr-or-atom name:atom decl] offset:fix>
 
-returns the `VECTOR` argument `CHTYPE`d to an `RSUBR-ENTRY` into the
+\index{\texttt{RSUBR-ENTRY}|textbf} returns the `VECTOR` argument `CHTYPE`d to an `RSUBR-ENTRY` into the
 *rsubr* at the specified *offset*. If the `RSUBR-ENTRY` is to have a
 `DECL` (`RSUBR` style), it should come as shown.
 
     <ENTRY-LOC rsubr-entry>
 
-("entry location") returns the *offset* into the `RSUBR` of this
+\index{\texttt{ENTRY-LOC}|textbf} ("entry location") returns the *offset* into the `RSUBR` of this
 entry.
 
 ## 19.8. RSUBRs in Files
 
 There are three kinds of files that can contain `RSUBR`s, identified
-by second names `BINARY`, `NBIN` and `FBIN`. There is nothing magic
+by second names `BINARY`\index{\texttt{BINARY}|textbf}, `NBIN`\index{\texttt{NBIN}|textbf} and `FBIN`\index{\texttt{FBIN}|textbf}. There is nothing magic
 about these names, but they are used by convention.
 
 A `BINARY` file is a completely ASCII file containing complete impure
@@ -182,7 +182,7 @@ done.
 
 An `NBIN` file contains a mixture of ASCII characters and binary code.
 The start of a binary portion is signalled to `READ` by the character
-control-C, so naive readers of an `NBIN` file under ITS may
+control-C, so naive readers of an `NBIN` file under ITS\index{\texttt{ITS}} may
 incorrectly assume that it ends before any binary code appears. An
 `NBIN` file cannot be edited with a text editor. An `RSUBR` is written
 in `NBIN` format by being `PRINT`ed on a `"PRINTB"` `CHANNEL`. The
@@ -191,12 +191,12 @@ in `NBIN` format by being `PRINT`ed on a `"PRINTB"` `CHANNEL`. The
 An `FBIN` file is actually part of a triad of files. The `FBIN`
 file(s) itself is the impure part of a collection of purified
 `RSUBR`s. It is simply ASCII and can be edited at will. (Exception: in
-the ITS and Tops-20 versions, the first object in the file should not
+the ITS and Tops-20\index{\texttt{Tops-20}} versions, the first object in the file should not
 be removed or changed in any way, lest a "grim reaper" program for
 `FBIN` files think that the other files in the triad are obsolete and
 delete them.) The pure code itself resides (in the ITS and Tops-20
 versions) in a special large file that contains all currently-used
-pure code, or (in the Tenex version) in a file in a special disk
+pure code, or (in the Tenex\index{\texttt{Tenex}} version) in a file in a special disk
 directory with first name the same as the *name* argument to `PCODE`
 for the `RSUBR`. The pure-code file is page-mapped directly into MDL
 storage in read-only mode. It can be unmapped when the pure storage
@@ -235,7 +235,7 @@ files are in a fast internal format that looks like a `UVECTOR` of
 
 Fixups are usually discarded after they are used during the loading
 procedure. However, if, while reading a `BINARY` or `NBIN` file the
-`ATOM` `KEEP-FIXUPS!-` has a non-`FALSE` `LVAL`, the fixups will be
+`ATOM` `KEEP-FIXUPS!-`\index{\texttt{KEEP-FIXUPS}|textbf} has a non-`FALSE` `LVAL`, the fixups will be
 kept, via an association between the `RSUBR` and the `ATOM` `RSUBR`.
 It should be noted that, besides correcting the code, the fixups
 themselves are corrected when `KEEP-FIXUPS` is bound and true. Also,

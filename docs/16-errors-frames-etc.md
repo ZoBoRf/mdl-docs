@@ -3,34 +3,34 @@
 ## 16.1. LISTEN
 
 This `SUBR` takes any number of arguments. It first checks the `LVAL`s
-of `INCHAN`, `OUTCHAN`, and `OBLIST` for reasonability and terminal
+of `INCHAN`\index{\texttt{INCHAN}}, `OUTCHAN`\index{\texttt{OUTCHAN}}, and `OBLIST`\index{\texttt{OBLIST}} for reasonability and terminal
 usability. In each case, if the value is unreasonable, the `ATOM` is
 rebound to the corresponding `GVAL`, if reasonable, or to an invented
-reasonable value. `LISTEN` then does `<TTYECHO .INCHAN T>` and
-`<ECHOPAIR .INCHAN .OUTCHAN>`. Next, it `PRINT`s its arguments, then
+reasonable value. `LISTEN`\index{\texttt{LISTEN}|textbf} then does `<TTYECHO .INCHAN T>`\index{\texttt{TTYECHO}} and
+`<ECHOPAIR .INCHAN .OUTCHAN>`\index{\texttt{ECHOPAIR}}. Next, it `PRINT`s its arguments, then
 `PRINT`s
 
     LISTENING-AT-LEVEL i PROCESS p
 
 where *i* is an integer (`FIX`) which is incremented each time 
 `LISTEN` is called recursively, and *p* is an integer identifying the 
-`PROCESS` (chapter 20) in which the `LISTEN` was `EVAL`ed. `LISTEN` 
+`PROCESS`\index{\texttt{PROCESS}} (chapter 20) in which the `LISTEN` was `EVAL`ed. `LISTEN` 
 then does `<APPLY <VALUE REP>>`, if there is one, and if it is 
-`APPLICABLE`. If not, it applies the `SUBR` `REP` (without making a 
+`APPLICABLE`. If not, it applies the `SUBR` `REP`\index{\texttt{REP}|textbf} (without making a 
 new `FRAME` -- see below). This `SUBR` drops into an infinite 
 `READ`-`EVAL`-`PRINT` loop, which can be left via `ERRET` (section 
 16.4).
 
 The standard `LISTEN` loop has two features for getting a handle on 
 objects that you have typed in and MDL has typed out. If the `ATOM` 
-`L-INS` has a local value that is a `LIST`, `LISTEN` will keep recent 
+`L-INS`\index{\texttt{L-INS}|textbf} has a local value that is a `LIST`, `LISTEN` will keep recent 
 inputs (what `READ` returns) in it, most recent first. Similarly, if 
-the `ATOM` `L-OUTS` has a local value that is a `LIST`, `LISTEN` will 
+the `ATOM` `L-OUTS`\index{\texttt{L-OUTS}|textbf} has a local value that is a `LIST`, `LISTEN` will 
 keep recent outputs (what `EVAL` returns) in it, most recent first. 
-The keeping is done before the `PRINT`ing, so that <kbd>^S</kbd> does 
+The keeping is done before the `PRINT`ing, so that <kbd>^S</kbd>\index{\texttt{"\^{}S}} does 
 not defeat its purpose. The user can decide how much to keep around by 
 setting the length of each `LIST`. Even if `L-OUTS` is not used, the 
-atom `LAST-OUT` is always `SET` to the last object returned by `EVAL` 
+atom `LAST-OUT`\index{\texttt{LAST-OUT}|textbf} is always `SET` to the last object returned by `EVAL` 
 in the standard `LISTEN` loop. Example:
 
 ```
@@ -40,7 +40,7 @@ in the standard `LISTEN` loop. Example:
 (.L-INS NEWEST NEWER)
 <SET FOO 69>$
 69
-<SET FIXIT <2 .LINS>>	;"grab the last input"$
+<SET FIXIT <2 .L-INS>>	;"grab the last input"$
 <SET FOO 69>
 .L-INS$
 (.L-INS <SET FIXIT <2 .L-INS>> <SET FOO 69>)
@@ -61,24 +61,24 @@ interrupt (chapter 21), if enabled. and (2) it `PRINT`s `*ERROR*`
 before `PRINT`ing its arguments.
 
 When any `SUBR` or `FSUBR` detects an anomalous condition (for
-example, its arguments are of the wrong `TYPE`), it calls `ERROR` with
+example, its arguments are of the wrong `TYPE`), it calls `ERROR`\index{\texttt{ERROR}|textbf} with
 at least two arguments, including:
 
 1. an `ATOM` whose `PNAME` describes the problem, normally from the
-`OBLIST` `ERRORS!-` (appendix 4),
+`OBLIST` `ERRORS!-`\index{\texttt{ERRORS}} (appendix 4),
 2. the `ATOM` that names the `SUBR` or `FSUBR`, and
 3. any other information of interest, and **then returns whatever the
-call to `ERROR` returns**. Exception: a few (for example `DEFINE`)
+call to `ERROR` returns**. Exception: a few (for example `DEFINE`\index{\texttt{DEFINE}})
 will take further action that depends on the value returned. This
 nonstandard action is specified in the error message (first `ERROR`
 argument).
 
 ## 16.3. FRAME (the TYPE)
 
-A `FRAME` is the object placed on a `PROCESS`'s control stack (chapter
-20) whenever a `SUBR`, `FSUBR`, `RSUBR`, or `RSUBR-ENTRY` (chapter 19)
+A `FRAME`\index{\texttt{FRAME}|textbf} is the object placed on a `PROCESS`'s control stack (chapter
+20) whenever a `SUBR`\index{\texttt{SUBR}}, `FSUBR`\index{\texttt{FSUBR}}, `RSUBR`\index{\texttt{RSUBR}}, or `RSUBR-ENTRY`\index{\texttt{RSUBR-ENTRY}} (chapter 19)
 is applied. (These objects are herein collectively called
-"Subroutines".) It contains information describing what was applied,
+"Subroutines"\index{\texttt{Subroutine}}.) It contains information describing what was applied,
 plus a `TUPLE` whose elements are the arguments to the Subroutine
 applied. If any of the Subroutine's arguments are to be evaluated,
 they will have been by the time the `FRAME` is generated.
@@ -94,25 +94,25 @@ followed by the `PNAME `of the Subroutine applied.
 
     <ARGS frame>
 
-("arguments") returns the argument `TUPLE` of *frame*.
+\index{\texttt{ARGS}|textbf} ("arguments") returns the argument `TUPLE` of *frame*.
 
 ### 16.3.2. FUNCT
 
     <FUNCT frame>
 
-("function"} returns the `ATOM` whose G/LVAL is being applied in 
+\index{\texttt{FUNCT}|textbf} ("function") returns the `ATOM` whose G/LVAL\index{\texttt{G/LVAL}} is being applied in 
 *frame*.
 
 ### 16.3.3. FRAME (the SUBR)
 
     <FRAME frame>
 
-returns the `FRAME` stacked **before** *frame* or, if there is none,
+\index{\texttt{FRAME}|textbf} returns the `FRAME` stacked **before** *frame* or, if there is none,
 it will generate an error. The oldest (lowest) `FRAME` that can be
-returned without error has a `FUNCT` of `TOPLEVEL`. If called with no
+returned without error has a `FUNCT` of `TOPLEVEL`\index{\texttt{TOPLEVEL}|textbf}. If called with no
 arguments, `FRAME` returns the topmost `FRAME` used in an application
 of `ERROR` or `LISTEN`, which was bound by the interpreter to the
-`ATOM` `LERR\ I-INTERRUPTS` ("last error").
+`ATOM` `LERR\ I-INTERRUPTS`\index{\texttt{LERR"\textbackslash{}}|textbf} ("last error").
 
 ### 16.3.4. Examples
 
@@ -132,14 +132,14 @@ the-arguments-to-the-Subroutine-which-called-ERROR:tuple
 
     <ERRET any frame>
 
-This `SUBR` ("error return") (1) causes the control stack to be
+\index{\texttt{ERRET}|textbf} This `SUBR` ("error return") (1) causes the control stack to be
 stripped down to the level of *frame*, and (2) **then** returns *any*.
 The net result is that the application which generated *frame* is
 forced to return *any*. Additional side effects that would have
 happened in the absence of an error may not have happened.
 
 The second argument to `ERRET` is optional, by default the `FRAME` of
-the last invocation of `ERROR` or `LISTEN`.
+the last invocation of `ERROR` or `LISTEN`\index{\texttt{LISTEN}}.
 
 If `ERRET` is called with **no** arguments, it drops you **all** the
 way down to the **bottom** of the control stack -- **before** the
@@ -187,19 +187,19 @@ LISTENING-AT-LEVEL 2 PROCESS 1
 
     <RETRY frame>
 
-causes the control stack to be stripped down just beyond *frame*, and 
+\index{\texttt{RETRY}|textbf} causes the control stack to be stripped down just beyond *frame*, and 
 then causes the Subroutine call that generated *frame* to be done 
 again. *frame* is optional, by default the `FRAME` of the last 
-invocation of `ERROR` or `LISTEN`. `RETRY` differs from `AGAIN` in 
+invocation of `ERROR` or `LISTEN`. `RETRY` differs from `AGAIN` \index{\texttt{AGAIN}} in 
 that (1) it is not intended to be used in programs; (2) it can retry 
 any old *frame* (any Subroutine call), whereas `AGAIN` requires an 
-`ACTIVATION` (`PROG` or `REPEAT` or `"ACT"`); and (3) if it retries 
+`ACTIVATION` \index{\texttt{ACTIVATION}} (`PROG` or `REPEAT` or `"ACT"`); and (3) if it retries 
 the `EVAL` of a `FORM` that makes an `ACTIVATION`, it will cause 
 rebinding in the argument `LIST`, thus duplicating side effects.
 
 ## 16.6. UNWIND
 
-`UNWIND` is an `FSUBR` that takes two arguments, usually `FORM`s. It 
+\index{\texttt{UNWIND}|textbf} `UNWIND` is an `FSUBR`\index{\texttt{FSUBR}} that takes two arguments, usually `FORM`s. It 
 `EVAL`s the first one, and, if the `EVAL` returns normally, the value 
 of the `EVAL` call is the value of `UNWIND`. If, however, during the 
 `EVAL` a non-local return attempts to return below the `UNWIND` 
@@ -208,7 +208,7 @@ value is ignored, and the non-local return is completed. The second
 argument is evaluated in the environment that was present when the 
 call to `UNWIND` was made. This facility is useful for cleaning up 
 data bases that are in inconsistent states and for closing temporary 
-`CHANNEL`s that may be left around. `FLOAD` sets up an `UNWIND` to 
+`CHANNEL`s that may be left around. `FLOAD`\index{\texttt{FLOAD}} sets up an `UNWIND` to 
 close its `CHANNEL` if the user attempts to `ERRET` without finishing 
 the `FLOAD`. Example:
 
@@ -222,7 +222,7 @@ the `FLOAD`. Example:
 
 ## 16.7. Control-G (^G)
 
-Typing control-G (<kbd>^G</kbd>, `<ASCII 7>`) at MDL causes it to act 
+\index{\texttt{"\^{}G}|textbf} Typing control-G (<kbd>^G</kbd>, `<ASCII 7>`) at MDL causes it to act 
 just as if an error had occurred in whatever was currently being done. 
 You can then examine the values of variables as above, continue by 
 applying `ERRET` to one argument (which is ignored), `RETRY` a `FRAME` 
@@ -231,17 +231,17 @@ no arguments.
 
 ## 16.8. Control-S (^S)
 
-Typing control-S (<kbd>^S</kbd>, `<ASCII 19>`) at MDL causes it to stop
-what is happening and return to the `FRAME` `.LERR\ !-INTERRUPTS`, 
-returning the `ATOM` `T`. (In the Tenex and Tops-20 versions, 
-<kbd>^O</kbd> also has the same effect.)
+\index{\texttt{"\^{}S}|textbf} Typing control-S (<kbd>^S</kbd>, `<ASCII 19>`) at MDL causes it to stop
+what is happening and return to the `FRAME` `.LERR\ !-INTERRUPTS`\index{\texttt{LERR"\textbackslash{}}}, 
+returning the `ATOM` `T`. (In the Tenex\index{\texttt{Tenex}} and Tops-20\index{\texttt{Tops-20}} versions, 
+<kbd>^O</kbd>\index{\texttt{"\^{}O}|textbf} also has the same effect.)
 
 ## 16.9. OVERFLOW
 
     <OVERFLOW false-or-any>
 
-There is one error that can be disabled: numeric overflow and
-underflow caused by the arithmetic `SUBR`s (`+`, `-`, `*`, `/`). The
+\index{\texttt{OVERFLOW}|textbf} There is one error that can be disabled: numeric overflow and
+underflow caused by the arithmetic `SUBR`s (`+`\index{\texttt{+}}, `-`\index{\texttt{-}}, `*`, \index{\texttt{*}} `/`\index{\texttt{/}}). The
 `SUBR` `OVERFLOW` takes one argument: if it is of `TYPE` `FALSE`,
 under/overflow errors are disabled; otherwise they are enabled. The
 initial state is enabled. `OVERFLOW` returns `T` or `#FALSE ()`,

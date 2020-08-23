@@ -4,7 +4,7 @@
 
 ### 17.1.1. % and %%
 
-The tokens `%` and `%%` are interpreted by `READ` in such a way as to
+The tokens `%` \index{\texttt{\%}|textbf} and `%%` \index{\texttt{\%\%}|textbf} are interpreted by `READ` in such a way as to
 give a "macro" capability to MDL similar to PL/I's.
 
 Whenever `READ` encounters a single `%` -- anywhere, at any depth of
@@ -37,7 +37,7 @@ Example:
 
     <LINK exp:any string oblist>
 
-creates an object of `TYPE` `LINK`, `PRIMTYPE` `ATOM`.  A `LINK`
+\index{\texttt{LINK}|textbf} creates an object of `TYPE` `LINK`, `PRIMTYPE` `ATOM`.  A `LINK`
 looks vaguely like an `ATOM`; it has a `PNAME` (the *string*
 argument), resides in an `OBLIST` (the *oblist* argument) and has a
 "value" (the *exp* argument).  A `LINK` has the strange property
@@ -68,7 +68,7 @@ During `READ`ing from an input `CHANNEL` or `PARSE`ing a `STRING`,
 any character can be made to have a special meaning.  A character can
 cause an arbitrary routine to be invoked, which can then return any
 number of elements to be put into the object being built by `READ`,
-`PARSE`, or `LPARSE`.  Translation of characters is also possible. 
+`PARSE`\index{\texttt{PARSE}}, or `LPARSE`\index{\texttt{LPARSE}}.  Translation of characters is also possible. 
 This facility was designed for those persons who want to use MDL
 `READ` to do large parts of their input but have to modify its
 actions for some areas: for example, one might want to treat left and
@@ -77,14 +77,14 @@ right parentheses as tokens, rather than as delimiters indicating a
 
 #### 17.1.3.1. READ (finally)
 
-Associated with `READ` is an `ATOM`, `READ-TABLE!-`, whose local
+\index{\texttt{READ}|textbf} Associated with `READ` is an `ATOM`, `READ-TABLE!-`\index{\texttt{READ-TABLE}|textbf}, whose local
 value, if any, must be a `VECTOR` of elements, one for each character
 up to and including all characters to be treated specially.  Each
 element indicates, if not `0`, the action to be taken upon `READ`'s
 encounter with that character.  A similar `VECTOR`, the local value
-of `PARSE-TABLE!-`, if any, is used to find the action to take for
+of `PARSE-TABLE!-`\index{\texttt{PARSE-TABLE}|textbf}, if any, is used to find the action to take for
 characters encountered when `PARSE` or `LPARSE` is applied to a
-`STRING`.
+`STRING`\index{\texttt{STRING}}.
 
 These tables can have up to 256 elements, one for each ASCII
 character and one for each possible exclamation-point/ASCII-character
@@ -105,10 +105,10 @@ Patterns:
 >`'0` indicates that no special action is to be taken when this
 >character is encountered.
 >
->`CHARACTER` indicates that the encountered character is to be
+>`CHARACTER`\index{\texttt{CHARACTER}} indicates that the encountered character is to be
 >translated into the given `CHARACTER` whenever it appears, except
 >when as an object of `TYPE` `CHARACTER`, or in a `STRING`, or
->immediately following a `\`.
+>immediately following a `\`\index{\texttt{"\textbackslash{}}}.
 >
 >`FIX` indicates that the character is to be given the same treatment
 >as the character with the ASCII value of the `FIX`.  This allows you
@@ -125,16 +125,16 @@ Patterns:
 >current object is finished, and the corresponding element of the
 >table is `APPLY`ed to the ASCII `CHARACTER`.  (If `READ` is called
 >during the application, the end-of-file slot of the `CHANNEL`
->temporarily contains a special kind of `ACTIVATION` (`TYPE` `READA`)
+>temporarily contains a special kind of `ACTIVATION` (`TYPE` `READA`\index{\texttt{READA}|textbf})
 >so that end-of-file can be signalled properly to the original
 >`READ`.  Isn't that wonderful?) The value returned is taken to be
->what was read, unless an object of `TYPE` `SPLICE` is returned.  If
+>what was read, unless an object of `TYPE` `SPLICE`\index{\texttt{SPLICE}|textbf} is returned.  If
 >so, the elements of this object, which is of `PRIMTYPE` `LIST`, are
 >spliced in at the point where MDL is reading.  An empty `SPLICE`
 >allows one to return nothing.  If a structured object is not being
 >built, and a `SPLICE` is returned, elements after the first will be
 >ignored.  A `SPLICE` says "expand me", whereas the structure
->containing a `SEGMENT` says "I will expand you".
+>containing a `SEGMENT`\index{\texttt{SEGMENT}} says "I will expand you".
 >
 >`<LIST APPLICABLE>` indicates the same thing, except that the
 >character does not by itself cause a break.  Therefore, if it occurs
@@ -210,9 +210,9 @@ Examples of each of the different kinds of entries in macro tables:
 
     <PARSE string radix look-up parse-table:vector look-ahead:character>
 
-is the fullest call to `PARSE`.  `PARSE` can take from zero to five
+\index{\texttt{PARSE}|textbf} is the fullest call to `PARSE`.  `PARSE` can take from zero to five
 arguments.  If `PARSE` is given no arguments, it returns the first
-object parsed from the local value of the `STRING` `PARSE-STRING` and
+object parsed from the local value of the `STRING` `PARSE-STRING`\index{\texttt{PARSE-STRING}|textbf} and
 additionally `SET`s `PARSE-STRING` to the `STRING` having those
 `CHARACTER`s which were parsed `REST`ed off.  If `PARSE` is given a
 `STRING` to parse, the `ATOM` `PARSE-STRING` is rebound to the
@@ -223,21 +223,21 @@ treated as if it were logically concatenated to the front of the
 *string* being parsed.  Other arguments are described in sections
 7.6.6.2 and 15.7.2.
 
-`LPARSE` is exactly like `PARSE`, except that it tries to parse the
+`LPARSE`\index{\texttt{LPARSE}|textbf} is exactly like `PARSE`, except that it tries to parse the
 whole `STRING`, returning a `LIST` of the objects created.
 
 ## 17.2. EVAL Macros
 
 An `EVAL` macro provides the convenience of a `FUNCTION` without the
-overhead of calling, `SPECIAL`s, etc.  in the **compiled** version. 
+overhead of calling, `SPECIAL`s\index{\texttt{SPECIAL}}, etc.  in the **compiled** version. 
 A special-purpose function that is called often by `FUNCTION`s that
 will be compiled is a good candidate for an `EVAL` macro.
 
 ### 17.2.1. DEFMAC and EXPAND
 
-`DEFMAC` ("define macro") is syntactically exactly the same as
+\index{\texttt{DEFMAC}|textbf} `DEFMAC` ("define macro") is syntactically exactly the same as
 `DEFINE`.  However, instead of creating a `FUNCTION`, `DEFMAC`
-creates a `MACRO`.  A `MACRO` is of `PRIMTYPE` `LIST` and in fact has
+creates a `MACRO`\index{\texttt{MACRO}|textbf}.  A `MACRO` is of `PRIMTYPE` `LIST` and in fact has
 a `FUNCTION` (or other `APPLICABLE` `TYPE`) as its single element.
 
 A `MACRO` can itself be applied to arguments.  A `MACRO` is applied
@@ -245,7 +245,7 @@ in a funny way, however: it is `EVAL`ed twice.  The first `EVAL`
 causes the `MACRO`'s element to be applied to the `MACRO`'s
 arguments.  Whatever that application returns (usually another
 `FORM`) is also `EVAL`ed.  The result of the second `EVAL`uation is
-the result of applying the `MACRO`.  `EXPAND` is used to perform the
+the result of applying the `MACRO`.  `EXPAND`\index{\texttt{EXPAND}|textbf} is used to perform the
 first `EVAL` without the second.
 
 To avoid complications, the first `EVAL` (by `EXPAND`, to create the
@@ -273,7 +273,7 @@ Example:
     <EXPAND '<INC X>>$
     <SET X <+ .X 1>>
 
-Perhaps the intention is clearer if `PARSE` and `%` are used:
+Perhaps the intention is clearer if `PARSE`\index{\texttt{PARSE}} and `%` are used:
 
     <DEFMAC INC (ATM "OPTIONAL" (N 1))
             #DECL (...)

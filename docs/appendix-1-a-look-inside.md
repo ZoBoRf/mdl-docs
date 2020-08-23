@@ -9,19 +9,19 @@ little awkward in this discussion, because we are in a twilight zone
 between the worlds of MDL objects and of bit patterns. In general the
 words and phrases appearing in diagrams refer to bit patterns not MDL
 objects. A lower-case word (like "tuple") refers to the storage
-occupied by an object of the corresponding `PRIMTYPE` (like `TUPLE`).
+occupied by an object of the corresponding `PRIMTYPE` (like `TUPLE`\index{\texttt{TUPLE}}).
 
 First some terminology needs discussion. The sine qua non of any MDL
 object is a **pair** of 36-bit computer words. In general, lists
 consist of pairs chained together by pointers (addresses), and
-vectors consist of contiguous blocks of pairs. `==?` essentially
+vectors consist of contiguous blocks of pairs. `==?` \index{\texttt{==?}} essentially
 tests two pairs to see whether they contain the same bit patterns.
 
 The first (lower-addressed) word of a pair is called the **`TYPE`
 word**, because it contains a numeric **`TYPE` code** that represents
-the object's `TYPE`. The second (higher-addressed) word of a pair is
+the object's `TYPE`\index{\texttt{TYPE}}. The second (higher-addressed) word of a pair is
 called the **value word**, because it contains (part of or the
-beginning of) the "data part" of the object. The `TYPE` word (and
+beginning of) the "data part" of the object. The `TYPE`\index{\texttt{TYPE}} word (and
 sometimes the value word) is considered to be made of a left half and
 a right half. We will picture a pair like this:
 
@@ -44,11 +44,11 @@ the object and actual location of the value.
 Actually the 18-bit `TYPE` field is further decoded. The high-order
 (leftmost) bit is the mark bit, used exclusively by the garbage
 collector when it runs. The next two bits are monitor bits, used to
-cause `"READ"` and `"WRITE"` interrupts on read and write references
+cause `"READ"` \index{\texttt{""READ""}} and `"WRITE"` \index{\texttt{""WRITE""}|textbf} interrupts on read and write references
 to the pair. The next bit is used to differentiate between list
 elements and vector dope words. The next bit is unused but could be
 used in the future for an "execute" monitor. The remaining 13 bits
-specify the actual `TYPE` code. What `CHTYPE` does is to copy the
+specify the actual `TYPE` code. What `CHTYPE`\index{\texttt{CHTYPE}} does is to copy the
 pair and put a new `TYPE` code into the new pair.
 
 Each data `TYPE` (predefined and `NEWTYPE`s) must belong to one of
@@ -57,13 +57,16 @@ about 25 "storage allocation classes" (roughly corresponding to MDL
 in which the garbage collector treats them. Some of these classes
 will now be described.
 
-"One Word"
+#### "One Word"
 
 This class includes all data that are not pointers to some kind of
 structure. All external (program-available) `TYPE`s in this class are
 of `PRIMTYPE` `WORD`. Example:
 
 ```
+
+
+
 ---------------------------------
 |       FIX     |       0       |
 | - - - - - - - - - - - - - - - |
@@ -71,10 +74,10 @@ of `PRIMTYPE` `WORD`. Example:
 ---------------------------------
 ```
 
-"Two Word"
+#### "Two Word"
 
 The members of this class are all 18-bit pointers to list elements.
-All external `TYPE`s in this class are of `PRIMTYPE` `LIST`. Example:
+All external `TYPE`s in this class are of `PRIMTYPE` `LIST`\index{\texttt{LIST}}. Example:
 
 ```
 ---------------------------------
@@ -86,9 +89,9 @@ All external `TYPE`s in this class are of `PRIMTYPE` `LIST`. Example:
 
 where `pointer` is a pointer to the first list element. If there are
 no elements, `pointer` is zero; thus empty objects of `PRIMTYPE`
-`LIST` are `==?` if their `TYPE`s are the same.
+`LIST` are `==?` \index{\texttt{==?}} if their `TYPE`s are the same.
 
-"Two N Word"
+#### "Two N Word"
 
 Members of this class are all "counting pointers" to blocks of
 two-word pairs. The right half of a counting pointer is an address,
@@ -96,7 +99,7 @@ and the left half is the negative of the number of 36-bit words in
 the block. (This format is tailored to the PDP-10 `AOBJN`
 instruction.) The number of pairs in the block (`LENGTH`) is half
 that number, since each pair is two words. All external `TYPE`s in
-this class are of `PRIMTYPE` `VECTOR`. Example:
+this class are of `PRIMTYPE` `VECTOR`\index{\texttt{VECTOR}}. Example:
 
 ```
 ---------------------------------
@@ -110,16 +113,16 @@ where `length` is the `LENGTH` of the `VECTOR` and `pointer` is the
 location of the start (the element selected by an `NTH` argument of
 1) of the `VECTOR`.
 
-"N word"
+#### "N word"
 
 This class is the same as the previous one, except that the block
 contains objects all of the same `TYPE` without individual `TYPE`
 words. The `TYPE` code for all the elements is in vector dope words,
 which are at addresses just larger than the block itself. Thus, any
 object that carries information in its `TYPE` word cannot go into the
-block: `PRIMTYPE`s `STRING`, `BYTES`, `TUPLE` (and the corresponding
-locatives `LOCS`, `LOCB`, `LOCA`), `FRAME`, and `LOCD`. All external
-`TYPE`s in this class are of `PRIMTYPE` `UVECTOR`. Example:
+block: `PRIMTYPE`s `STRING`\index{\texttt{STRING}}, `BYTES`\index{\texttt{BYTES}}, `TUPLE` (and the corresponding
+locatives `LOCS`, `LOCB`, `LOCA`), `FRAME`\index{\texttt{FRAME}}, and `LOCD`\index{\texttt{LOCD}}. All external
+`TYPE`s in this class are of `PRIMTYPE` `UVECTOR`\index{\texttt{UVECTOR}}. Example:
 
 ```
 ---------------------------------
@@ -132,7 +135,7 @@ locatives `LOCS`, `LOCB`, `LOCA`), `FRAME`, and `LOCD`. All external
 where `length` is the `LENGTH` of the `UVECTOR` and `pointer` points
 to the beginning of the `UVECTOR`.
 
-"Byte String" and "Character String"
+#### "Byte String" and "Character String"
 
 These two classes are almost identical. Byte strings are byte
 pointers to strings of arbitrary-size bytes. `PRIMTYPE` `BYTES` is
@@ -159,13 +162,13 @@ newly-created `STRING` always has `*010700*` in the left half of
 `byte-pointer` points to a uvector, where the elements (characters)
 of the `STRING` are stored, packed together five to a word.
 
-"Frame"
+#### "Frame"
 
 This class gives the user program a handle on its control and
 variable-reference structures. All external `TYPE`s in this class are
 of `PRIMTYPE` `FRAME`. Three numbers are needed to designate a frame:
 a unique 18-bit identifying number, a pointer to the frame's storage
-on a control stack, and a pointer to the `PROCESS` associated with
+on a control stack, and a pointer to the `PROCESS`\index{\texttt{PROCESS}} associated with
 the frame. Example:
 
 ```
@@ -177,11 +180,11 @@ the frame. Example:
 ```
 
 where `PROCESS-pointer` points to the dope words of a `PROCESS`
-vector, and `unique-id` is used for validating (testing `LEGAL?`) the
+vector, and `unique-id` is used for validating (testing `LEGAL?`\index{\texttt{LEGAL?}}) the
 `frame-pointer`, which points to a frame for some Subroutine call on
 the control stack.
 
-"Tuple"
+#### "Tuple"
 
 A tuple pointer is a counting pointer to a vector on the control
 stack. It may be a pointer to the arguments to a Subroutine or a
@@ -198,11 +201,11 @@ only member of this class. Example:
 ---------------------------------
 ```
 
-Other Storage Classes
+#### Other Storage Classes
 
 The rest of the storage classes include strictly internal `TYPE`s and
 pointers to special kinds of lists and vectors like locatives,
-`ATOM`s and `ASOC`s. A pair for any `LOCATIVE` except a `LOCD` looks
+`ATOM`s and `ASOC`s\index{\texttt{ASOC}}. A pair for any `LOCATIVE`\index{\texttt{LOCATIVE}} except a `LOCD` looks
 like a pair for the corresponding structure, except of course that
 the `TYPE` is different. A `LOCD` pair looks like a tuple pair and
 needs a word and a half for its value; the `unique-id` refers to a
@@ -210,9 +213,9 @@ binding on the control stack or to the "global stack" if zero. Thus
 `LOCD`s are in a sense "stack objects" and are more restricted than
 other locatives.
 
-An `OFFSET` is stored with the `INDEX` in the right half of the value
+An `OFFSET`\index{\texttt{OFFSET}} is stored with the `INDEX` in the right half of the value
 word and the Pattern in the left half. Since the Pattern can be
-either an `ATOM` or a `FORM`, the left half actually points to a
+either an `ATOM`\index{\texttt{ATOM}} or a `FORM`, the left half actually points to a
 pair, which points to the actual Pattern. The Pattern `ANY` is
 recognized as a special case: the left-half pointer is zero, and no
 pair is used. Thus, if you're making the production version of your
@@ -221,11 +224,11 @@ FOO <PUT-DECL ,FOO ANY>>` for all `OFFSET`s.
 
 ## Basic Data Structures
 
-Lists
+#### Lists
 
 List elements are pairs linked together by the right halves of their
 first words. The list is terminated by a zero in the right half of
-the last pair. For example the `LIST` `(1 2 3)` would look like this:
+the last pair. For example the \index{\texttt{LIST}} `LIST` `(1 2 3)` would look like this:
 
 ```
 -------------
@@ -240,8 +243,8 @@ the last pair. For example the `LIST` `(1 2 3)` would look like this:
 The use of pointers to tie together elements explains why new
 elements can be added easily to a list, how sharing and circularity
 work, etc. The links go in only one direction through the list, which
-is why a list cannot be `BACK`ed or `TOP`ped: there's no way to find
-the `REST`ed elements.
+is why a list cannot be `BACK`ed\index{\texttt{BACK}} or `TOP`ped\index{\texttt{TOP}}: there's no way to find
+the `REST`ed\index{\texttt{REST}} elements.
 
 Since some MDL values require a word and a half for the value in the
 pair, they do not fit directly into list elements. This problem is
@@ -267,7 +270,7 @@ datum is put in the deferred pair. For example the `LIST` `(1 "hello"
                                 -----------
 ```
 
-Vectors
+#### Vectors
 
 A vector is a block of contiguous words. More than one pair can point
 to the block, possibly at different places in the block; this is how
@@ -293,18 +296,18 @@ The various fields have the following meanings:
 octal) is always one, to distinguish these vector dope words from a
 `TYPE`/value pair.
 
-If the high-order bit is zero, then the vector is a `UVECTOR`, and
+If the high-order bit is zero, then the vector is a `UVECTOR`\index{\texttt{UVECTOR}}, and
 the remaining bits specify the uniform `TYPE` of the elements.
-`CHUTYPE` just puts a new `TYPE` code in this field. Each element is
+`CHUTYPE`\index{\texttt{CHUTYPE}} just puts a new `TYPE` code in this field. Each element is
 limited to a one-word value: clearly `PRIMTYPE` `STRING`s and
 `BYTES`es and stack objects can't go in uniform vectors.
 
 If the high-order bit is one and the `TYPE` bits are zero, then this
-is a regular `VECTOR`.
+is a regular `VECTOR`\index{\texttt{VECTOR}}.
 
 If the high-order bit is one and the `TYPE` bits are not all zero,
 then this is either an `ATOM`, a `PROCESS`, an `ASOC`, or a
-`TEMPLATE`. The special internal format of these objects will be
+`TEMPLATE`\index{\texttt{TEMPLATE}}. The special internal format of these objects will be
 described a little later in this appendix.
 
 `length` -- The high-order bit is the mark bit, used by the garbage
@@ -344,7 +347,7 @@ Examples (numbers in octal): the `VECTOR` `[1 "bye" 3]` looks like:
                         -----------------
 ```
 
-The `UVECTOR` `![-1 7 -4!]` looks like:
+The `UVECTOR`\index{\texttt{UVECTOR}} `![-1 7 -4!]` looks like:
 
 ```
 ---------------
@@ -362,12 +365,12 @@ The `UVECTOR` `![-1 7 -4!]` looks like:
                         -----------------
 ```
 
-Atoms
+#### Atoms
 
 Internally, atoms are special vector-like objects. An atom contains a
 value cell (the first two words of the block, filled in whenever the
 global or local value of the `ATOM` is referenced and is not already
-there), an `OBLIST` pointer, and a print name (`PNAME`), in the
+there), an `OBLIST` pointer, and a print name (`PNAME`\index{\texttt{PNAME}}), in the
 following format:
 
 ```
@@ -376,7 +379,7 @@ following format:
 ---------------------------------
 |       pointer-to-value        |
 ---------------------------------
-|       pointer-to-oblist       |
+|       pointer-to-OBLIST       |
 ---------------------------------
 |           print-name          |
 /                               /
@@ -389,7 +392,7 @@ following format:
 ---------------------------------
 ```
 
-If the type field corresponds to `TYPE` `UNBOUND`, then the `ATOM` is
+If the type field corresponds to `TYPE` `UNBOUND`\index{\texttt{UNBOUND}}, then the `ATOM` is
 locally and globally unbound. (This is different from a pair, where
 the same `TYPE` `UNBOUND` is used to mean unassigned.) If it
 corresponds to `TYPE` `LOCI` (an internal `TYPE`), then the value
@@ -397,13 +400,13 @@ cell points either to the global stack, if `bindid` is zero, or to a
 local control stack, if `bindid` is non-zero. The `bindid` field is
 used to verify whether the local value pointed to by the value cell
 is valid in the current environment. The `pointer-to-OBLIST` is
-either a counting pointer to an oblist (uvector). a positive offset
+either a counting pointer to an oblist (uvector), a positive offset
 into the "transfer vector" (for pure `ATOM`s), or zero, meaning that
 this `ATOM` is not on an `OBLIST`. The `valid-type` field tells
 whether or not the `ATOM` represents a `TYPE` and if so the code for
-that `TYPE`: `grow` values are never needed for atoms.
+that `TYPE`; `grow` values are never needed for atoms.
 
-Associations
+#### Associations
 
 Associations are also special vector-like objects. The first six
 words of the block contain `TYPE`/value pairs for the `ITEM`,
@@ -413,6 +416,7 @@ association hash table. The last word contains forward and backward
 pointers in the chain of all the associations.
 
 ```
+
 ---------------------------------
 |             ITEM              |
 | - - - - - - - - - - - - - - - |
@@ -436,14 +440,14 @@ pointers in the chain of all the associations.
 ---------------------------------
 ```
 
-`PROCESS`es
+#### `PROCESS`es
 
 A `PROCESS` vector looks exactly like a vector of `TYPE`/value pairs.
 It is different only in that the garbage collector treats it
 differently from a normal vector, and it contains extremely volatile
 information when the `PROCESS` is `RUNNING`.
 
-Templates
+#### Templates
 
 In a template, the number in the type field (left half or first dope
 word) identifies to which "storage allocation class" this `TEMPLATE`
@@ -469,7 +473,7 @@ value is always restored after a mediated Subroutine call returns.
 `TB` ("temporaries base") points to the frame for the running
 Subroutine and also serves as a stack base pointer. The `TB` pointer
 is really all that is necessary to return from a Subroutine -- given
-a value to return, for example by `ERRET` -- since the frame
+a value to return, for example by `ERRET`\index{\texttt{ERRET}} -- since the frame
 specifies the entire state of the calling routine. `TP` ("temporaries
 pointer") is the actual stack pointer and always points to the
 current top of the control stack.
@@ -580,7 +584,7 @@ the frame on the control stack (at lower storage addresses), and the
 temporaries for the called Subroutine are above the frame (at higher
 storage addresses). These arguments and temporaries are just pairs
 stored on the control stack while needed: they are all that remain of
-`UNSPECIAL` values in compiled programs.
+`UNSPECIAL`\index{\texttt{UNSPECIAL}} values in compiled programs.
 
 The following figure shows what the control stack might look like
 after several Subroutine calls.
@@ -623,7 +627,7 @@ after several Subroutine calls.
 
 The above figure shows the frames all linked together through the
 control stack (the "execution path"), so that it is easy to return to
-the caller of a given Subroutine (`ERRET` or `RETRY`).
+the caller of a given Subroutine (`ERRET`\index{\texttt{ERRET}} or `RETRY`\index{\texttt{RETRY}}).
 
 Subroutine exit is accomplished simply by the call mediator, which
 loads the right half of `TB` from the previous frame pointer,
@@ -656,14 +660,14 @@ stack. Binding blocks have the following format:
 
 where:
 
-* `BIND` means this is a binding for a `SPECIAL` `ATOM` (the only
+* `BIND` means this is a binding for a `SPECIAL`\index{\texttt{SPECIAL}} `ATOM` (the only
 kind used by compiled programs), and `UBIND` means this is a binding
-for an `UNSPECIAL` `ATOM` -- for `SPECIAL` checking by the
+for an `UNSPECIAL`\index{\texttt{UNSPECIAL}} `ATOM` -- for `SPECIAL` checking by the
 interpreter;
 * `prev` points to the closest previous binding block for any `ATOM`
-(the "access path" -- `UNWIND` objects are also linked in this
+(the "access path" -- `UNWIND`\index{\texttt{UNWIND}} objects are also linked in this
 chain);
-* `decl` points to a `DECL` associated with this value, for
+* `decl` points to a `DECL`\index{\texttt{DECL}} associated with this value, for
 `SET(LOC)` to check;
 * `unique-id` is used for validation of this block; and
 * `previous-binding` points to the closest previous binding for this
@@ -692,7 +696,7 @@ Obviously variable binding is more complicated than this, because
 `ATOM`s can have both local and global values and even different
 local values in different `PROCESS`es. The solution to all of these
 additional problems lies in the `bindid` field of the atom. Each
-`PROCESS` vector also contains a current `bindid`. Whenever an ATOM's
+`PROCESS` vector also contains a current `bindid`. Whenever an `ATOM`'s
 local value is desired, the `RUNNING` `PROCESS`'s `bindid` is checked
 against that of the atom: if they are the same, the atom points to
 the current value; if not, the current `PROCESS`'s control stack must

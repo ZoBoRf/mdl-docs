@@ -2,7 +2,7 @@
 
 In MDL, it is possible to declare the permissible range of "types"
 and/or structures that an `ATOM`'s values or a function's arguments or
-value may have. This is done using a special `TYPE`, the `DECL`
+value may have. This is done using a special `TYPE`, the `DECL`\index{\texttt{DECL}|textbf}
 ("declaration"). A `DECL` is of `PRIMTYPE` `LIST` but has a
 complicated internal structure. `DECL`s are used by the interpreter to
 find `TYPE` errors in function calling and by the compiler to generate
@@ -19,7 +19,7 @@ argument `LIST` of a `FUNCTION` or *aux* `LIST` of a `PROG` or
 where the pairing of a `LIST` of `ATOM`s and a "Pattern" can be
 repeated indefinitely. This declares the `ATOM`s in a *list* to be of
 the type/structure specified in the following *Pattern*. The special
-`ATOM` `VALUE`, if it appears, declares the result of a `FUNCTION`
+`ATOM` `VALUE`\index{\texttt{VALUE}|textbf}, if it appears, declares the result of a `FUNCTION`
 call or `PROG` or `REPEAT` evaluation to satisfy the Pattern
 specified. An `ATOM` `DECL` is useful in only one place: immediately
 following the argument `LIST` of a `FUNCTION`, `PROG`, or `REPEAT`. It
@@ -52,7 +52,7 @@ declares that `.X` is always the `ATOM` `T`. When variables are
 `DECL`ed as "being" some other object in this way, the test used is
 `=?`, not `==?`. The distinction is usually not important, since
 `ATOM`s, which are most commonly used in this construction, are `==?`
-to each other is `=?` anyway.
+to each other if `=?` anyway.
 
 It is more common to want to specify that a value must be of a given
 `TYPE`. This is done with the simplest non-specific Pattern, a `TYPE`
@@ -64,12 +64,12 @@ declares `.X` to be of `TYPE` `FIX`, and `.Y` of `TYPE` `FLOAT`. In
 addition to the names of all of the built-in and created `TYPE`s, such
 as `FIX`, `FLOAT` and `LIST`, a few "compound" type names are allowed:
 
-* `ANY` allows any `TYPE`.
-* `STRUCTURED` allows any structured `TYPE`, such as `LIST`, `VECTOR`,
+* `ANY` \index{\texttt{ANY}|textbf} allows any `TYPE`.
+* `STRUCTURED` \index{\texttt{STRUCTURED}|textbf} allows any structured `TYPE`, such as `LIST`, `VECTOR`,
 `FALSE`, `CHANNEL`, etc. (appendix 3).
-* `LOCATIVE` allows any locative `TYPE`, such as are returned by
+* `LOCATIVE` \index{\texttt{LOCATIVE}|textbf} allows any locative `TYPE`, such as are returned by
 `LLOC`, `GLOC`, `AT`, and so on (chapter 12).
-* `APPLICABLE` allows any applicable `TYPE`, such as `FUNCTION`,
+* `APPLICABLE` \index{\texttt{APPLICABLE}|textbf} allows any applicable `TYPE`, such as `FUNCTION`,
 `SUBR`, `FIX` (!), etc. (appendix 3).
 * Any other `ATOM` can be used to stand for a more complex construct,
 if an association is established on that `ATOM` and the `ATOM` `DECL`.
@@ -127,7 +127,7 @@ satisfy a given Pattern (or sequence of Patterns). This is called an
 
     [ number:fix Pattern Pattern ... ]
 
-states that the sequence of *Patterns* which is `REST` of the `VECTOR`
+states that the sequence of *Patterns* which is `REST`\index{\texttt{REST}|textbf} of the `VECTOR`
 is repeated the *number* of times given. For example:
 
     #DECL ((X) <VECTOR [3 FIX] FLOAT> (Y) <LIST [3 FIX FLOAT]>)
@@ -155,7 +155,7 @@ declares that `.X` is a `VECTOR` wherein the sequence
 `<LENGTH .X>` is an even multiple of three: the `VECTOR` can end at
 any point.
 
-A variation on `REST` is `OPT` (or `OPTIONAL`), which is similar to
+A variation on `REST` is `OPT` \index{\texttt{OPT}|textbf} (or `OPTIONAL`\index{\texttt{OPTIONAL}|textbf}), which is similar to
 `REST` except that the construction is scanned once at most instead of
 indefinitely, and further undeclared elements can follow. For example:
 
@@ -195,7 +195,7 @@ be enclosed in the construction
     < specialty:atom Pattern >
 
 which explicitly declares the specialty of the `ATOM`(s) in the
-preceding `LIST`. *specialty* can be either `SPECIAL` or `UNSPECIAL`.
+preceding `LIST`. *specialty* can be either `SPECIAL` \index{\texttt{SPECIAL}|textbf} or `UNSPECIAL`\index{\texttt{UNSPECIAL}|textbf}.
 Specialty is important only when the program is to be compiled. The
 word comes from the control stack, which is called "special" in Lisp
 (Moon, 1974) because the garbage collector finds objects on it and
@@ -203,7 +203,7 @@ modifies their internal pointers when storage is compacted. (An
 internal stack is used within the interpreter and is not accessible to
 programs -- section 22.1) In an interpreted program all local values
 are inherently `SPECIAL`, because all bindings are put on the control
-stack (but see `SPECIAL-MODE` below). When the program is compiled,
+stack (but see `SPECIAL-MODE` \index{\texttt{SPECIAL-MODE}} below). When the program is compiled,
 only values declared `SPECIAL` (which may or may not be the
 declaration used by default) remain in bindings on the control stack.
 All others are taken care of simply by storing objects on the control
@@ -224,7 +224,7 @@ explicitly declares `ACT` to be `SPECIAL`.
 Most well-written, modular programs get all their information from
 their arguments and from `GVAL`s, and thus they rarely use `SPECIAL`
 `ATOM`s, except perhaps for `ACTIVATION`s and the `ATOM`s whose
-`LVAL`s MDL uses by default: `INCHAN`, `OUTCHAN`, `OBLIST`, `DEV`,
+`LVAL`s MDL uses by default: `INCHAN`, `OUTCHAN`\index{\texttt{OUTCHAN}}, `OBLIST`, `DEV`,
 `SNM`, `NM1`, `NM2`. `OUTCHAN` is a special case: the compiler thinks
 that all conversion-output `SUBR`s are called with an explicit
 `CHANNEL` argument, whether or not the program being compiled thinks
@@ -350,7 +350,7 @@ way*.
 
 There are some rules of thumb concerning "good" `DECL`s. A "good"
 `DECL` is one that is minimally offensive to the `DECL`-checking
-mechanism as the compiler, but that gives the maximum amount of
+mechanism and the compiler, but that gives the maximum amount of
 information. It is simple to state what gives offense to the compiler
 and `DECL`-checking mechanism: complexity. For example, a large
 compound `DECL` like:
@@ -383,8 +383,8 @@ to date several instances of the full `DECL`.
 ### 14.5.1. GDECL and MANIFEST
 
 There are two ways to declare `GVAL`s for the `DECL`-checking
-mechanism. These are through the `FSUBR` `GDECL` ("global
-declaration") and the `SUBR` `MANIFEST`.
+mechanism. These are through the `FSUBR`\index{\texttt{FSUBR}} `GDECL` \index{\texttt{GDECL}|textbf} ("global
+declaration") and the `SUBR` `MANIFEST`\index{\texttt{MANIFEST}|textbf}.
 
     <GDECL atoms:list Pattern ...>
 
@@ -425,24 +425,24 @@ either:
 
     <MANIFEST? atom>
 
-returns `T` if *atom* is `MANIFEST`, `#FALSE ()` otherwise.
+\index{\texttt{MANIFEST?}|textbf} returns `T` if *atom* is `MANIFEST`, `#FALSE ()` otherwise.
 
     <UNMANIFEST atom atom ...>
 
-removes the `MANIFEST` of the global value of each of its arguments so
+\index{\texttt{UNMANIFEST}|textbf} removes the `MANIFEST` of the global value of each of its arguments so
 that the value can be changed.
 
 ### 14.5.3. GBOUND?
 
     <GBOUND? atom>
 
-("globally bound") returns `T` if *atom* has a global value slot (that
+\index{\texttt{GBOUND?}|textbf} ("globally bound") returns `T` if *atom* has a global value slot (that
 is, if it has ever been `SETG`ed, `MANIFEST`, `GDECL`ed, or `GLOC`ed
 (chapter 12) with a true second argument), `#FALSE ()` otherwise.
 
 ## 14.6. NEWTYPE (again)
 
-`NEWTYPE` gives the programmer another way to `DECL` objects. The
+\index{\texttt{NEWTYPE}|textbf} `NEWTYPE` gives the programmer another way to `DECL` objects. The
 third (and optional) argument of `NEWTYPE` is a `QUOTE`d Pattern. If
 given, it will be saved as the value of an association (chapter 13)
 using the name of the `NEWTYPE` as the item and the `ATOM` `DECL` as
@@ -500,7 +500,7 @@ and interact with the `DECL`-checking mechanism.
 
 This entire complex checking mechanism can get in the way during
 debugging. As a result, the most commonly used `DECL`-oriented `SUBR`
-is `DECL-CHECK`. It is used to enable and disable the entire
+is `DECL-CHECK`\index{\texttt{DECL-CHECK}|textbf}. It is used to enable and disable the entire
 `DECL`-checking mechanism.
 
     <DECL-CHECK false-or-any>
@@ -523,20 +523,20 @@ checks is performed.
 
     <SPECIAL-CHECK false-or-any>
 
-controls whether or not `SPECIAL` checking is performed at run time by
+\index{\texttt{SPECIAL-CHECK}|textbf} controls whether or not `SPECIAL` checking is performed at run time by
 the interpreter. It is initially off. Failure to declare an `ATOM` to
 be `SPECIAL` when it should be will produce buggy compiled code.
 
     <SPECIAL-MODE specialty:atom>
 
-sets the declaration used by default (for `ATOM`s not declared either
+\index{\texttt{SPECIAL-MODE}|textbf} sets the declaration used by default (for `ATOM`s not declared either
 way) and returns the previous such declaration, or the current such
 declaration if no argument is given. The initial declaration used by
 default is `UNSPECIAL`.
 
 ### 14.7.3. GET-DECL and PUT-DECL
 
-`GET-DECL` and `PUT-DECL` are used to examine and change the current
+`GET-DECL`\index{\texttt{GET-DECL}|textbf} and `PUT-DECL`\index{\texttt{PUT-DECL}|textbf} are used to examine and change the current
 `DECL` (of either the global or the local value) of an `ATOM`.
 
     <GET-DECL locd>
@@ -574,7 +574,7 @@ it is not legal to `PUT-DECL` a "Pattern" of `MANIFEST` or `#FALSE
 
     <DECL? any Pattern>
 
-specifically checks *any* against *Pattern*. For example:
+\index{\texttt{DECL?}|textbf} specifically checks *any* against *Pattern*. For example:
 
     <DECL? '[1 2 3] '<VECTOR [REST FIX]>>$
     T
@@ -583,7 +583,7 @@ specifically checks *any* against *Pattern*. For example:
 
 ## 14.8. OFFSET
 
-An `OFFSET` is essentially a `FIX` with a Pattern attached, considered
+\index{\texttt{OFFSET}|textbf} An `OFFSET` is essentially a `FIX`\index{\texttt{FIX}} with a Pattern attached, considered
 as an `APPLICABLE` rather than a number. An `OFFSET` allows a program
 to specify the type of structure that its `FIX` applies to. `OFFSET`s,
 like `DECL`s -- if used properly -- can make debugging considerably
@@ -607,12 +607,12 @@ will not do the right thing with them unless they are `MANIFEST`.
 Since there's no good reason not to `MANIFEST` them, this isn't a
 problem.
 
-The `SUBR` `INDEX`, given an `OFFSET`, returns its `FIX`:
+The `SUBR` `INDEX`\index{\texttt{INDEX}|textbf}, given an `OFFSET`, returns its `FIX`:
 
     <INDEX ,FOO>$
     1
 
-`GET-DECL` of an `OFFSET` returns the associated Pattern; `PUT-DECL`
+`GET-DECL`\index{\texttt{GET-DECL}} of an `OFFSET` returns the associated Pattern; `PUT-DECL` \index{\texttt{PUT-DECL}}
 of an `OFFSET` and a Pattern returns a new `OFFSET` with the same
 `INDEX` as the argument, but with a new Pattern:
 
@@ -639,26 +639,26 @@ The simplest `RSUBR` `DECL` is for an `RSUBR` or `RSUBR-ENTRY`
 
     #DECL ("VALUE" FIX FIX FLOAT)
 
-declares that there are two arguments, a `FIX` and a `FLOAT`, and a
+\index{\texttt{""VALUE""}|textbf} declares that there are two arguments, a `FIX` and a `FLOAT`, and a
 result which is a `FIX`. While the `STRING` `"VALUE"` is not
 constrained to appear at the front of the `DECL`, it does appear there
 by custom. It need not appear at all, if the result is not to be
 declared, but (again by custom) in this case it is usually declared
 `ANY`.
 
-If any arguments are optional, the `STRING` `"OPTIONAL"` (or `"OPT"`)
+If any arguments are optional, the `STRING` `"OPTIONAL"` \index{\texttt{""OPTIONAL""}} (or `"OPT"`) \index{\texttt{""OPT""}}
 is placed before the Pattern for the first optional argument:
 
     #DECL ("VALUE" FIX FIX "OPTIONAL" FLOAT)
 
 If any of the arguments is not to be evaluated, it is preceded by the
-`STRING` `"QUOTE"`:
+`STRING` `"QUOTE"`: \index{\texttt{""QUOTE""}|textbf}
 
     #DECL ("VALUE" FIX "QUOTE" FORM)
 
 declares one argument, which is not `EVAL`ed.
 
-If the arguments are to be evaluated and gathered into a `TUPLE`, the
+If the arguments are to be evaluated and gathered into a `TUPLE`, \index{\texttt{""TUPLE""}} the
 Pattern for it is preceded by the `STRING` `"TUPLE"`:
 
     #DECL ("VALUE" FIX "TUPLE" <TUPLE [REST FIX]>)

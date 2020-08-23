@@ -1,14 +1,17 @@
-# Name Index
 
-An underscored page number refers to a
+\indexprologue{An underscored page number refers to a
 primary description: an unadorned page
 number refers to a secondary description.
 
-!!! note "Trascriber's note"
+!!! note "Transcriber's note"
     In this transcription, underscoring is replaced by strong emphasis (bolding).
+}
 
-|     |     |
-| --- | --- |
+# Name Index
+
+
+|                     |                                                                                                                                                      |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------------                              |
 | `!"`                | [7.6.6](07-structured-objects.md#766-string-the-primtype-and-character-1)
 | `!$`                | **[1.2](01-basic-introduction.md#12-typing-1)**
 | `!,`                | **[7.7.1](07-structured-objects.md#771-representation-1)**

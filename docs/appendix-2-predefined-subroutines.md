@@ -116,8 +116,8 @@ sets access pointer for next I/O transfer via a `CHANNEL`
 ACTIVATE-CHARS ("OPTIONAL" STRING)
  #DECL ((VALUE STRING) STRING)
 ```
-sets or returns interrupt characters for terminal typing (Tenex and
-Tops-20 versions only)
+sets or returns interrupt characters for terminal typing (Tenex\index{\texttt{Tenex}} and
+Tops-20\index{\texttt{Tops-20}} versions only)
 
 ```
 AGAIN ("OPTIONAL" (ACTIVATION .LPROG\ !-INTERRUPTS))
@@ -870,7 +870,7 @@ ISTORAGE (LENGTH "OPTIONAL" (ELEMENT #LOSE 0))
  #DECL ((VALUE) STORAGE
         (LENGTH) FIX (ELEMENT) ANY)
 ```
-creates a non-garbage-collected `STORAGE` from implicit arguments (archaic)
+\index{\texttt{ISTORAGE}} creates a non-garbage-collected `STORAGE` from implicit arguments (archaic)
 
 ```
 ISTRING (LENGTH "OPTIONAL" (ELEMENT !\^@))
@@ -1727,7 +1727,7 @@ SQUOTA (SYMBOL)
  #DECL ((VALUE) <OR FIX '#FALSE ()>
         (SYMBOL) <PRIMTYPE WORD>)
 ```
-gets the address of an internal interpreter symbol (for internal use only)
+\index{\texttt{SQUOTA}} gets the address of an internal interpreter symbol (for internal use only)
 
 ```
 STACKFORM ("ARGS" ARGS)

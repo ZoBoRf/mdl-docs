@@ -15,13 +15,13 @@ generate an error if not applied to a structured object. Hereafter,
 
     <LENGTH structured>
 
-evaluates to the number of elements in *structured*.
+\index{\texttt{LENGTH}|textbf} evaluates to the number of elements in *structured*.
 
 ### 7.1.2. NTH [1]
 
     <NTH structured fix>
 
-evaluates to the *fix*'th element of *structured*. An error occurs if 
+\index{\texttt{NTH}|textbf} evaluates to the *fix*'th element of *structured*. An error occurs if 
 *fix* is less than 1 or greater than `<LENGTH structured>`. *fix* is 
 optional, 1 by default.
 
@@ -29,7 +29,7 @@ optional, 1 by default.
 
     <REST structured fix>
 
-evaluates to *structured* without its first *fix* elements. *fix* is 
+\index{\texttt{REST}|textbf} evaluates to *structured* without its first *fix* elements. *fix* is 
 optional, 1 by default.
 
 Obscure but important side effect: `REST` actually returns 
@@ -42,7 +42,7 @@ with an explicit second argument of `0` has no effect except for this
 
     <PUT structured fix anything-legal>
 
-first makes *anything-legal* the *fix*'th element of *structured*, 
+\index{\texttt{PUT}|textbf} first makes *anything-legal* the *fix*'th element of *structured*, 
 then evaluates to *structured*. *anything-legal* is anything which can 
 legally be an element of *structured*; often, this is synonymous with 
 "any MDL object", but see below. An error occurs if *fix* is less than 
@@ -53,13 +53,13 @@ general than this -- chapter 13.)
 
     <GET structured fix>
 
-evaluates the same as `<NTH structured fix>`. It is more general than 
+\index{\texttt{GET}|textbf} evaluates the same as `<NTH structured fix>`. It is more general than 
 `NTH`, however (chapter 13), and is included here only for symmetry 
 with `PUT`.
 
 ### 7.1.6. APPLYing a FIX [1]
 
-`EVAL` understands the application of an object of `TYPE` `FIX` as a 
+`EVAL` understands the application of an object of `TYPE` `FIX`\index{\texttt{FIX}} as a 
 "shorthand" call to `NTH` or `PUT`, depending on whether it is given 
 one or two arguments, respectively [unless the `APPLYTYPE` of `FIX` is 
 changed]. That is, `EVAL` considers the following two to be identical:
@@ -83,7 +83,7 @@ are **not** identical.]
 
 ### 7.1.7. SUBSTRUC
 
-`SUBSTRUC` ("substructure") facilitates the construction of structures 
+\index{\texttt{SUBSTRUC}|textbf} `SUBSTRUC` ("substructure") facilitates the construction of structures 
 that are composed of sub-parts of existing structures. A special case 
 of this would be a "substring" function.
 
@@ -109,20 +109,21 @@ if *from* is of `PRIMTYPE` `LIST`, it must not share any elements with
 
     ( element-1 element-2 ... element-N )
 
-represents a `LIST` of *N* elements.
+\index{\texttt{(}|textbf} \index{\texttt{)}|textbf} represents a `LIST`\index{\texttt{LIST}|textbf} of *N* elements.
 
 ### 7.2.2. VECTOR [1]
 
     [ element-1 element-2 ... element-N ]
 
-represents a `VECTOR` of *N* elements. [A `TUPLE` is just like a 
+\index{\texttt{[}|textbf} \index{\texttt{]}|textbf} represents a `VECTOR`\index{\texttt{VECTOR}|textbf} of *N* elements. [A `TUPLE` is just like a 
 `VECTOR`, but it lives on the control stack.]
 
 ### 7.2.3. UVECTOR [1]
 
     ![ element-1 element-2 ... element-N !]
 
-represents a `UVECTOR` (uniform vector) of *N* elements. The second 
+\index{\texttt{"![}|textbf}\index{\texttt{"!]}|textbf}
+represents a `UVECTOR`\index{\texttt{UVECTOR}|textbf} (uniform vector) of *N* elements. The second 
 `!` (exclamation-point) is optional for input. [A `STORAGE` is an 
 archaic kind of `UVECTOR` that is not garbage-collected.]
 
@@ -130,8 +131,8 @@ archaic kind of `UVECTOR` that is not garbage-collected.]
 
     "characters"
 
-represents a `STRING` of ASCII text. A `STRING` containing the 
-character `"` (double-quote) is represented by placing a `\` 
+represents a `STRING`\index{\texttt{STRING}|textbf} of ASCII text. A `STRING` containing the 
+character `"` \index{\texttt{""}|textbf} (double-quote) is represented by placing a `\`\index{\texttt{"\textbackslash{}}|textbf} 
 (backslash) before the double-quote inside the `STRING`. A `\` in a 
 `STRING` is represented by two consecutive backslashes.
 
@@ -139,13 +140,13 @@ character `"` (double-quote) is represented by placing a `\`
 
     #n {element-1 element-2 ... element-N}
 
-represents a string of *N* uniformly-sized bytes of size *n* bits.
+represents a string of *N* uniformly-sized bytes\index{\texttt{BYTES}|textbf} of size *n* bits.
 
 ### 7.2.6. TEMPLATE
 
     { element-1 element-2 ... element-N }
 
-represents a `TEMPLATE` of *N* elements when output, not input -- 
+\index{\texttt{\char123}|textbf} \index{\texttt{\char125}|textbf} represents a `TEMPLATE`\index{\texttt{TEMPLATE}|textbf} of *N* elements when output, not input -- 
 when input, a `#` and a `TYPE` must precede it.
 
 ## 7.3. Evaluation of Basic Structures
@@ -189,6 +190,8 @@ constructing a structure. However, see section 7.7.
     .BAR$
     ![("meow") ([SNEAKY -3 STRING])!]
 
+\index{\texttt{PUT}}\index{\texttt{REST}}\index{\texttt{SUBSTRUC}}
+
 ## 7.5. Generation of Basic Structures
 
 Since `LIST`s, `VECTOR`s, `UVECTOR`s, and `STRING`s [and `BYTES`es] 
@@ -213,8 +216,8 @@ The same is true of any other `TYPE` whose `TYPEPRIM` happens to be
 
 ### 7.5.2. QUOTE [1]
 
-`QUOTE` is an `FSUBR` of one argument which returns its argument 
-unevaluated. `READ` and `PRINT` understand the character `'` 
+`QUOTE`\index{\texttt{QUOTE}|textbf} is an `FSUBR`\index{\texttt{FSUBR}} of one argument which returns its argument 
+unevaluated. `READ` and `PRINT` understand the character `'` \index{\texttt{'}|textbf} 
 (single-quote) as an abbreviation for a call to `QUOTE`, the way 
 period and comma work for `LVAL` and `GVAL`. Examples:
 
@@ -223,7 +226,7 @@ period and comma work for `LVAL` and `GVAL`. Examples:
     '<+ 1 2>$
     <+ 1 2>
 
-Any `LIST`, `VECTOR`, or `UVECTOR` in a program that is constant and 
+Any `LIST`\index{\texttt{LIST}}, `VECTOR`\index{\texttt{VECTOR}}, or `UVECTOR`\index{\texttt{UVECTOR}} in a program that is constant and 
 need not have its elements evaluated should be represented directly 
 and **inside a call to `QUOTE`.** This technique prevents the 
 structure from being copied each time that portion of the program is 
@@ -233,7 +236,7 @@ put it in read-only (pure) storage.)
 
 ### 7.5.3. LIST, VECTOR, UVECTOR, and STRING (the SUBRs) [1]
 
-Each of the `SUBR`s `LIST`, `VECTOR`, `UVECTOR`, and `STRING` takes 
+Each of the `SUBR`s `LIST`\index{\texttt{LIST}|textbf}, `VECTOR`\index{\texttt{VECTOR}|textbf}, `UVECTOR`\index{\texttt{UVECTOR}|textbf}, and `STRING`\index{\texttt{STRING}|textbf} takes 
 any number of arguments and returns an object of the appropriate 
 `TYPE` whose elements are `EVAL` of its arguments. There are 
 limitations on what the arguments to `UVECTOR` and `STRING` may `EVAL` 
@@ -260,7 +263,7 @@ Examples:
 
 ### 7.5.4. ILIST, IVECTOR, IUVECTOR, and ISTRING [1]
 
-Each of the `SUBR`s `ILIST`, `IVECTOR`, `IUVECTOR`, and `ISTRING` 
+Each of the `SUBR`s `ILIST`\index{\texttt{ILIST}|textbf}, `IVECTOR`\index{\texttt{IVECTOR}|textbf}, `IUVECTOR`\index{\texttt{IUVECTOR}|textbf}, and `ISTRING`\index{\texttt{ISTRING}|textbf} 
 ("implicit" or "iterated" whatever) creates and returns an object of 
 the obvious `TYPE`. The format of an application of any of them is
 
@@ -272,10 +275,10 @@ elements are `EVAL` of *expression*.
 
 *expression* is optional. When it is not specified, `ILIST`, 
 `IVECTOR`, and `IUVECTOR` return objects filled with objects of `TYPE` 
-`LOSE` (`PRIMTYPE` `WORD`) as place holders, a `TYPE` which can be 
+`LOSE`\index{\texttt{LOSE}} (`PRIMTYPE` `WORD`) as place holders, a `TYPE` which can be 
 passed around and have its `TYPE` checked, but otherwise is an illegal 
 argument. If *expression* is not specified in `ISTRING`, you get a 
-`STRING` made up of `^@` characters.
+`STRING` made up of `^@`\index{\texttt{"\^{}"@}} characters.
 
 When *expression* is supplied as an argument, it is re-`EVAL`uated 
 each time a new element is generated. (Actually, `EVAL` of 
@@ -304,9 +307,9 @@ Examples:
 
 ### 7.5.5. FORM and IFORM
 
-Sometimes the need arises to create a `FORM` without `EVAL`ing it or 
+Sometimes the need arises to create a `FORM`\index{\texttt{FORM}|textbf} without `EVAL`ing it or 
 making it the body of a `FUNCTION`. In such cases the `SUBR`s `FORM` 
-and `IFORM` ("implicit form") can be used (or `QUOTE` can be used). 
+and `IFORM`\index{\texttt{IFORM}|textbf} ("implicit form") can be used (or `QUOTE` can be used). 
 They are entirely analogous to `LIST` and `ILIST`. Example:
 
     <DEFINE INC-FORM (A)
@@ -319,7 +322,7 @@ They are entirely analogous to `LIST` and `ILIST`. Example:
 
 ### 7.6.1. LIST (the PRIMTYPE) [1]
 
-An object of `PRIMTYPE` `LIST` may be considered as a "pointer chain" 
+An object of `PRIMTYPE` `LIST`\index{\texttt{LIST}|textbf} may be considered as a "pointer chain" 
 (appendix 1). Any MDL object may be an element of a `PRIMTYPE` `LIST`. 
 It is easy to add and remove elements of a `PRIMTYPE` `LIST`, but the 
 higher N is, the longer it takes to refer to the Nth element. The 
@@ -329,7 +332,7 @@ higher N is, the longer it takes to refer to the Nth element. The
 
     <PUTREST head:primtype-list tail:primtype-list>
 
-changes *head* so that `<REST head>` is *tail* (actually 
+\index{\texttt{PUTREST}|textbf} changes *head* so that `<REST head>` is *tail* (actually 
 `<CHTYPE tail LIST>`), then evaluates to *head*. Note that this 
 actually changes *head*; it also changes anything having *head* as an 
 element or a value. For example:
@@ -357,7 +360,7 @@ example, given that `.L` is of `PRIMTYPE` `LIST`, to leave the first
 
     <CONS new list>
 
-("construct") adds *new* to the front of *list*, without copying 
+\index{\texttt{CONS}|textbf} ("construct") adds *new* to the front of *list*, without copying 
 *list*, and returns the resulting `LIST`. References to *list* are not 
 affected.
 
@@ -379,7 +382,7 @@ represents an object of such a `PRIMTYPE`.)
 
     <BACK array fix>
 
-This is the opposite of `REST`. It evaluates to *array*, with *fix* 
+\index{\texttt{BACK}|textbf} This is the opposite of `REST`. It evaluates to *array*, with *fix* 
 elements put back onto its front end, and changed to its `PRIMTYPE`. 
 *fix* is optional, 1 by default. If *fix* is greater than the number 
 of elements which have been `REST`ed off, an error occurs. Example:
@@ -397,7 +400,7 @@ of elements which have been `REST`ed off, an error occurs. Example:
 
     <TOP array>
 
-"`BACK`s up all the way" -- that is, evaluates to *array*, with all 
+\index{\texttt{TOP}|textbf} "`BACK`s up all the way" -- that is, evaluates to *array*, with all 
 the elements which have been `REST`ed off put back onto it, and 
 changed to its `PRIMTYPE`. Example:
 
@@ -410,7 +413,7 @@ changed to its `PRIMTYPE`. Example:
 
     <GROW vu end:fix beg:fix>
 
-adds/removes elements to/from either or both ends of *vu*, and returns 
+\index{\texttt{GROW}|textbf} adds/removes elements to/from either or both ends of *vu*, and returns 
 the entire (`TOP`ped) resultant object. *vu* can be of `PRIMTYPE` 
 `VECTOR` or `UVECTOR`. *end* specifies a lower bound for the number of 
 elements to be added to the **end** of *vu*; *beg* specifies the same 
@@ -419,7 +422,7 @@ for the **beginning**. A negative *fix* specifies removal of elements.
 The number of elements added to each respective end is *end* or *beg* 
 **increased** to an integral multiple of *X*, where *X* is 32 for 
 `PRIMTYPE` `VECTOR` and 64 for `PRIMTYPE` `UVECTOR` (`1` produces 32 
-or 64; `-1` produces 0). The elements added will be `LOSE`s if *vu* is 
+or 64; `-1` produces 0). The elements added will be `LOSE`s\index{\texttt{LOSE}} if *vu* is 
 of `PRIMTYPE` `VECTOR`, and "empty" whatever-they-are's if *vu* is of 
 `PRIMTYPE` `UVECTOR`. An "empty" object of `PRIMTYPE` `WORD` contains 
 zero. An "empty" object of any other `PRIMTYPE` has zero in its "value 
@@ -448,7 +451,7 @@ Example:
 
 #### 7.6.3.2. SORT
 
-This `SUBR` will sort `PRIMTYPE`s `VECTOR`, `UVECTOR` and `TUPLE` 
+\index{\texttt{SORT}|textbf} This `SUBR` will sort `PRIMTYPE`s `VECTOR`, `UVECTOR` and `TUPLE` 
 (section 9.2). It works most efficiently if the sort keys are of 
 `PRIMTYPE` `WORD`, `ATOM` or `STRING`. However, the keys may be of any 
 `TYPE`, and `SORT` will still work. `SORT` acts on fixed-length 
@@ -483,7 +486,7 @@ by default).
 
 `SORT` returns the sorted *s1* as a value.
 
-Note: the `SUBR` `SORT` calls the `RSUBR` (chapter 19) `SORTX`; if the 
+Note: the `SUBR` `SORT` calls the `RSUBR` (chapter 19) `SORTX`\index{\texttt{SORTX}}; if the 
 `RSUBR` must be loaded, you may see some output from the loader on 
 your terminal.
 
@@ -525,7 +528,7 @@ Any MDL object may be an element of a `PRIMTYPE` `VECTOR`. A
 
 ### 7.6.5. UVECTOR (the PRIMTYPE) [1]
 
-The difference between `PRIMTYPE`s `UVECTOR` and `VECTOR` is that 
+\index{\texttt{UVECTOR}|textbf} The difference between `PRIMTYPE`s `UVECTOR` and `VECTOR`\index{\texttt{VECTOR}|textbf} is that 
 every element of a `PRIMTYPE` `UVECTOR` must be of the same `TYPE`. A 
 `PRIMTYPE` `UVECTOR` takes approximately half the storage of a 
 `PRIMTYPE` `VECTOR` or `PRIMTYPE` `LIST` and, like a `PRIMTYPE` 
@@ -555,7 +558,7 @@ The following `SUBR`s work on `PRIMTYPE` `UVECTOR`s along.
 
     <UTYPE primtype-uvector>
 
-("uniform type") evaluates to the `TYPE` of every element in its 
+\index{\texttt{UTYPE}|textbf} ("uniform type") evaluates to the `TYPE` of every element in its 
 argument. Example:
 
     <UTYPE '![A B C]>$
@@ -565,11 +568,11 @@ argument. Example:
 
     <CHUTYPE uv:primtype-uvector type>
 
-("change uniform type") changes the `UTYPE` of *uv* to *type*, 
+\index{\texttt{CHUTYPE}|textbf} ("change uniform type") changes the `UTYPE` of *uv* to *type*, 
 simultaneously changing the `TYPE` of all elements of *uv*, and 
 returns the new, changed, *uv*. This works only when the `PRIMTYPE` of 
 the elements of *uv* can remain the same through the whole procedure. 
-(Exception: a *uv* of `UTYPE` `LOSE` can be `CHUTYPE`d to any *type* 
+(Exception: a *uv* of `UTYPE` `LOSE`\index{\texttt{LOSE}} can be `CHUTYPE`d to any *type* 
 (legal in a `UVECTOR` of course); the resulting elements are "empty", 
 as for `GROW`.)
 
@@ -591,20 +594,20 @@ Examples:
 
 ### 7.6.6. STRING (the PRIMTYPE) and CHARACTER [1]
 
-The best mental image of a `PRIMTYPE` `STRING` is a `PRIMTYPE` 
-`UVECTOR` of `CHARACTER`s -- where `CHARACTER` is the MDL `TYPE` for a 
+The best mental image of a `PRIMTYPE` `STRING`\index{\texttt{STRING}|textbf} is a `PRIMTYPE` 
+`UVECTOR` of `CHARACTER`s -- where `CHARACTER`\index{\texttt{CHARACTER}|textbf} is the MDL `TYPE` for a 
 single ASCII character. The representation of a `CHARACTER`, by the 
-way, is
+way, is \index{\texttt{"!"\textbackslash{}}|textbf}
 
     !\any-ASCII-character
 
 That is, the characters `!\` (exclamation-point backslash) preceding a 
 single ASCII character represent the corresponding object of `TYPE` 
-`CHARACTER` (`PRIMTYPE` `WORD`). (The characters `!"` 
+`CHARACTER` (`PRIMTYPE` `WORD`). (The characters `!"` \index{\texttt{"!""}}
 (exclamation-point double-quote) preceding a character are also 
 acceptable for inputting a `CHARACTER`, for historical reasons.)
 
-The `SUBR` `ISTRING` will produce an error if you give it an argument 
+The `SUBR` `ISTRING`\index{\texttt{ISTRING}} will produce an error if you give it an argument 
 that produces a non-`CHARACTER`. `STRING` can take either `CHARACTER`s 
 or `STRING`s.
 
@@ -615,7 +618,7 @@ but some are particularly useful in connection with them:
 
     <ASCII fix-or-character>
 
-If its argument is of `TYPE` `FIX`, `ASCII` evaluates to the 
+If its argument is of `TYPE` `FIX`, `ASCII`\index{\texttt{ASCII}|textbf} evaluates to the 
 `CHARACTER` with the 7-bit ASCII code of its argument. Example: 
 `<ASCII 65>` evaluates to `!\A`.
 
@@ -629,7 +632,7 @@ Example: `<ASCII !\Z>` evaluates to `90`.
 
     <PARSE string radix:fix>
 
-`PARSE` applies to its argument `READ`'s algorithm for converting 
+\index{\texttt{PARSE}|textbf} `PARSE` applies to its argument `READ`'s algorithm for converting 
 ASCII representations to MDL objects and returns the **first** object 
 created. The remainder of *string*, after the first object 
 represented, is ignored. *radix* (optional, ten by default) is used 
@@ -638,7 +641,7 @@ for converting any `FIX`es that occur. [See also sections 15.7.2 and
 
 #### 7.6.6.3. LPARSE [1]
 
-`LPARSE` ("list parse") is exactly like `PARSE` (above), except that 
+\index{\texttt{LPARSE}|textbf} `LPARSE` ("list parse") is exactly like `PARSE` (above), except that 
 it parses the **entire** *string* and returns a `LIST` of **all** 
 objects created. If given an empty `STRING` or one containing only 
 separators, `LPARSE` returns an empty `LIST`, whereas `PARSE` gets an 
@@ -648,35 +651,35 @@ error.
 
     <UNPARSE any radix:fix>
 
-`UNPARSE` applies to its argument `PRINT`'s algorithm for converting 
+\index{\texttt{UNPARSE}|textbf} `UNPARSE` applies to its argument `PRINT`'s algorithm for converting 
 MDL objects to ASCII representations and returns a `STRING` which 
 contains the `CHARACTER`s `PRINT` would have typed out. [However, this 
 `STRING` will **not** contain any of the gratuitous carriage-returns 
-`PRINT` adds to accommodate a `CHANNEL`'s finite line-width (section 
+`PRINT` adds to accommodate a `CHANNEL`'s\index{\texttt{CHANNEL}} finite line-width (section 
 11.2.8).] *radix* (optional, ten by default) is used for converting 
 any `FIX`es that occur.
 
 ### 7.6.7. BYTES
 
-A (`PRIMTYPE`) `BYTES` is a string of uniformly-sized bytes. The bytes 
+\index{\texttt{BYTES}|textbf} A (`PRIMTYPE`) `BYTES` is a string of uniformly-sized bytes. The bytes 
 can be any size between 1 and 36 bits inclusive. A `BYTES` is similar 
-in some ways to a `UVECTOR` of `FIX`es and in some ways to a `STRING` 
+in some ways to a `UVECTOR`\index{\texttt{UVECTOR}} of `FIX`es and in some ways to a `STRING`\index{\texttt{STRING}} 
 of non-seven-bit bytes. The elements of a `BYTES` are always of `TYPE` 
 `FIX`.
 
-The `SUBR`s `BYTES` and `IBYTES` are similar to `STRING` and 
+The `SUBR`s `BYTES` and `IBYTES`\index{\texttt{IBYTES}|textbf} are similar to `STRING` and 
 `ISTRING`, respectively, except that each of the former takes a first 
 argument giving the size of the bytes in the generated `BYTES`. 
 `BYTES` takes one required argument which is a `FIX` specifying a byte 
 size and any number of `PRIMTYPE` `WORD`s. It returns an object of 
 `TYPE` `BYTES` with that byte size containing the objects as elements. 
-These objects will be `ANDB`ed with the appropriate mask of 1-bits to 
+These objects will be `ANDB`ed \index{\texttt{ANDB}} with the appropriate mask of 1-bits to 
 fit in the byte size. `IBYTES` takes two required `FIX`es and one 
 optional argument. It uses the first `FIX` to specify the byte size 
 and the second to specify the number of elements. The third argument 
 is repeatedly evaluated to generate `FIX`es that become elements of 
 the `BYTES` (if it is omitted, bytes filled with zeros are generated). 
-The analog to `UTYPE` is `BYTE-SIZE`. Examples:
+The analog to `UTYPE` is `BYTE-SIZE`\index{\texttt{BYTE-SIZE}|textbf}. Examples:
 
     <BYTES 3 <+ 2 2> 9 -1>$
     #3 {4 1 7}
@@ -691,7 +694,7 @@ The analog to `UTYPE` is `BYTE-SIZE`. Examples:
 
 ### 7.6.8. TEMPLATE
 
-A `TEMPLATE` is similar to a PL/I "structure" of one level: the 
+\index{\texttt{TEMPLATE}|textbf} A `TEMPLATE` is similar to a PL/I "structure" of one level: the 
 elements are packed together and reduced in size to save storage 
 space, while an auxiliary internal data structure describes the 
 packing format and the elements' real `TYPE`s (appendix 1). The 
@@ -701,7 +704,7 @@ Subroutines to them, with the same effects as with other "arrays".
 
 ## 7.7. SEGMENTs [1]
 
-Objects of `TYPE` `SEGMENT` (whose `TYPEPRIM` is `LIST`) look very 
+Objects of `TYPE` `SEGMENT`\index{\texttt{SEGMENT}|textbf} (whose `TYPEPRIM` is `LIST`) look very 
 much like `FORM`s. `SEGMENT`s, however, undergo a non-standard 
 evaluation designed to ease the construction of structured objects 
 from elements of other structured objects.
@@ -712,6 +715,7 @@ The representation of an object of `TYPE` `SEGMENT` is the following:
 
     !< func arg-1 arg-2 ... arg-N !>
 
+\index{\texttt{"!<}|textbf}\index{\texttt{"!>}|textbf}
 where the second `!` (exclamation-point) is optional, and *fun* and 
 *arg-1* through *arg-N* are any legal constituents of a `FORM` (that 
 is, anything). The pointed brackets can be implicit, as in the period 
@@ -720,6 +724,8 @@ and comma notation for `LVAL` and `GVAL`.
 All of the following are `SEGMENT`s:
 
     !<3 .FOO>    !.FOO    !,FOO
+
+\index{\texttt{"!.}|textbf}\index{\texttt{"!,}|textbf}
 
 ### 7.7.2. Evaluation [1]
 
@@ -760,7 +766,7 @@ Most of the cases in which is is possible to use `SEGMENT`s require
 `EVAL` to generate an entire new object. Naturally, this uses up both 
 storage and time. However, there is one case which it is possible to 
 handle without copying, and `EVAL` uses it. When the structure being 
-built is a `PRIMTYPE` `LIST`, and the segment value of a `PRIMTYPE` 
+built is a `PRIMTYPE` `LIST`\index{\texttt{LIST}}, and the segment value of a `PRIMTYPE` 
 `LIST` is the last (rightmost) element being concatenated, that last 
 `PRIMTYPE` `LIST` is not copied. This case is similar to `CONS` and is 
 the principle reason why `PRIMTYPE` `LIST`s have their structures more 
@@ -799,6 +805,7 @@ place:
     .ARF$
     ("BOWOW" "WOOF" 4)
 
+\index{\texttt{PUT}}
 Since `ARF` was not copied, it was literally part of `DOG`. Hence, 
 when an element of `ARF` was changed, `DOG` was changed. Similarly, 
 when an element of `DOG` which `ARF` shared was changed, `ARF` was 
@@ -847,7 +854,7 @@ live MDL, be sure you know how to use `^S` (section 1.2) to save
 
     <PUTREST head:primtype-list tail:primtype-list>
 
-If *head* is a subset of *tail*, that is, if `<REST tail fix>` is the 
+\index{\texttt{PUTREST}} If *head* is a subset of *tail*, that is, if `<REST tail fix>` is the 
 same object as `<REST head 0>` for some *fix*, then both *head* and 
 *tail* will be "circular" (and this self-referencing) after the 
 `PUTREST`. Example:

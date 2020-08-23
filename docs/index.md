@@ -4,11 +4,15 @@ S. W. Galley and Greg Pfister
 
 ## Transcriber's notes
 
-This document has been transcribed by [Mark
-Trapp](https://marktrapp.com) and [Jesse
-McGrew](https://bitbucket.org/jmcgrew) from a [PDF maintained by the
-Defense Technical Information
-Center](http://www.dtic.mil/docs/citations/ADA070930).  It attempts
+This [document](https://github.com/ZoBoRf/mdl-docs) has been 
+converted and typset by Roman Bartke with [Pandoc](https://pandoc.org/) 
+and \LaTeX{} from enriched markdown sources taken from 
+the mdl-docs project (https://github.com/taradinoc/mdl-docs).
+
+The markdown sources has been transcribed by 
+[Mark Trapp](https://marktrapp.com) and 
+[Jesse McGrew](https://bitbucket.org/jmcgrew) 
+from a [PDF maintained by the Defense Technical Information Center](http://www.dtic.mil/docs/citations/ADA070930).  It attempts
 to be as faithful to the original as possible deviating only to adopt
 modern formatting techniques, account for limitations of Markdown and
 the web, and add links where appropriate.
@@ -22,8 +26,12 @@ the notes will be marked clearly like so:
     This is a transcriber's note.
 
 If you do notice an error in this current version, feel free to
-[create an issue](https://github.com/taradinoc/mdl-docs/issues) or
-[submit a pull request](https://github.com/taradinoc/mdl-docs/pulls).
+create an issue (https://github.com/taradinoc/mdl-docs/issues) or
+submit a pull request (https://github.com/taradinoc/mdl-docs/pulls).
+
+For errors in the PDF version 
+create an issue here https://github.com/ZoBoRf/mdl-docs/issues or
+submit a pull request here: https://github.com/ZoBoRf/mdl-docs/pulls.
 
 ## Copyright
 

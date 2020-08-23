@@ -2,7 +2,7 @@
 
 ## 10.1. PROG and REPEAT [1]
 
-`PROG` and `REPEAT` are almost identical `FSUBR`s which make it 
+`PROG` \index{\texttt{PROG}|textbf} and `REPEAT` \index{\texttt{REPEAT}|textbf} are almost identical `FSUBR`s \index{\texttt{FSUBR}} which make it 
 possible to vary the order of `EVAL`uation arbitrarily -- that is, to 
 have "jumps". The syntax of `PROG` ("program") is
 
@@ -15,7 +15,7 @@ the `PROG`.
 * *aux* is a `LIST` which looks exactly like that part of a 
 `FUNCTION`'s argument `LIST` which follows an `"AUX"`, and serves 
 exactly the same purpose. It is not optional. If you need no temporary 
-variables of `"ACT"`, make it `()`.
+variables or `"ACT"`, make it `()`.
 * *body* is a non-zero number of arbitrary MDL expressions.
 
 The syntax of `REPEAT` is identical, except that, of course, `REPEAT` 
@@ -43,11 +43,11 @@ explicitly use `RETURN` (or `GO` with a `TAG` -- section 10.4).
 
 Within a `PROG` or `REPEAT`, you always have a defined `ACTIVATION`, 
 whether you bind it to an `ATOM` or not. [In fact the interpreter 
-binds it to the `ATOM` `LPROG\ !-INTERRUPTS` ("last PROG"). The 
-`FSUBR` `BIND` is identical to `PROG` except that `BIND` does not bind 
-that `ATOM`, so that `AGAIN` and `RETURN` with no `ACTIVATION` 
+binds it to the `ATOM` `LPROG\ !-INTERRUPTS` \index{\texttt{LPROG"\textbackslash{}}|textbf} ("last PROG"). The 
+`FSUBR` \index{\texttt{FSUBR}} `BIND` \index{\texttt{BIND}|textbf} is identical to `PROG` except that `BIND` does not bind 
+that `ATOM`, so that `AGAIN` \index{\texttt{AGAIN}|textbf} and `RETURN` \index{\texttt{RETURN}|textbf} with no `ACTIVATION` 
 argument will not refer to it. This feature could be useful within 
-`MACRO`s.]
+`MACRO`s. \index{\texttt{MACRO}}]
 
 If `AGAIN` is used with no arguments, it uses the `ACTIVATION` of the 
 closest surrounding `PROG` or `REPEAT` **within the current function** 
@@ -104,7 +104,7 @@ simply, and lots of uses for `REPEAT`.
 
 ## 10.2. MAPF and MAPR: Basics [1]
 
-`MAPF` ("map first") and `MAPR` ("map rest") are two `SUBR`s which 
+`MAPF` \index{\texttt{MAPF}|textbf} ("map first") and `MAPR` \index{\texttt{MAPR}|textbf} ("map rest") are two `SUBR`s which 
 take care of a majority of cases which require loops over data. The 
 basic idea is the following:
 
@@ -133,7 +133,7 @@ take an additional function as an argument, and, when the looping is
 over, apply the additional function to **all** the results, and then 
 return the results of that application. Thus, if the additional 
 function is `,LIST`, you get a `LIST` of the previous results; if it 
-is `.VECTOR`, you get a `VECTOR` of results; etc.
+is `,VECTOR`, you get a `VECTOR` of results; etc.
 
 Finally, it might be the case that you really want to loop a function 
 over more than one structure simultaneously. For instance, consider 
@@ -151,7 +151,7 @@ usually the ones used.
 
     <MAPF finalf loopf s1 s2 ... sN>
 
-where (after argument evaluation)
+\index{\texttt{MAPF}} where (after argument evaluation)
 
 * *finalf* is something applicable that evaluates all its arguments, 
 or a `FALSE`;
@@ -178,7 +178,7 @@ arguments; if *finalf* is a `FALSE`, `MAPF` returns `#FALSE ()`.
 
     <MAPR finalf loopf s1 s2 ... sN>
 
-acts just like `MAPF`, but, instead of applying *loopf* to `NTH`s of 
+\index{\texttt{MAPR}} acts just like `MAPF`, but, instead of applying *loopf* to `NTH`s of 
 the structures -- that is, `<NTH si 1>`, `<NTH si 2>`, etc. -- it 
 applies it to `REST`s of the structures -- that is, `<REST si 0>`, 
 `<REST si 1>`, etc.
@@ -187,7 +187,7 @@ applies it to `REST`s of the structures -- that is, `<REST si 0>`,
 
 Make the element-wise sum of two `LIST`s:
 
-    <MAPF .LIST .+ '(1 2 3 4) '(10 11 12 13)>$
+    <MAPF ,LIST ,+ '(1 2 3 4) '(10 11 12 13)>$
     (11 13 15 17)
 
 Change a `UVECTOR` to contain double its values:
@@ -231,8 +231,8 @@ are of different lengths.):
 
 Note: it is easy to forget that *finalf* **must** evaluate its 
 arguments, which precludes the use of an `FSUBR`. It is primarily for 
-this reason that the `SUBR`s `AND?` and `OR?` were invented. As an 
-example, the predicate `=?` could have been defined this way:
+this reason that the `SUBR`s `AND?` \index{\texttt{AND?}|textbf} and `OR?` \index{\texttt{OR?}} were invented. As an 
+example, the predicate `=?` \index{\texttt{=?}} could have been defined this way:
 
     <DEFINE =? (A B)
             <COND (<MONAD? .A> <==? .A .B>)
@@ -242,7 +242,7 @@ example, the predicate `=?` could have been defined this way:
                    <MAPF ,AND? ,=? .A .B>)>>
 
 [By the way, the following shows how to construct a value that has the 
-same `TYPE` as an argument.
+same `TYPE` \index{\texttt{TYPE}} as an argument.
 
     <DEFINE MAP-NOT (S)
      <COND (<MEMQ <PRIMTYPE .S> '![LIST VECTOR UVECTOR STRING]>
@@ -257,7 +257,7 @@ the corresponding `SUBR`s to build objects of those `TYPE`s.]
 
 ### 10.3.1. MAPRET
 
-`MAPRET` is a `SUBR` that enables the *loopf* being used in a `MAPR` 
+`MAPRET` \index{\texttt{MAPRET}|textbf} is a `SUBR` that enables the *loopf* being used in a `MAPR` 
 or `MAPF` (and lexically within it, that is, not separated from it by 
 a function call) to return from zero to any number of values as 
 opposed to just one. For example, suppose a `MAPF` of the following 
@@ -287,7 +287,7 @@ Example: the following returns a `LIST` of all the `ATOM`s in an
 
 ### 10.3.2. MAPSTOP
 
-`MAPSTOP` is the same as `MAPRET`, except that, after adding its 
+`MAPSTOP` \index{\texttt{MAPSTOP}|textbf} is the same as `MAPRET`, except that, after adding its 
 arguments, if any, to the final `TUPLE`, it forces the application of 
 *finalf* to occur, whether or not the structured objects have run out 
 of objects. Example: the following copies the first ten (or all) 
@@ -302,12 +302,12 @@ elements of its argument into a `LIST`:
 
 ### 10.3.3. MAPLEAVE
 
-`MAPLEAVE` is analogous to `RETURN`, except that it works in 
+`MAPLEAVE` \index{\texttt{MAPLEAVE}|textbf} is analogous to `RETURN`, except that it works in 
 (lexically within) `MAPF` or `MAPR` instead of `PROG` or `REPEAT`. It 
 flushes the accumulated `TUPLE` of results and returns its argument 
 (optional, `T` by default) as the value of the `MAPF` or `MAPR`. (It 
 finds the MAPF/R that should returns in the current binding of the 
-`ATOM` `LMAP\ !-INTERRUPTS` ("last map").) Example: the following 
+`ATOM` `LMAP\ !-INTERRUPTS` \index{\texttt{LMAP"\textbackslash{}}|textbf} ("last map").) Example: the following 
 finds and returns the first non-zero element of its argument, or 
 `#FALSE ()` if there is none:
 
@@ -339,8 +339,8 @@ found in chapter 13.
 
 Example: the following `FUNCTION` reads characters from the current 
 input channel until an `$` (<kbd>ESC</kbd>) is read, and then returns 
-what was read as one `STRING`. (The `SUBR` `READCHR` reads one 
-character from the input channel and returns it. `NEXTCHR` returns the 
+what was read as one `STRING`. (The `SUBR` `READCHR` \index{\texttt{READCHR}} reads one 
+character from the input channel and returns it. `NEXTCHR` \index{\texttt{NEXTCHR}} returns the 
 next `CHARACTER` which `READCHR` will return -- chapter 11.)
 
     <DEFINE RDSTR ()
@@ -357,7 +357,7 @@ next `CHARACTER` which `READCHR` will return -- chapter 11.)
 
 ### 10.3.5. STACKFORM
 
-The `FSUBR` `STACKFORM` is archaic, due to improvements in the 
+The `FSUBR` \index{\texttt{FSUBR}} `STACKFORM` \index{\texttt{STACKFORM}} is archaic, due to improvements in the 
 implementation of MAPF/R, and it should not be used in new programs.
 
     <STACKFORM function arg pred>
@@ -372,7 +372,7 @@ In fact MAPF/R is more powerful, because `MAPRET`, `MAPSTOP`, and
 
 ## 10.4. GO and TAG
 
-`GO` is provided in MDL for people who can't recover from a youthful 
+`GO` \index{\texttt{GO}|textbf} is provided in MDL for people who can't recover from a youthful 
 experience with Basic, Fortran, PL/I, etc. The `SUBR`s previously 
 described in this chapter are much more tasteful for making good, 
 clean, "structured" programs. `GO` just bollixes things.
@@ -380,7 +380,7 @@ clean, "structured" programs. `GO` just bollixes things.
 `GO` is a `SUBR` which allows you to break the normal order of 
 evaluation and re-start just before any top-level expression in a 
 `PROG` or `REPEAT`. It can take two `TYPE`s of arguments: `ATOM` or 
-`TAG`.
+`TAG`.  \index{\texttt{TAG}|textbf}
 
 Given an `ATOM`, `GO` searches the *body* of the immediately 
 surrounding `PROG` or `REPEAT` within the current Function, starting 
@@ -397,7 +397,7 @@ from within any function called inside the `PROG` or `REPEAT`. `GO`
 with a `TAG` is vaguely like `AGAIN` with an `ACTIVATION`; it allows 
 you to "go back" to the middle of any `PROG` or `REPEAT` which called 
 you. Also like `ACTIVATION`s, `TAG`s into a `PROG` or `REPEAT` can no 
-longer be used after the `PROG` or `REPEAT` has returned. `LEGAL?` can 
+longer be used after the `PROG` or `REPEAT` has returned. `LEGAL?` \index{\texttt{LEGAL?}} can 
 be used to see if a `TAG` is still valid.
 
 ## 10.5. Looping versus Recursion

@@ -10,7 +10,7 @@ compiled programs are used (chapter 19).
 
 A `WORD` in MDL is a PDP-10 machine word of 36 bits. A `WORD` always
 `PRINT`s in "# format", and its contents are always printed in octal
-(hence preceded and followed by `*`). Examples:
+(hence preceded and followed by `*`\index{\texttt{*}}). Examples:
 
     #WORD 0                  ;"all 0s"$
     #WORD *000000000000*
@@ -37,7 +37,7 @@ can be `CHTYPE`d to it.
 
 ## 18.2. BITS
 
-An object of `TYPE` `BITS` is of `PRIMTYPE` `WORD`, and `PRINT`s just
+\index{\texttt{BITS}|textbf} An object of `TYPE` `BITS` is of `PRIMTYPE` `WORD`, and `PRINT`s just
 like a `WORD`. The internal form of a `BITS` is precisely that of a
 PDP-10 "byte pointer", which is, in fact, just what a `BITS` is.
 
@@ -65,13 +65,13 @@ Examples: the indicated application of `BITS` returns an object of
 |---------------|------------------------------------|
 | `<BITS 7>`    | 35 ... 7 **6 ... 0**               |
 | `<BITS 4 18>` | 35 ... 22 **21 20 19 18** 17 ... 0 |
-| `<BITS 36>`   | ***35 ... 0***                     |
+| `<BITS 36>`   | **35 ... 0**                       |
 
 ## 18.3. GETBITS
 
     <GETBITS from:primtype-word bits>
 
-where *from* is an object of `PRIMTYPE` `WORD`, returns a **new**
+\index{\texttt{GETBITS}|textbf} where *from* is an object of `PRIMTYPE` `WORD`, returns a **new**
 object whose `TYPE` is `WORD`. This object is constructed in the
 following way: the set of bits in *from* pointed to by *bits* is
 copied into the new object, right-adjusted, that is, lined up against
@@ -92,7 +92,7 @@ Examples:
 
     <PUTBITS to:primtype-word bits from:primtype-word>
 
-where *to* and *from* are of `PRIMTYPE` `WORD`, returns a **copy** of
+\index{\texttt{PUTBITS}|textbf} where *to* and *from* are of `PRIMTYPE` `WORD`, returns a **copy** of
 *to*, modified as follows: the set of bits in *to* which are pointed
 to by *bits* are replaced by the appropriate number of rightmost bits
 copied from *from* (optional, 0 by default). In other words: `PUTBITS`
@@ -111,7 +111,7 @@ Examples:
 
 ## 18.5. Bitwise Boolean Operations
 
-Each of the `SUBR`s `ANDB`, `ORB`, `XORB`, and `EQVB` takes arguments
+Each of the `SUBR`s `ANDB`\index{\texttt{ANDB}|textbf}, `ORB`\index{\texttt{ORB}|textbf}, `XORB`\index{\texttt{XORB}|textbf}, and `EQVB`\index{\texttt{EQVB}|textbf} takes arguments
 of `PRIMTYPE` `WORD` and returns a `WORD` which is the bitwise Boolean
 "and", inclusive "or", exclusive "or", or "equivalence" (inverse of
 exclusive "or"), respectively, of its arguments. Each takes any number
@@ -126,7 +126,7 @@ to confuse `AND` and `OR` with `ANDB` and `ORB`.
 
     <LSH from:primtype-word amount:fix>
 
-returns a **new** `WORD` containing the bits in *from*, shifted the
+\index{\texttt{LSH}|textbf} returns a **new** `WORD` containing the bits in *from*, shifted the
 number of bits specified by *amount* (mod 256, says the hardware).
 Zero bits are brought in at the end being vacated; bits shifted out at
 the other end are lost. If *amount* is positive, shifting is to the
@@ -139,7 +139,7 @@ left; if *amount* is negative, shifting is to the right. Examples:
 
     <ROT from:primtype-word amount:fix>
 
-returns a **new** `WORD` containing the bits from *from*, rotated the
+\index{\texttt{ROT}|textbf} returns a **new** `WORD` containing the bits from *from*, rotated the
 number of bits specified by *amount* (mod 256, says the hardware).
 Rotation is a cyclic bitwise shift where bits shifted out at one end
 are put back in at the other. If *amount* is positive, rotation is to

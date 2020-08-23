@@ -4,7 +4,7 @@ This is a list of all error-naming ATOMs initially in the ERRORS OBLIST, in the 
 and appropriate examples or elucidations, where necessary, in the right-hand column.
 
 |                                                           |                                                                                                          |
-| ---                                                       | ---                                                                                                      |
+| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------                              |
 | `ACCESS-FAILURE`                                          | `ACCESS`, `RESTORE` (Tenex and Tops-20 versions only)                                                    |
 | `ALREADY-DEFINED-ERRET-NON-FALSE-TO-REDEFINE`             |                                                                                                          |
 | `APPLY-OR-STACKFORM-OF-FSUBR`                             | First argument to `APPLY`, `STACKFORM`, MAPF/R doesn't `EVAL` all its arguments.                         |

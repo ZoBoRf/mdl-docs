@@ -1,6 +1,7 @@
 # Appendix 5. Initial Settings
 
 The various switches and useful variables in MDL are initially set up with the following values:
+\index{\texttt{DEV}} \index{\texttt{INITIAL}} \index{\texttt{KEEP-FIXUPS}} \index{\texttt{NM1}} \index{\texttt{NM2}} \index{\texttt{REDEFINE}} \index{\texttt{RSUBR-LINK}} \index{\texttt{SNM}}
 
     <ACTIVATE-CHARS <STRING <ASCII 7> <ASCII 19> <ASCII 15>>>
                           ;"Tenex and Tops-20 versions only"

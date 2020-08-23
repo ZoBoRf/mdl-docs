@@ -11,14 +11,14 @@ chapter.
 
 	<PUTPROP item:any indicator:any value:any>
 
-("put property") returns *item*, having associated *value* with
+\index{\texttt{PUTPROP}|textbf} ("put property") returns *item*, having associated *value* with
 *item* under the indicator *indicator*.
 
 ### 13.1.2. PUT
 
 	<PUT item:any indicator:any value:any>
 
-is identical to `PUTPROP`, except that, if *item* is structured
+\index{\texttt{PUT}|textbf} is identical to `PUTPROP`, except that, if *item* is structured
 **and** *indicator* is of `TYPE` `FIX` or `OFFSET`, it does `<SETLOC
 <AT item indicator> value>`. In other words, an element with an
 integral selector is stored in the structure itself, instead of in
@@ -47,7 +47,7 @@ exist (is garbage-collected).
 
 	<GETPROP item:any indicator:any exp:any>
 
-("get property") returns the *value* associated with *item* under
+\index{\texttt{GETPROP}|textbf} ("get property") returns the *value* associated with *item* under
 *indicator*, if any. If there is no such association, `GETPROP`
 returns `EVAL` of *exp* (that is, *exp* gets `EVAL`ed both at call
 time and later).
@@ -63,7 +63,7 @@ objects** used to establish the association; that is, they must be
 
 	<GET item:any indicator:any exp:any>
 
-is the inverse of `PUT`, using `NTH` or `GETPROP` depending on the
+\index{\texttt{GET}|textbf} is the inverse of `PUT`, using `NTH` or `GETPROP` depending on the
 test outlined in section 13.1.2. *exp* is optional and used as in
 `GETPROP`.
 
@@ -88,7 +88,7 @@ test outlined in section 13.1.2. *exp* is optional and used as in
 	<GET .N '(1 2 3 4)>$
 	#FALSE ()
 
-The last example failed because `READ` generated a new `LIST` -- not
+The last example failed because `READ` \index{\texttt{READ}} generated a new `LIST` -- not
 the one which is `L`'s `LVAL`. However,
 
 	<GET 0 .L>$
@@ -107,7 +107,7 @@ N-1>`, as in the following:
 	<GET <REST .L 2> PERCENT>$
 	0.30000000
 
-Remember comments?
+Remember comments? \index{\texttt{COMMENT}|textbf}
 
 	<SET N '![A B C ;"third element" D E]>$
 	![A B C D E!]
@@ -118,7 +118,7 @@ The `'` in the `<SET N ... >` is to keep `EVAL` from generating a new
 `UVECTOR` ("Direct Representation"), which would not have the comment
 on it (and which would be a needless duplicate). A "top-level"
 comment -- one attached to the entire object returned by `READ` -- is
-`PUT` on the `CHANNEL` in use, since there is no position in any
+`PUT` on the `CHANNEL` \index{\texttt{CHANNEL}} in use, since there is no position in any
 structure for it. If no top-level comment follows the object, `READ`
 removes the value (`<PUT channel COMMENT>`); so anybody that wants to
 see a top-level comment must look for it after each `READ`.
@@ -138,17 +138,17 @@ into one. For example, to associate *value* with *item* under
 Associations (created by `PUT` and `PUTPROP`) are chained together in
 a doubly-linked list, internal to MDL. The order of associations in
 the chain is their order of creation, newest first. There are several
-`SUBR`s for examining the chain of associations. `ASSOCIATIONS`
+`SUBR`s for examining the chain of associations. `ASSOCIATIONS` \index{\texttt{ASSOCIATIONS}|textbf}
 returns the first association in the chain, or `#FALSE ()` if there
-are none. `NEXT` takes an association as an argument and returns the
+are none. `NEXT` \index{\texttt{NEXT}|textbf} takes an association as an argument and returns the
 next association in the chain, or `#FALSE ()` if there are no more.
-`ITEM`, `INDICATOR` and `AVALUE` all take an association as an
+`ITEM`\index{\texttt{ITEM}|textbf}, `INDICATOR` \index{\texttt{INDICATOR}|textbf} and `AVALUE` \index{\texttt{AVALUE}|textbf} all take an association as an
 argument and return the item, indicator and value, respectively.
 Associations print as:
 
 	#ASOC (item indicator value)
 
-(sic: only one `S`). Example: the following gathers all the existing
+\index{\texttt{ASOC}|textbf}(sic: only one `S`). Example: the following gathers all the existing
 associations into a `LIST`.
 
 	<PROG ((A <ASSOCIATIONS>))

@@ -1,41 +1,60 @@
-# The MDL Programming Language
 
-This repository contains a Markdown representation of *The MDL 
-Programming Language* by S. W. Galley and Greg Pfister, originally 
-written with support from the Advanced Research Projects Agency of the 
-Department of Defense (DARPA).
+# A New PDF Version of "The MDL Programming Language"
+This project aims to produce a [PDF version](tex/mdl.pdf) of "The MDL Programming Language"
+by *S. W. Galley* and *Greg Pfister*. As source it uses the markdown files, which the participants in the https://github.com/taradinoc/mdl-docs project transcribed from scans of the original MIT document https://apps.dtic.mil/dtic/tr/fulltext/u2/a070930.pdf 
+(referenced here http://www.dtic.mil/docs/citations/ADA070930).
 
-## How to read this documentation
+Quite a few typos and typographical errors of the transcription was corrected
+and **the name index** readded.
 
-You can browse the `.md` files directly using GitHub's Markdown
-preview, or find a more pleasant HTML rendering at
-[Read The Docs](https://mdl-language.readthedocs.io/en/latest/).
+The original README.md was renamed to [README-orig.md](README-orig.md).
 
-## Development disclaimer
+The original creation of [ReadTheDocs](https://readthedocs.org/) 
+version from [mkdocs.yml](mkdocs.yml) 
+is untested in this project and will most likely fail.
 
-This repository was forked from [Mark Trapp's transcription 
-project](https://github.com/itafroma/mdl-docs), which includes the 
-following disclaimer:
+# Howto
 
->This a personal project in its early stages of development and 
->planning. It is not ready for collaboration or a guarantee of 
->fitness. It's being made available for transparency (and so I have 
->something to point to when I want to talk about it), but be warned 
->that:
->
->- Support requests via GitHub issues or email will go unanswered and 
->ignored
->- Pull requests will be summarily rejected
->- Public progress may be minimal to non-existent for long stretches 
->at a time
->
->You're welcome to use what's here under the terms of its license (if 
->one is available) or the principles of fair use (if one is not). If 
->you like the idea/premise behind this project, I would suggest 
->starting over the way you'd want to do it yourself as I am very 
->unlikely to accept future contributions forked off of, or derived 
->from, this project's current stage of development.
+This project uses [Pandoc](https://pandoc.org/) to create a `LaTeX` version
+of the document and uses `PDFLaTeX` to typeset the final PDF.
 
-That disclaimer notwithstanding, the contributors here have chosen to 
-continue based on Trapp's work. **Contributions to [this 
-repository](https://github.com/taradinoc/mdl-docs) are welcome.**
+The conversion was done on Windows but should be possible on Linux with minor script changes.
+
+## Prerequisites
+
+* `perl`
+  - On Widnows I use [ActivePerl](https://www.activestate.com/products/perl/downloads/)
+* `pandoc`, the universal document converter
+  - I use https://pandoc.org/releases.html
+* A `TeX` distribution
+  - On Windows I use [MiKTeX](https://miktex.org/howto/install-miktex)
+
+## Conversion
+
+1. Merge MarkDown Files
+
+   see [etc/00-do-merge.cmd](etc/00-do-merge.cmd)
+
+2. Make TeX File with `pandoc`
+
+   see [etc/10-mk-tex.cmd](etc/10-mk-tex.cmd)
+
+3. Transform the TeX File
+
+   see [etc/20-conv.cmd](etc/20-conv.cmd)
+   for the replacements needed. 
+   Perl is used to globally replace text fragments.
+   Don't ask, what's going on there. I don't know anymore myself.
+
+4. Create PDF Version with PDFLaTeX
+
+   see [etc/30-mk-pdf.cmd](etc/30-mk-pdf.cmd)
+
+5. Make all in one step
+
+   see [etc/99-mk-all.cmd](etc/99-mk-all.cmd)
+
+* The final file is here
+
+   see [tex/mdl.pdf](tex/mdl.pdf)
+

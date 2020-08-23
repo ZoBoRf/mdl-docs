@@ -37,7 +37,7 @@ error is usual), that instead it is built by the interpreter or `CHTYPE`d to by 
 | `HANDLER`     | `VECTOR`        | `S` |     |     | `X`   |                                                             |
 | `IHEADER`     | `VECTOR`        | `S` |     |     | `X`   | "interrupt header"                                          |
 | `ILLEGAL`     | `WORD`          |     |     |     | `X`   | Garbage collector may put this on non-`LEGAL?` object.      |
-| `INTERNAL`    | `INTERNAL-TYPE` |     |     |     | `X`   | should not be seen by programs                              |
+| `INTERNAL`\index{\texttt{INTERNAL}}    | `INTERNAL-TYPE`\index{\texttt{INTERNAL-TYPE}} |     |     |     | `X`   | should not be seen by programs                              |
 | `LINK`        | `ATOM`          |     |     |     | `X`   | for terminal shorthand                                      |
 | `LIST`        |                 | `S` | `E` |     |       |                                                             |
 | `LOCA`        |                 |     |     |     | `B`   | locative to `TUPLE`                                         |
@@ -57,8 +57,8 @@ error is usual), that instead it is built by the interpreter or `CHTYPE`d to by 
 | `PCODE`       | `WORD`          |     |     |     | `%`   | "pure code"                                                 |
 | `PRIMTYPE-C`  | `WORD`          |     |     |     | `%`   | "primtype code"                                             |
 | `PROCESS`     |                 |     |     |     | `B`   |                                                             |
-| `QUICK-ENTRY` | `VECTOR`        | `S` |     | `A` | `%`   | an `RSUBR-ENTRY` that has been `QCALL`ed and `RSUBR-LINK`ed |
-| `QUICK-RSUBR` | `VECTOR`        | `S` |     | `A` | `%/B` | an `RSUBR` that has been `QCALL`ed and `RSUBR-LINK`ed       |
+| `QUICK-ENTRY`\index{\texttt{QUICK-ENTRY}} | `VECTOR`        | `S` |     | `A` | `%`   | an `RSUBR-ENTRY` that has been `QCALL`ed and `RSUBR-LINK`ed |
+| `QUICK-RSUBR`\index{\texttt{QUICK-RSUBR}} | `VECTOR`        | `S` |     | `A` | `%/B` | an `RSUBR` that has been `QCALL`ed and `RSUBR-LINK`ed       |
 | `READA`       | `FRAME`         |     |     |     | `X`   | in eof slot during recursive `READ` via `READ-TABLE`        |
 | `RSUBR`       | `VECTOR`        | `S` |     | `A` | `%/B` | if code vector is pure/impure, respectively                 |
 | `RSUBR-ENTRY` | `VECTOR`        | `S` |     | `A` | `%`   |                                                             |
@@ -73,7 +73,7 @@ error is usual), that instead it is built by the interpreter or `CHTYPE`d to by 
 | `TUPLE`       |                 | `S` |     |     | `B`   | vector on the control stack                                 |
 | `TYPE-C`      | `WORD`          |     |     |     | `%`   | "type code"                                                 |
 | `TYPE-W`      | `WORD`          |     |     |     | `%`   | "type word"                                                 |
-| `UNBOUND`     | `WORD`          |     |     |     | `X`   | value of unassigned but bound `ATOM`, as seen by locatives  |
+| `UNBOUND`\index{\texttt{UNBOUND}}     | `WORD`          |     |     |     | `X`   | value of unassigned but bound `ATOM`, as seen by locatives  |
 | `UVECTOR`     |                 | `S` | `E` |     |       | "uniform vector"                                            |
 | `VECTOR`      |                 | `S` | `E` |     |       |                                                             |
 | `WORD`        |                 |     |     |     |       |                                                             |

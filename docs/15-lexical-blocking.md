@@ -44,7 +44,7 @@ information about `OBLIST`s as such.
 
 ### 15.2.1. OBLIST Names
 
-Every normally constituted `OBLIST` has a name. The name of an
+\index{\texttt{OBLIST}|textbf} Every normally constituted `OBLIST` has a name. The name of an
 `OBLIST` is an `ATOM` associated with the `OBLIST` under the indicator
 `OBLIST`. Thus,
 
@@ -90,7 +90,7 @@ which is defeating the purpose of this whole exercise.
 
     <MOBLIST atom fix>
 
-("make oblist") creates and returns a new `OBLIST`, containing no
+\index{\texttt{MOBLIST}|textbf} ("make oblist") creates and returns a new `OBLIST`, containing no
 `ATOM`s, whose name is *atom*, unless there already exists an
 `OBLIST` of that name, in which case it returns the existing `OBLIST`.
 *fix* is the size of the `OBLIST` created -- the number of hashing
@@ -102,14 +102,14 @@ that allows the hashing to work better.
 
     <OBLIST? atom>
 
-returns `#FALSE ()` if *atom* is not in any `OBLIST`. If *atom* is
+\index{\texttt{OBLIST?}|textbf} returns `#FALSE ()` if *atom* is not in any `OBLIST`. If *atom* is
 in an `OBLIST`, it returns that `OBLIST`.
 
 ## 15.3. READ and OBLISTs
 
-`READ` can be explicitly told to look up an `ATOM` in a particular
+`READ`\index{\texttt{READ}} can be explicitly told to look up an `ATOM` in a particular
 `OBLIST` by giving the `ATOM` a **trailer**. A trailer consists of the
-characters `!-` (exclamation-point dash) following the `ATOM`,
+characters `!-` \index{\texttt{"!-}|textbf} (exclamation-point dash) following the `ATOM`,
 immediately followed by the name of the `OBLIST`. For example,
 
     A!-OB
@@ -145,12 +145,12 @@ default. This look-up starts with `<1 .OBLIST>` and continues until
 `.OBLIST` is exhausted. If the `ATOM` is not found. `READ` usually
 inserts it into `<1 .OBLIST>`. (It is possible to force `READ` to use
 a different element of the `LIST` of `OBLIST`s for new insertions. If
-the `ATOM` `DEFAULT` is in that `LIST`, the `OBLIST` following that
+the `ATOM` `DEFAULT`\index{\texttt{DEFAULT}} is in that `LIST`, the `OBLIST` following that
 `ATOM` will be used.)
 
 ## 15.4. PRINT and OBLISTs
 
-When `PRINT` is given an `ATOM` to output, it outputs as little of the
+When `PRINT`\index{\texttt{PRINT}} is given an `ATOM` to output, it outputs as little of the
 trailer as is necessary to specify the `ATOM` uniquely to `READ`. That
 is, if the `ATOM` is the **first** `ATOM` of that `PNAME` which `READ`
 would find in its normal look-up in the current `.OBLIST`, no trailer
@@ -165,17 +165,17 @@ similar case will also give `PRINT` a hernia.
 
 ## 15.5. Initial State
 
-In an initial MDL, `.OBLIST` contains two `OBLIST`s. `<1 .OBLIST>`
+In an initial MDL, `.OBLIST` contains two `OBLIST`s\index{\texttt{OBLIST}|textbf}. `<1 .OBLIST>`
 initially contains no `ATOM`s, and `<2 .OBLIST>` contains all the
 `ATOM`s whose `GVAL` are `SUBR`s or `FSUBR`s, as well as `OBLIST`,
-`DEFAULT`, `T`, etc. It is difficult to lose track of the latter; the
+`DEFAULT`\index{\texttt{DEFAULT}|textbf}, `T`, etc. It is difficult to lose track of the latter; the
 specific trailer `!-`*separator* will **always** cause references to
-that `OBLIST`. In addition, the `SUBR` `ROOT`, which takes no
+that `OBLIST`. In addition, the `SUBR` `ROOT`\index{\texttt{ROOT}|textbf}, which takes no
 arguments, always returns that `OBLIST`.
 
 The name of `<ROOT>` is `ROOT`; this `ATOM` is in `<ROOT>` and would
 cause infinite recursion were it not for the use of `!-`*separator*.
-The name of the initial `<1 .OBLIST>` is `INITIAL` (really `INITIAL!-
+The name of the initial `<1 .OBLIST>` is `INITIAL`\index{\texttt{INITIAL}|textbf} (really `INITIAL!-
 `).
 
 The `ATOM` `OBLIST` also has a `GVAL`. `,OBLIST` is initially the same
@@ -197,12 +197,12 @@ Three other `OBLIST`s exist in a virgin MDL: their names and purposes
 are as follows:
 
 `ERRORS!-` contains `ATOM`s whose `PNAME`s are used as error messages.
-It is returned by `<ERRORS>`.
+It is returned by `<ERRORS>`\index{\texttt{ERRORS}|textbf}.
 
 `INTERRUPTS!-` is used by the interrupt system (section 21.5.1). It is
-returned by `<INTERRUPTS>`.
+returned by `<INTERRUPTS>`\index{\texttt{INTERRUPTS}}.
 
-`MUDDLE!-` is used infrequently by the interpreter when loading
+`MUDDLE!-`\index{\texttt{MUDDLE}|textbf} is used infrequently by the interpreter when loading
 compiled programs to fix up references to locations within the
 interpreter.
 
@@ -216,13 +216,13 @@ in the way they manipulate static blocking (and in **no** other way.)
 
     <BLOCK look-up:list-of-oblists>
 
-returns its argument after "pushing" the current `LVAL` of the `ATOM`
+\index{\texttt{BLOCK}|textbf} returns its argument after "pushing" the current `LVAL` of the `ATOM`
 `OBLIST` and making its argument the current `LVAL`. You usually want
 `<ROOT>` to be an element of *look-up*, normally its last.
 
     <ENDBLOCK>
 
-"pops" the LVAL of the `ATOM` `OBLIST` and returns the resultant
+\index{\texttt{ENDBLOCK}|textbf} "pops" the LVAL of the `ATOM` `OBLIST` and returns the resultant
 `LIST` of `OBLIST`s.
 
 Note that this "pushing" and "popping" of `.OBLIST` is entirely
@@ -234,7 +234,7 @@ independent of functional application, binding, etc.
 
     <READ channel eof-routine look-up>
 
-This is a fuller call to `READ`. *look-up* is an `OBLIST` or a `LIST`
+\index{\texttt{READ}|textbf} This is a fuller call to `READ`. *look-up* is an `OBLIST` or a `LIST`
 of them, used as stated in section 15.3 to look up `ATOM`s and insert
 them in `OBLIST`s. If not specified, `.OBLIST` is used. See also
 section 11.1.1.1, 11.3, and 17.1.3 for other arguments.
@@ -243,9 +243,9 @@ section 11.1.1.1, 11.3, and 17.1.3 for other arguments.
 
     <PARSE string radix:fix look-up>
 
-as was previously mentioned, applies `READ`'s algorithm to *string*
+\index{\texttt{PARSE}|textbf} as was previously mentioned, applies `READ`'s algorithm to *string*
 and returns the first MDL object resulting. This **includes** looking
-up prospective `ATOM`s on *look-up*, if given, or `.OBLIST`. `LPARSE`
+up prospective `ATOM`s on *look-up*, if given, or `.OBLIST`. `LPARSE`\index{\texttt{LPARSE}|textbf}
 can be called in the same way. See also section 7.6.6.2 and 17.1.3 for
 other arguments.
 
@@ -253,26 +253,26 @@ other arguments.
 
     <LOOKUP string oblist>
 
-returns the `ATOM` of `PNAME` *string* in the `OBLIST` *oblist*, if
+\index{\texttt{LOOKUP}|textbf} returns the `ATOM` of `PNAME` *string* in the `OBLIST` *oblist*, if
 there is such an `ATOM`; otherwise, it returns `#FALSE ()`. If
-*string* would `PARSE` into an `ATOM` anyway, `LOOKUP` is faster,
+*string* would `PARSE`\index{\texttt{PARSE}} into an `ATOM` anyway, `LOOKUP` is faster,
 although it looks in only one `OBLIST` instead of a `LIST` of them.
 
 ### 15.7.4. ATOM
 
     <ATOM string>
 
-creates and returns a spanking new `ATOM` of `PNAME` *string* which is
+\index{\texttt{ATOM}|textbf} creates and returns a spanking new `ATOM` of `PNAME` *string* which is
 guaranteed not to be on **any** `OBLIST`.
 
 An `ATOM` which is not on any `OBLIST` is `PRINT`ed with a trailer of
-`!-#FALSE ()`.
+`!-#FALSE ()`. \index{\texttt{"!-\#FALSE ()}|textbf}
 
 ### 15.7.5. REMOVE
 
     <REMOVE string oblist>
 
-removes the `ATOM` of `PNAME` *string* from *oblist* and returns that
+\index{\texttt{REMOVE}|textbf} removes the `ATOM` of `PNAME` *string* from *oblist* and returns that
 ATOM. If there is no such `ATOM`, `REMOVE` returns `#FALSE ()`. Also,
 
     <REMOVE atom>
@@ -284,7 +284,7 @@ if it was on an `OBLIST`; otherwise it returns `#FALSE ()`.
 
     <INSERT string-or-atom oblist>
 
-creates an `ATOM` of `PNAME` *string*, inserts it into *oblist* and
+\index{\texttt{INSERT}|textbf} creates an `ATOM` of `PNAME` *string*, inserts it into *oblist* and
 returns it. If there is already an `ATOM` with the same `PNAME` as
 *atom* in *oblist*, an error occurs. The standard way to avoid the
 error and always get your *atom* is
@@ -302,15 +302,15 @@ argument; this `ATOM` must not be on any `OBLIST` -- it must have been
 
     <PNAME atom>
 
-returns a `STRING` (newly created) which is *atom*'s `PNAME` ("printed
+\index{\texttt{PNAME}|textbf} returns a `STRING` (newly created) which is *atom*'s `PNAME` ("printed
 name"). If trailers are not needed, `PNAME` is much faster than
-`UNPARSE` on *atom*. (In fact, `UNPARSE` has to go all the way through
+`UNPARSE`\index{\texttt{UNPARSE}} on *atom*. (In fact, `UNPARSE` has to go all the way through
 the `PRINT` algorithm **twice**, the first time to see how long a
 `STRING` is needed.)
 
 ### 15.7.8. SPNAME
 
-`SPNAME` ("shared printed name") is identical to `PNAME`, except that
+\index{\texttt{SPNAME}|textbf} `SPNAME` ("shared printed name") is identical to `PNAME`, except that
 the `STRING` it returns shares storage with *atom* (appendix 1), which
 is more efficient if the `STRING` will not be modified. `PUT`ting into
 such a `STRING` will cause an error.
@@ -321,6 +321,7 @@ What follows is an example of the way `OBLIST`s are "normally" used to
 provide "externally available" `ATOM`s and "local" `ATOM`s which are
 not so readily available externally. Lebling (1979) describes a
 systematic way to accomplish the same thing and more.
+\index{\texttt{BLOCK}}\index{\texttt{ENDBLOCK}}\index{\texttt{INSERT}}\index{\texttt{MOBLIST}}\index{\texttt{REMOVE}}\index{\texttt{ROOT}}
 
 ```
 <MOBLIST INCO 1>

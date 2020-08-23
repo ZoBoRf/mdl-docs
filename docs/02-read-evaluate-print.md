@@ -4,8 +4,8 @@
 
 Once you type `$` and all brackets are correctly paired and nested, 
 the current contents of the input buffer go through processing by 
-three functions successively: first `READ`, which passes its output to 
-`EVAL` ("evaluate"), which passes its output to `PRINT`, whose output 
+three functions successively: first `READ`\index{\texttt{READ}}, which passes its output to 
+`EVAL`\index{\texttt{EVAL}|textbf} ("evaluate"), which passes its output to `PRINT`\index{\texttt{PRINT}|textbf}, whose output 
 is typed on the terminal.
 
 [Actually, the sequence is more like `READ`, `CRLF`, `EVAL`, `PRIN1`,
@@ -33,7 +33,7 @@ objects.
 
 MDL objects are best considered as abstract entities with abstract 
 properties. The properties of a particular MDL object depend on the 
-class of MDL objects to which it belongs. This class is the `TYPE` of 
+class of MDL objects to which it belongs. This class is the `TYPE`\index{\texttt{TYPE}|textbf} of 
 the MDL object. Every MDL object has a `TYPE`, and every `TYPE` has 
 its own peculiarities. There are many different `TYPE`s in MDL; they
 will gradually be introduced below, but in the meantime here is a 
@@ -69,7 +69,7 @@ produces.
 The following has occurred:
 
 First, `READ` recognized the character `1` as the representation for 
-an object of `TYPE` `FIX`, in particular the one which corresponds to 
+an object of `TYPE` `FIX`\index{\texttt{FIX}}, in particular the one which corresponds to 
 the integer one. (`FIX` means integer, because the decimal point is 
 understood always to be in a fixed position: at the right-hand end.) 
 `READ` built the MDL object corresponding to the decimal
@@ -89,7 +89,7 @@ integer.
     1.0
 
 What went on was entirely analogous to the preceding example, except 
-that the MDL object was of `TYPE` `FLOAT`. (`FLOAT` means a real 
+that the MDL object was of `TYPE` `FLOAT`\index{\texttt{FLOAT}}. (`FLOAT` means a real 
 number (of limited precision), because the decimal point can float 
 around to any convenient position: an internal exponent part tells 
 where it "really" belongs.)
@@ -103,7 +103,7 @@ This time a lot more has happened.
 
 `READ` noted that what was typed had no special meaning, and therefore 
 assumed that it was the representation of an identifier, that is, an 
-object of `TYPE` `ATOM`. ("Atom" means more or less *indivisible*.) 
+object of `TYPE` `ATOM`\index{\texttt{ATOM}}. ("Atom" means more or less *indivisible*.) 
 `READ` therefore attempted to look up the representation in a table it 
 keeps for such purposes [a `LIST` of `OBLISTS`, available as the local 
 value of the `ATOM` `OBLIST`]. If `READ` finds an `ATOM` in its table 
@@ -113,7 +113,7 @@ corresponding to the representation, that `ATOM` is returned as
 into `<1 .OBLIST>` usually], and returns the new `ATOM`. Nothing which 
 could in any way be referenced as a legal "value" is attached to the 
 new `ATOM`. The initially-typed representation of an `ATOM` becomes 
-its `PNAME`, meaning its name for `PRINT`. One often abbreviates 
+its `PNAME`\index{\texttt{PNAME}}, meaning its name for `PRINT`. One often abbreviates 
 "object of `TYPE` `ATOM` with `PNAME` *name*" by saying "`ATOM` 
 *name*".
 
@@ -129,8 +129,8 @@ will be considered. Further on, the methods used to attach values to
 
 ### 2.6.1. READ and FIXed-point Numbers
 
-`READ` considers any grouping of characters which are solely digits to 
-be a `FIX`, and the radix of the representation is decimal by default. 
+`READ`\index{\texttt{READ}} considers any grouping of characters which are solely digits to 
+be a `FIX`\index{\texttt{FIX}|textbf}, and the radix of the representation is decimal by default. 
 A `-` (hyphen) immediately preceding such a grouping represents a 
 negative `FIX`. The largest `FIX` representable on the PDP-10 is two 
 to the 35th power minus one, or 34,359,738,367 (decimal): the smallest 
@@ -144,20 +144,20 @@ however, there are two formats for representations of `FIX`es which
 cause `READ` to use a specified radix independent of the current one. 
 These are as follows:
 
-1. If a group of digits is immediately followed by a period (`.`), 
+1. If a group of digits is immediately followed by a period (`.`)\index{\texttt{.}|textbf}, 
 `READ` interprets that group as the decimal representation of a `FIX`. 
 For example, `10.` is always interpreted by `READ` as the decimal 
 representation of ten.
 
 2.  If a group of digits is immediately enclosed on both sides with 
-asterisks (`*`), `READ` interprets that group as the octal 
+asterisks (`*`), \index{\texttt{*}|textbf} `READ` interprets that group as the octal 
 representation of a `FIX`. For example, `*10*` is always interpreted 
 by `READ` as the octal representation of eight.
 
 ### 2.6.2. READ and PRINT versus FLOATing-point Numbers
 
-`PRINT` can produce, and `READ` can understand, two different formats 
-for objects of `TYPE` `FLOAT`. The first is "decimal-point" notation, 
+`PRINT`\index{\texttt{PRINT}} can produce, and `READ` can understand, two different formats 
+for objects of `TYPE` `FLOAT`\index{\texttt{FLOAT}|textbf}. The first is "decimal-point" notation, 
 the second is "scientific" notation. Decimal radix is always used for 
 representations of `FLOAT`s.
 
@@ -176,7 +176,7 @@ with a limit of precision of one part in 2 to the 27th power.
 
 where a "number" is an arbitrarily long string of digits, with or 
 without a decimal point (see following note): an an "exponent" is up 
-to two digits worth of `FIX`. This notation represents the "number" to 
+to two digits worth of `FIX`\index{\texttt{FIX}}. This notation represents the "number" to 
 the "exponent" power of ten. Note: if the "number" as above would by 
 itself be a `FIX`, and if the "exponent" is positive, and if the 
 result is within the allowed range of `FIX`es, then the result will be 
@@ -207,7 +207,7 @@ perfectionist nor a masochist, skip to the next chapter.
 A group of characters is **not** a `PNAME` if:
 
 1. It represents a `FLOAT` or a `FIX`, as described above -- that is,
-it is composed wholly of digits, or digits and a single `.` (period)
+it is composed wholly of digits, or digits and a single `.` \index{\texttt{.}} (period)
 or digits and a `.` and the letter `E` or `e` (with optional minus
 signs in the right places).
 
@@ -220,11 +220,11 @@ which have special interactive effects: `^@`, `^D`, `^L`, `^G`, `^O`,
 4. It contains a format character -- space, carriage-return,
 line-feed, form-feed, horizontal tab, vertical tab.
 
-5. It contains a `,` (comma) or a `#` (number sign) or a `'` (single 
-quote) or a `;` (semicolon) or a `%` (percent sign).
+5. It contains a `,` \index{\texttt{,}|textbf} (comma) or a `#` \index{\texttt{\#}} (number sign) or a `'` \index{\texttt{'}} (single 
+quote) or a `;` \index{\texttt{;}} (semicolon) or a `%` \index{\texttt{\%}} (percent sign).
 
-6. It contains any variety of bracket -- `(` or `)` or `[` or `]` or
-`<` or `>` or `{` or `}` or `"`.
+6. It contains any variety of bracket -- `(` \index{\texttt{(}} or `)` \index{\texttt{)}} or `[`\index{\texttt{[}} or `]`\index{\texttt{]}} or
+`<` \index{\texttt{<}} or `>` \index{\texttt{>}} or `{` \index{\texttt{\char123}} or `}` \index{\texttt{\char125}} or `"` \index{\texttt{""}}.
 
 In addition, the character `\` (backslash) has a special 
 interpretation, as mentioned below. Also the pair of characters `!-` 
@@ -248,7 +248,7 @@ met. Instead, the right-hand column will be used to state just what
 `READ` thought the input in the left-hand column really was.
 
  Input                    | Explanation
---------------------------|--------------------------------------------------------
+---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------
 `ABC$`                    | an `ATOM` of `PNAME` `ABC`
 `abc$`                    | an `ATOM` of `PNAME` `abc`
 `ARBITRARILY-LONG-PNAME$` | an `ATOM` of `PNAME` `ARBITRARILY-LONG-PNAME`
@@ -264,7 +264,7 @@ met. Instead, the right-hand column will be used to state just what
 
 If you have a strange, uncontrollable compulsion to have what were 
 referred to as "separators" above as part of the `PNAME`s of your 
-`ATOM`s, you can do so by preceding them with the character `\`
+`ATOM`s, you can do so by preceding them with the character `\`\index{\texttt{"\textbackslash{}}|textbf}
 (backslash). `\` will also magically turn an otherwise normal `FIX` or 
 `FLOAT` into an `ATOM` if it appears amongst the digits. In fact, 
 backslash in front of **any** character changes it from something 

@@ -122,7 +122,7 @@ reading, in lieu of a separate introduction for MDL. [On first
 reading, text within brackets like these should be ignored.]
 
 Most specifically indicated examples herein are composed of pairs of 
-lines. The first line of a pair, the input, always ends in `$` (which 
+lines. The first line of a pair, the input, always ends in `$` \index{\texttt{\$}|textbf} (which 
 is how the ASCII character <kbd>ESC</kbd> is represented, and which 
 always represents it). The second line is the result of MDL's 
 groveling over the first. If you were to type all the first lines at 
@@ -138,6 +138,6 @@ often the variable will have both a meaning and a data type (as here),
 but sometimes one of those will be ommitted, for obvious reasons.
 
 An ellipsis (...) indicates that something uninteresting has been 
-omitted. The character `^` means that the following character is to be 
+omitted. The character `^`\index{\texttt{"\^{}}|textbf} means that the following character is to be 
 "controllified": it is usually typed by holding down a terminal's 
 <kbd>CTRL</kbd> key and striking the other key.

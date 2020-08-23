@@ -16,13 +16,13 @@ representation of the object, with its elements represented as `PRINT`
 applied to each of them in turn.
 
 A MDL object which is used to represent the application of a function 
-to its arguments is an argument of `TYPE` `FORM`. Its printed 
+to its arguments is an argument of `TYPE` `FORM`\index{\texttt{FORM}|textbf}. Its printed 
 representation is
 
     < func arg-1 arg-2 ... arg-N >
 
-where *func* is an object which designates the function to be applied, 
-and *arg-1* through *arg-N* are object which designate the arguments 
+where *func* is an object which designates the function\index{\texttt{function}|textbf} to be applied, 
+and *arg-1* through *arg-N* are objects which designate the arguments 
 or "actual parameters" or "inputs". A `FORM` is just a structured 
 object which is stored and can be manipulated like a `LIST` (its 
 "primitive type" is `LIST` -- chapter 6). The application of the
@@ -34,7 +34,7 @@ applicable to arguments.
 
 `EVAL` applied to a `FORM` acts as if following these directions:
 
-First, example the *func* (first element) of the `FORM`. If it is an 
+First, examine the *func* (first element) of the `FORM`. If it is an 
 `ATOM`, look at its "value" (global or local, in that order -- see
 next chapter). If it is not an `ATOM`, `EVAL` it and look at the
 result of the evaluation. If what you are looking at is not something
@@ -47,13 +47,13 @@ the object gotten from *func*.
 ## 3.3. Built-in Functions (TYPE SUBR, TYPE FSUBR) [1]
 
 The built-in functions of MDL come in two varieties: those which have 
-all their arguments `EVAL`ed before operating on them (`TYPE` `SUBR`, 
+all their arguments `EVAL`ed before operating on them (`TYPE` `SUBR`\index{\texttt{SUBR}|textbf}, 
 for "subroutine", pronounced "subber") and those which have none of 
-their arguments `EVAL`ed (`TYPE` `FSUBR`, historically from Lisp 
+their arguments `EVAL`ed (`TYPE` `FSUBR`\index{\texttt{FSUBR}|textbf}, historically from Lisp 
 (Moon, 1974), pronounced "effsubber"). Collectively they will be 
 called `F/SUBR`s, although that term is not meaningful to the 
 interpreter. See appendix 2 for a listing of all `F/SUBR`s and short 
-descriptions. The term "Subroutine" will be used herein to mean both 
+descriptions. The term "Subroutine"\index{\texttt{Subroutine}} will be used herein to mean both 
 `F/SUBR`s and compiled user programs (`RSUBR`s and `RSUBR-ENTRY`s --
 chapter 19).
 
@@ -73,9 +73,9 @@ similar meaning.
     12
 
 The `SUBR` `+` adds numbers. Most of the usual arithmetic functions 
-are MDL `SUBR`s: `+`, `-`, `*`, `/`, `MIN`, `MAX`, `MOD`, `SIN`, 
-`COS`, `ATAN`, `SQRT`, `LOG`, `EXP`, `ABS`. (See appendix 2 for short 
-descriptions of these.) All except `MOD`, which wants `FIX`es, are 
+are MDL `SUBR`s: `+` \index{\texttt{-}|textbf}, \index{\texttt{+}|textbf} `-`, `*`, \index{\texttt{*}|textbf} `/`\index{\texttt{/}|textbf}, `MIN` \index{\texttt{MIN}}, `MAX`\index{\texttt{MAX}}, `MOD`\index{\texttt{MOD}}, `SIN`\index{\texttt{SIN}}, 
+`COS`\index{\texttt{COS}}, `ATAN`\index{\texttt{ATAN}}, `SQRT`\index{\texttt{SQRT}}, `LOG`\index{\texttt{LOG}}, `EXP`\index{\texttt{EXP}}, `ABS`\index{\texttt{ABS}|textbf}. (See appendix 2 for short 
+descriptions of these.) All except `MOD`, which wants `FIX`es\index{\texttt{FIX}|textbf}, are 
 indifferent as to whether their arguments are `FLOAT` or `FIX` or a 
 mixture. In the last case they exhibit "contagious `FLOAT`ing": one
 argument of `TYPE` `FLOAT` forces the result to be of `TYPE` `FLOAT`.
@@ -117,7 +117,7 @@ machine's capacity. (That error can be disabled if necessary --
 section 16.9).
 
 One arithmetic function that always requires some discussion is the 
-pseudo-random-number generator. MDL's is named `RANDOM`, and it always 
+pseudo-random-number generator. MDL's is named `RANDOM`\index{\texttt{RANDOM}|textbf}, and it always 
 returns a `FIX`, uniformly distributed over the whole range of 
 `FIX`es. If `RANDOM` is never called with arguments, it always returns 
 the exact same sequence of numbers, for convenience in debugging. 

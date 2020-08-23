@@ -24,18 +24,18 @@ which you have obtained a locative will be referred to as the object
 
 	<LLOC atom env>
 
-returns a locative (`TYPE` `LOCD`, "locative to iDentifier") to the
-`LVAL` of *atom* in *env*. If *atom* is not bound in *env*, an error
+\index{\texttt{LLOC}|textbf} returns a locative (`TYPE` `LOCD`\index{\texttt{LOCD}|textbf}, "locative to iDentifier") to the
+`LVAL` \index{\texttt{LVAL}} of *atom* in *env*. If *atom* is not bound in *env*, an error
 occurs. *env* is optional, with the current `ENVIRONMENT` used by
 default. The locative returned by `LLOC` is **independent of future
-re-bindings** of *atom*. That is, `IN` (see below) of that locative
+re-bindings** of *atom*. That is, `IN` \index{\texttt{IN}} (see below) of that locative
 will return the same thing even if *atom* is re-bound to something
-else; `SETLOC` (see below) will affect only that particular binding
+else; `SETLOC` \index{\texttt{SETLOC}} (see below) will affect only that particular binding
 of *atom*.
 
 Since bindings are kept on a stack (tra la), any attempt to use a
 locative to an `LVAL` which has become unbound will fetch up an
-error. (It breaks just like a `TUPLE`....) `LEGAL?` can, once again,
+error. (It breaks just like a `TUPLE`....) `LEGAL?` \index{\texttt{LEGAL?}} can, once again,
 be used to see if a `LOCD` is valid. Caution: `<SET A <LLOC A>>`
 creates a self-reference and can make `PRINT` very unhappy.
 
@@ -43,8 +43,8 @@ creates a self-reference and can make `PRINT` very unhappy.
 
 	<GLOC atom pred>
 
-returns a locative (`TYPE` `LOCD`) to the `GVAL` of *atom*. If *atom*
-has no `GVAL` **slot**, an error occurs, unless *pred* (optional) is
+\index{\texttt{GLOC}|textbf} returns a locative (`TYPE` `LOCD`\index{\texttt{LOCD}}) to the `GVAL` of *atom*. If *atom*
+has no `GVAL` \index{\texttt{GVAL}} **slot**, an error occurs, unless *pred* (optional) is
 given and not `FALSE`, in which case a slot is created (chapter 22).
 Caution: `<SETG A <GLOC A>>` creates a self-reference and can make
 `PRINT` very unhappy.
@@ -53,11 +53,11 @@ Caution: `<SETG A <GLOC A>>` creates a self-reference and can make
 
 	<AT structured N:fix-or-offset>
 
-returns a locative to the <em>N</em>th element in *structured*. *N*
+\index{\texttt{AT}|textbf} returns a locative to the <em>N</em>th element in *structured*. *N*
 is optional, `1` by default. The exact `TYPE` of the locative
-returned depends on the `PRIMTYPE` of *structured*: `LOCL` for
-`LIST`, `LOCV` for `VECTOR`, `LOCU` for `UVECTOR`, `LOCS` for
-`STRING`, `LOCB` for `BYTES`, `LOCT` for `TEMPLATE`, and `LOCA` for
+returned depends on the `PRIMTYPE` of *structured*: `LOCL` \index{\texttt{LOCL}|textbf} for
+`LIST`, `LOCV` \index{\texttt{LOCV}|textbf} for `VECTOR`, `LOCU` \index{\texttt{LOCU}|textbf} for `UVECTOR`, `LOCS` \index{\texttt{LOCS}|textbf} for
+`STRING`, `LOCB` \index{\texttt{LOCB}|textbf} for `BYTES`, `LOCT` \index{\texttt{LOCT}|textbf} for `TEMPLATE`, and `LOCA` \index{\texttt{LOCA}|textbf} for
 `TUPLE`. If *N* is greater than `<LENGTH structured>` or less than
 `1`, or an `OFFSET` with a Pattern that doesn't match *structured*,
 an error occurs. The locative is unaffected by applications of
@@ -67,22 +67,21 @@ an error occurs. The locative is unaffected by applications of
 
 	<GETPL item:any indicator:any default:any>
 
-returns a locative (`TYPE` `LOCAS`) to the association of *item*
+\index{\texttt{GETPL}|textbf} returns a locative (`TYPE` `LOCAS`\index{\texttt{LOCAS}|textbf}) to the association of *item*
 under *indicator*. (See chapter 13 for information about
 associations.) If no such association exists, `GETPL` returns `EVAL`
 of *default*. *default* is optional, `#FALSE ()` by default.
 
 `GETPL` corresponds to `GETPROP` amongst the association machinery.
-There also exists `GETL`, which corresponds to `GET`, returning
+There also exists `GETL`\index{\texttt{GETL}|textbf}, which corresponds to `GET`, returning
 either a `LOCAS` or a locative to the *indicator*th element of a
 structured *item*. `GETL` is like `AT` if *item* is a structure and
 *indicator* is a `FIX` or `OFFSET`, and like `GETPL` if not.
 
 ## 12.2. LOCATIVE?
 
-This `SUBR` is a predicate that tells whether or not is argument is a
-locative. It is cheaper than `<MEMQ <PRIMTYPE arg> '![LOCD LOCL
-...]>`.
+ \index{\texttt{LOCATIVE?}|textbf}This `SUBR` is a predicate that tells whether or not is argument is a
+locative. It is cheaper than `<MEMQ <PRIMTYPE arg> '![LOCD LOCL ...]>`.
 
 ## 12.3. Using Locatives
 
@@ -95,11 +94,11 @@ returned by `LLOC`, `GLOC`, `AT`, `GETPL` or `GETL`.
 
 	<IN locative>
 
-returns the object to which *locative* points. The only way you can
+\index{\texttt{IN}|textbf} returns the object to which *locative* points. The only way you can
 get an error using `IN` is when *locative* points to an `LVAL` which
 has become unbound from an `ATOM`. This is the same as the problem in
 referencing `TUPLE`s as mentioned in section 9.2, and it can be
-avoided by first testing `<LEGAL? locd>`.
+avoided by first testing `<LEGAL? locd>`\index{\texttt{LEGAL?}}.
 
 Example:
 
@@ -112,7 +111,7 @@ Example:
 
 	<SETLOC locative any>
 
-returns *any*, after having made *any* the contents of that position
+\index{\texttt{SETLOC}|textbf} returns *any*, after having made *any* the contents of that position
 in a structure pointed to by *locative*. The structure itself is not
 otherwise disturbed. An error occurs if *locative* is to a
 non-`LEGAL?` `LVAL` or if you try to put an object of the wrong
@@ -131,11 +130,11 @@ Example:
 
 You may have noticed that locatives are, strictly speaking,
 unnecessary; you can do everything locatives allow by appropriate use
-of, for example, `SET`, `LVAL`, `PUT`, `NTH`, etc. What locatives
+of, for example, `SET`, `LVAL`\index{\texttt{LVAL}}, `PUT`, `NTH`, etc. What locatives
 provide is generality.
 
-Basically, how you obtained a locative is irrelevant to `SETLOC` and
-`IN`; thus the same program can play with `GVAL`s, `LVAL`s, object in
+Basically, how you obtained a locative is irrelevant to `SETLOC` \index{\texttt{SETLOC}} and
+`IN`\index{\texttt{IN}}; thus the same program can play with `GVAL`s, `LVAL`s, object in
 explicit structures, etc., without being bothered by what function it
 should use to do so. This is particularly true with respect to
 locatives to `LVAL`s; the fact that they are independent of changes

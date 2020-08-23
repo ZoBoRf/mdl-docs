@@ -36,7 +36,7 @@ used for `TYPE`s without any special representation is
 
     #type representation-as-if-it-were-its-primitive-type
 
-`READ` will understand that format for **any** `TYPE`, and `PRINT` 
+\index{\texttt{\#}|textbf} `READ` will understand that format for **any** `TYPE`, and `PRINT` 
 will use it by default. This representational format will be referred 
 to below as "# notation". It was used above to represent `FUNCTION`s.
 
@@ -46,7 +46,7 @@ to below as "# notation". It was used above to represent `FUNCTION`s.
 
     <TYPE any>
 
-returns an **`ATOM`** whose `PNAME` corresponds to the `TYPE` of 
+\index{\texttt{TYPE}|textbf} returns an **`ATOM`** whose `PNAME` corresponds to the `TYPE` of 
 *any*. There is no `TYPE` "TYPE". To type a `TYPE` (aren't homonyms 
 wonderful?), just type the appropriate `ATOM`, like `FIX` or `FLOAT` 
 or `ATOM` etc. However, in this document we will use the convention 
@@ -71,7 +71,7 @@ Examples:
 
     <PRIMTYPE any>
 
-evaluates to the primitive type of *any*. The `PRIMTYPE` of *any* is 
+\index{\texttt{PRIMTYPE}|textbf} evaluates to the primitive type of *any*. The `PRIMTYPE` of *any* is 
 an `ATOM` which also represents a `TYPE`. The way an object can be 
 **manipulated** depends solely upon its `PRIMTYPE`; the way it is 
 **evaluated** depends upon its `TYPE`.
@@ -91,7 +91,7 @@ Examples:
 
     <TYPEPRIM type>
 
-returns the `PRIMTYPE` of an object whose `TYPE` is *type*. *type* is, 
+\index{\texttt{TYPEPRIM}|textbf} returns the `PRIMTYPE` of an object whose `TYPE` is *type*. *type* is, 
 as usual, an `ATOM` used to designate a `TYPE`.
 
 Examples:
@@ -111,7 +111,7 @@ Examples:
 
     <CHTYPE any type>
 
-("change type") returns a new object that has `TYPE` *type* and the 
+\index{\texttt{CHTYPE}|textbf} ("change type") returns a new object that has `TYPE` *type* and the 
 same "data part" as *any* (appendix 1).
 
     <CHTYPE (+ 2 2) FORM>$
@@ -130,7 +130,7 @@ formats. Useful obscurity: because of their internal representations
 on the PDP-10, `<CHTYPE <MAX> FIX>` gives the least possible `FIX`, 
 and analogously for `MIN`.]
 
-Passing note: "# notation" is just an instruction to `READ` saying 
+Passing note: "# notation" \index{\texttt{\#}} is just an instruction to `READ` saying 
 "`READ` the representation of the `PRIMTYPE` normally and (literally) 
 `CHTYPE` it to the specified `TYPE`". [Or, if the `PRIMTYPE` is 
 `TEMPLATE`, "apply the `GVAL` of the `TYPE` name (which should be a 
@@ -143,7 +143,7 @@ Passing note: "# notation" is just an instruction to `READ` saying
 
     <ALLTYPES>
 
-returns a `VECTOR` (chapter 7) containing just those `ATOM`s which can 
+\index{\texttt{ALLTYPES}|textbf} returns a `VECTOR` (chapter 7) containing just those `ATOM`s which can 
 currently be returned by `TYPE` or `PRIMTYPE`. This is the very 
 "`TYPE` vector" (section 22.1) that the interpreter uses: look, but 
 don't touch. No examples: try it, or see appendix 3.
@@ -152,14 +152,14 @@ don't touch. No examples: try it, or see appendix 3.
 
     <VALID-TYPE? atom>
 
-returns `#FALSE ()` if *atom* is not the name of a `TYPE`, and the 
+\index{\texttt{VALID-TYPE?}|textbf} returns `#FALSE ()` if *atom* is not the name of a `TYPE`, and the 
 same object that `<TYPE-C atom>` (section 19.5) returns if it is.
 
 ### 6.4.3. NEWTYPE
 
 MDL is a type-extensible language, in the sense that the programmer 
 can invent new `TYPE`s and use them in every way that the predefined 
-`TYPE`s can be used. A program-defined `TYPE` is called a `NEWTYPE`. 
+`TYPE`s can be used. A program-defined `TYPE` is called a `NEWTYPE`\index{\texttt{NEWTYPE}|textbf}. 
 New `PRIMTYPE`s cannot be invented except by changing the interpreter; 
 thus the `TYPEPRIM` of a `NEWTYPE` must be chosen from those already 
 available. But the name of a `NEWTYPE` (an `ATOM` of course) can be 
@@ -277,8 +277,8 @@ all return *type*, after specifying *how* MDL is to deal with it.
 
 These three `SUBR`s can be used to make newly-generated `TYPE`s behave 
 in arbitrary ways, or to change the characteristics of standard MDL 
-`TYPE`s. `PRINTTYPE` tells MDL how to print *type*, `EVALTYPE` how to 
-evaluate it, and `APPLYTYPE` how to apply it in a `FORM`.
+`TYPE`s. `PRINTTYPE`\index{\texttt{PRINTTYPE}|textbf} tells MDL how to print *type*, `EVALTYPE`\index{\texttt{EVALTYPE}|textbf} how to 
+evaluate it, and `APPLYTYPE`\index{\texttt{APPLYTYPE}|textbf} how to apply it in a `FORM`.
 
 *how* can be either a `TYPE` or something that can be applied to 
 arguments.
@@ -292,14 +292,14 @@ For `PRINTTYPE`, *how* should take one argument: the object being
 output. *how* should output something without formatting 
 (`PRIN1`-style); its result is ignored. (Note: *how* cannot use an 
 output `SUBR` on *how*'s own *type*: endless recursion will result. 
-`OUTCHAN` is bound during the application to the `CHANNEL` in use, or 
+`OUTCHAN`\index{\texttt{OUTCHAN}} is bound during the application to the `CHANNEL` in use, or 
 to a pseudo-internal channel for `FLATSIZE` -- chapter 11.) If *how* 
-is the `SUBR` `PRINT`, *type* will receive no special treatment in 
+is the `SUBR` `PRINT`\index{\texttt{PRINT}}, *type* will receive no special treatment in 
 printing, that is, it will be printed as it was in an initial MDL or 
 immediately after its defining `NEWTYPE`.
 
 For `EVALTYPE`, *how* should take one argument: the object being 
-evaluated. The value returned by *how* will be used as `EVAL` of the 
+evaluated. The value returned by *how* will be used as `EVAL`\index{\texttt{EVAL}} of the 
 object. If *how* is the `SUBR` `EVAL`, *type* will receive no special 
 treatment in its evaluation.
 
@@ -307,7 +307,7 @@ For `APPLYTYPE`, *how* should take at least one argument. The first
 argument will be the object being applied: the rest will be the 
 objects it was given as arguments. The result returned by *how* will 
 be used as the result of the application. If *how* is the `SUBR` 
-`APPLY`, *type* will receive no special treatment in application to 
+`APPLY`\index{\texttt{APPLY}}, *type* will receive no special treatment in application to 
 arguments.
 
 If any of these `SUBR`s is given only one argument, that is if *how* 

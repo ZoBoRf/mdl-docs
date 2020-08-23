@@ -3,7 +3,7 @@
 ## 5.1. General [1]
 
 The MDL equivalent of a "program" (uncompiled) is an object of `TYPE` 
-`FUNCTION`. Actually, full-blown "programs" are usually composed of 
+`FUNCTION`\index{\texttt{FUNCTION}|textbf}. Actually, full-blown "programs" are usually composed of 
 sets of `FUNCTION`s, with most `FUNCTION`s in the set acting as 
 "subprograms".
 
@@ -94,14 +94,14 @@ applied the indicated `FUNCTION` to 5 and returned 25.
 What `EVAL` does when applying a `FUNCTION` is the following:
 
 1. Create a "world" in which the `ATOM`s of the argument `LIST` have
-been **`SET`** to the values applied to the `FUNCTION`, and all other
+been **`SET`** \index{\texttt{SET}} to the values applied to the `FUNCTION`, and all other
 `ATOM`s have their original values. This is called "binding".
   - In the above, this is a "world" in which `X` is `SET` to `5`.
 2. In that new "world", evaluate all the objects in the body of the
 `FUNCTION`, one after the other, from first to last.
   - In the above, this means evaluate `<* .X .X>` in a "world" where
 `X` is `SET` to `5`.
-3. Throw away the "world" created, and restore the `LVAL`s of all
+3. Throw away the "world" created, and restore the `LVAL`s\index{\texttt{LVAL}} of all
 `ATOM`s bound in this application of the `FUNCTION ` to their
 originals (if any). This is called "unbinding".
   - In the above, this simply gives `X` back the local value, if any,
@@ -111,7 +111,7 @@ body was evaluated in step (2).
   - In the above, this means return `25` as the value.
 
 The "world" mentioned above is actually an object of `TYPE` 
-`ENVIRONMENT`. The fact that such "worlds" are separate from the 
+`ENVIRONMENT`\index{\texttt{ENVIRONMENT}}. The fact that such "worlds" are separate from the 
 `FUNCTION`s which cause their generation means that **all** MDL 
 `FUNCTION`s can be used recursively.
 
@@ -121,7 +121,7 @@ the **previous** world is completely restored. This means that if,
 inside a `FUNCTION`, you `SET` one of its argument `ATOM`s to 
 something, that new `LVAL` will **not** be remembered when `EVAL` 
 leaves the `FUNCTION`. However, if you `SET` an `ATOM` which is 
-**not** in the argument `LIST` (or `SETG` **any** `ATOM`) the new 
+**not** in the argument `LIST` (or `SETG`\index{\texttt{SETG}} **any** `ATOM`) the new 
 local (or global) value **will** be remembered. Examples:
 
     <SET X 0>$
@@ -176,8 +176,8 @@ use your `FUNCTION`s a month (two weeks?) later.
 ## 5.4. Defining FUNCTIONs (FUNCTION and DEFINE) [1]
 
 Obviously, typing `#FUNCTION (...)` all the time is neither reasonable 
-nor adequate for many purposes. Normally, you just want a `FUNCTION` 
-to be the `GVAL` of some `ATOM` -- the way `SUBR`s and `FSUBR`s are -- 
+nor adequate for many purposes. Normally, you just want a `FUNCTION`\index{\texttt{FUNCTION}|textbf}
+to be the `GVAL`\index{\texttt{GVAL}} of some `ATOM` -- the way `SUBR`s and `FSUBR`s\index{\texttt{FSUBR}} are -- 
 so you can use it repeatedly (and recursively). Note that you 
 generally do **not** want a `FUNCTION` to be the `LVAL` of an `ATOM`; 
 this has the same problems as free variables. (Of course, there are 
@@ -211,7 +211,7 @@ This, however, is generally the **best** way:
     ,SQUARE$
     #FUNCTION ((X) <* .X .X>
 
-The last two lines immediately above are just to prove that `DEFINE` 
+The last two lines immediately above are just to prove that `DEFINE`\index{\texttt{DEFINE}|textbf}
 did the "right thing".
 
 `DEFINE` is an `FSUBR` which `SETG`s `EVAL` of its first argument to 
@@ -227,7 +227,7 @@ should be used only when you really do want to redefine something.
 
 [Actually, if it is absolutely necessary to use `DEFINE` to "redefine" 
 things, there is a "switch" which can be used: if the `LVAL` of the 
-`ATOM` `REDEFINE` is `T` (or anything not of `TYPE` `FALSE`), `DEFINE` 
+`ATOM` `REDEFINE`\index{\texttt{REDEFINE}|textbf} is `T` (or anything not of `TYPE` `FALSE`), `DEFINE` 
 will produce no errors. The normal state can be restored by evaluating 
 `<SET REDEFINE <>>`. See chapter 8.]
 
@@ -246,13 +246,13 @@ Using `SQUARE` as defined above:
 
 Note that carriage-returns, line-feeds, tabs, etc. are just 
 separators, like spaces. A comment is **any single** MDL object which 
-follows a `;` (semicolon). A comment can appear between any two MDL 
+follows a `;` \index{\texttt{;}|textbf} (semicolon). A comment can appear between any two MDL 
 objects. A comment is totally ignored by `EVAL` but remembered and 
 associated by `READ` with the place in the `FUNCTION` (or any other 
 structured object) where it appeared. (This will become clearer after 
 chapter 13.) The `"`s (double-quotes) serve to make everything between 
 them a single MDL object, whose `TYPE` is `STRING` (chapter 7). 
-(`SQRT` is the `SUBR` which returns the square root of its argument. 
+(`SQRT`\index{\texttt{SQRT}|textbf} is the `SUBR` which returns the square root of its argument. 
 It always returns a `FLOAT`.)
 
 A whimsical `FUNCTION`:
@@ -267,13 +267,13 @@ A whimsical `FUNCTION`:
     0.99999999
 
 `ONE` always returns (approximately) one, since the sum of the squares 
-of sin(x) and cos(x) is unity for any x. (`SIN` and `COS` always 
-return `FLOAT`s, and each takes its argument in radians. `ATAN` 
+of sin(x) and cos(x) is unity for any x. (`SIN` \index{\texttt{SIN}|textbf} and `COS`\index{\texttt{COS}|textbf} always 
+return `FLOAT`s, and each takes its argument in radians. `ATAN`\index{\texttt{ATAN}|textbf}
 (arctangent) returns its value in radians. Any other trigonometric 
 function can be compounded from these three.)
 
 MDL doesn't have a general "to the power" `SUBR`, so let's define one 
-using `LOG` and `EXP` (log base e, and e to a power, respectively; 
+using `LOG` \index{\texttt{LOG}|textbf} and `EXP` \index{\texttt{EXP}|textbf} (log base e, and e to a power, respectively; 
 again, they return `FLOAT`s).
 
     <DEFINE ** (NUM PWR) <EXP <* .PWR <LOG .NUM>>>>$
@@ -285,7 +285,7 @@ again, they return `FLOAT`s).
     <** 25 0.5>$
     5.0000001
 
-Two `FUNCTION`s which use a single global variable (Since the `GVAL` 
+Two `FUNCTION`s which use a single global variable (Since the `GVAL`\index{\texttt{GVAL}}
 is used, it cannot be rebound.):
 
     <DEFINE START () <SETG GV 0>>$

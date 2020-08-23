@@ -15,7 +15,7 @@ and some of the characteristics of local versus global values, follow.
 
 ### 4.2.1. SETG [1]
 
-A global value can be assigned to an `ATOM` by the `SUBR` `SETG` ("set 
+A global value can be assigned to an `ATOM` by the `SUBR` `SETG`\index{\texttt{SETG}|textbf} ("set 
 global"), as in
 
     <SETG atom any>
@@ -41,7 +41,7 @@ That made the global value of the `ATOM` `BAR` equal to the `ATOM`
 
 ### 4.2.2. GVAL [1]
 
-The `SUBR` `GVAL` ("global value") is used to reference the global 
+The `SUBR` `GVAL`\index{\texttt{GVAL}|textbf} ("global value") is used to reference the global 
 value of an `ATOM`.
 
     <GVAL atom>
@@ -54,7 +54,7 @@ global value, an error occurs.
 function, will return the same value. Any `SETG` anywhere changes the 
 global value for everybody. Global values are context-independent.
 
-`READ` understands the character `,` (comma) as an abbreviation for an 
+`READ` understands the character `,` \index{\texttt{,}|textbf} (comma) as an abbreviation for an 
 application of `GVAL` to whatever follows it. `PRINT` always 
 translates an application of `GVAL` into the comma format. The 
 following are absolutely equivalent:
@@ -76,7 +76,7 @@ given, the following will evaluate as indicated:
 ### 4.2.3. Note on SUBRs and FSUBRs
 
 The initial `GVAL`s of the `ATOM`s used to refer to MDL "built-in" 
-Subroutines are the `SUBR`s and `FSUBR`s which actually get applied 
+Subroutines are the `SUBR`s\index{\texttt{SUBR}} and `FSUBR`s\index{\texttt{FSUBR}} which actually get applied 
 when those `ATOM`s are referenced. If you don't like the way those 
 supplied routines work, you are perfectly free to `SETG` the `ATOM`s 
 to your own versions.
@@ -85,7 +85,7 @@ to your own versions.
 
     <GUNASSIGN atom>
 
-("global unassign") causes *atom* to have no assigned global value, 
+\index{\texttt{GUNASSIGN}|textbf} ("global unassign") causes *atom* to have no assigned global value, 
 whether or not it had one previously. The storage used for the global 
 value can become free for other uses.
 
@@ -93,7 +93,7 @@ value can become free for other uses.
 
 ### 4.3.1. SET [1]
 
-The `SUBR` `SET` is used to assign a local value to an `ATOM`. 
+The `SUBR` `SET`\index{\texttt{SET}|textbf} is used to assign a local value to an `ATOM`. 
 Applications of `SET` are of the form
 
     <SET atom any>
@@ -119,8 +119,8 @@ and `BAR` might have had.
 ### 4.3.2. LVAL [1]
 
 The `SUBR` used to extract the local value of an `ATOM` is named 
-`LVAL`. As with `GVAL`, `READ` understands an abbreviation for an 
-application of `LVAL`: the character `.` (period), and `PRINT` 
+`LVAL`\index{\texttt{LVAL}|textbf}. As with `GVAL`, `READ` understands an abbreviation for an 
+application of `LVAL`: the character `.` \index{\texttt{.}|textbf} (period), and `PRINT` 
 produces it. The following two representations are equivalent, and 
 when `EVAL` operates on the corresponding MDL object, it returns the
 current local value of *atom*:
@@ -148,12 +148,12 @@ done. Then the following evaluate as indicated:
 
     <UNASSIGN atom>
 
-causes *atom* to have no assigned local value, whether or not it had 
+\index{\texttt{UNASSIGN}|textbf} causes *atom* to have no assigned local value, whether or not it had 
 one previously.
 
 ## 4.4. VALUE
 
-`VALUE` is a `SUBR` which takes an `ATOM` as an argument, and then:
+`VALUE`\index{\texttt{VALUE}|textbf} is a `SUBR` which takes an `ATOM` as an argument, and then:
 
 1. if the `ATOM` has an `LVAL`, returns the `LVAL`;
 2. if the `ATOM` has no `LVAL` but has a `GVAL`, returns the `GVAL`;
@@ -161,7 +161,7 @@ one previously.
 function.
 
 This order of seeking a value is the **opposite** of that used when an 
-`ATOM` is the first element of a `FORM`. The latter will be called the 
+`ATOM` is the first element of a `FORM`\index{\texttt{FORM}}. The latter will be called the 
 G/LVAL, even though that name is not used in MDL.
 
 Example:

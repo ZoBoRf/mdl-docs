@@ -8,12 +8,12 @@ Some guidelines, in order of decreasing expense:
 
 1. Free storage is expensive.
 2. Calling functions is expensive.
-3. `PROG` and `REPEAT` are expensive, except when compiled.
+3. `PROG`\index{\texttt{PROG}} and `REPEAT`\index{\texttt{REPEAT}} are expensive, except when compiled.
 
 Explanation:
 
-1. Unnecessary use of free storage (creating needless `LIST`s,
-`VECTOR`s, `UVECTOR`s, etc.) will cause the garbage collector to run
+1. Unnecessary use of free storage (creating needless `LIST`s\index{\texttt{LIST}},
+`VECTOR`s\index{\texttt{VECTOR}}, `UVECTOR`s\index{\texttt{UVECTOR}}, etc.) will cause the garbage collector to run
 more often. This is **expensive!** A fairly large MDL (for example,
 60,000 36-bit words) can take ten seconds of PDP-10 CPU time for a
 garbage collection. Be especially wary of constructions like `(0)`.
@@ -60,14 +60,14 @@ could instead be written
               <STEP-2>)>)>
 ```
 
-By the way, `REPEAT` is faster than `GO` in a `PROG`. The `<GO x>`
+By the way, `REPEAT` is faster than `GO`\index{\texttt{GO}} in a `PROG`. The `<GO x>`
 `FORM` has to be separately interpreted, right? In fact, if you
 organize things properly you **very** seldom need a `GO`; using `GO`
 is generally considered "bad style", but in some cases it's needed.
 Very few.
 
 In many cases, a `REPEAT` can be replaced with a `MAPF` or `MAPR`, or
-an `ILIST`, `IVECTOR`, etc. of the form
+an `ILIST`\index{\texttt{ILIST}}, `IVECTOR`, etc. of the form
 
     <ILIST .N '<SET X <+ .X 1>>
 
@@ -81,7 +81,7 @@ same. Function calling is relatively more expensive. However, the
 compiler careth not whether you use `REPEAT`, `GO`, `PROG`, `ILIST`,
 `MAPF`, or whatnot: it all gets compiled into practically the same
 thing. However, the `REPEAT` or `PROG` will be slower if it has an
-`ACTIVATION` that is `SPECIAL` or used other than by `RETURN` or
+`ACTIVATION` \index{\texttt{ACTIVATION}} that is `SPECIAL` or used other than by `RETURN` or
 `AGAIN`.
 
 ### 24.1.1. Example
@@ -111,6 +111,8 @@ function `TRANS`.
        <COND (<G? <SET N <+ .N 1>> .L1>
               <RETURN "DONE">)> >>
 ```
+\index{\texttt{"!<}|textbf}
+\index{\texttt{"!.}|textbf}
 
 Comments:
 
@@ -125,8 +127,8 @@ while. Even if the indexing were not phased out, the compiler would
 be happier with `<NTH .LIST .N>`.
 4. The variable `CHN` is unnecessary if `OUTCHAN` is bound to the
 argument `CHANNEL`.
-5. It is tasteful to call `ERROR` in the same way that F/SUBRs do.
-This includes using an `ATOM` from the `ERRORS` `OBLIST` (if one is
+5. It is tasteful to call `ERROR`\index{\texttt{ERROR}} in the same way that F/SUBRs do.
+This includes using an `ATOM` from the `ERRORS`\index{\texttt{ERRORS}} `OBLIST` (if one is
 appropriate) to tell what is wrong, and it includes identifying
 yourself.
 
@@ -214,7 +216,7 @@ if an *unmanifest* is referenced more than twice. Example:
 ## 24.4. Global and Local Values
 
 In the interpreter the sequence `,X .X ,X .X` is slower than `,X ,X
-.X .X` because of interference between the `GVAL` and `LVAL`
+.X .X` because of interference between the `GVAL`\index{\texttt{GVAL}} and `LVAL`\index{\texttt{LVAL}}
 mechanisms (appendix 1). Thus it is not good to use both the `GVAL`
 and `LVAL` of the same `ATOM` frequently, unless references to the
 `LVAL` will be compiled away (made into control stack references).

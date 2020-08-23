@@ -3,7 +3,7 @@
 ## 8.1. Truth Values [1]
 
 MDL represents "false" with an object of a particular `TYPE`: `TYPE` 
-`FALSE` (unsurprisingly). `TYPE` `FALSE` is structured: its `PRIMTYPE` 
+`FALSE`\index{\texttt{FALSE}|textbf} (unsurprisingly). `TYPE` `FALSE` is structured: its `PRIMTYPE` 
 is `LIST`. Thus, you can give reasons or excuses by making them 
 elements of a `FALSE`. (Again, `EVAL`ing a `FALSE` neither copies it 
 nor `EVAL`s its elements, so it is not necessary to `QUOTE` a `FALSE` 
@@ -12,7 +12,7 @@ appearing in a program.) Objects of `TYPE` `FALSE` are represented in
 
     #FALSE list-of-its-elements
 
-The empty `FORM` evaluates to the empty `FALSE`:
+The empty `FORM`\index{\texttt{FORM}} evaluates to the empty `FALSE`:
 
     <>$
     #FALSE ()
@@ -26,7 +26,7 @@ context is whether its `TYPE` is `FALSE` or not.
 
 There are numerous MDL F/SUBRs which can return a `FALSE` or a true. 
 See appendix 2 to find them all. Most return either `#FALSE ()` or the 
-`ATOM` with `PNAME` `T`. (The latter is for historical reasons, namely 
+`ATOM` with `PNAME` `T`\index{\texttt{T}|textbf}. (The latter is for historical reasons, namely 
 Lisp (Moon, 1974).) Some predicates which are meaningful now are 
 described next.
 
@@ -34,34 +34,34 @@ described next.
 
     <0? fix-or-float>
 
-evaluates to `T` only if its argument is identically equal to `0` or 
+\index{\texttt{0?}|textbf} evaluates to `T` only if its argument is identically equal to `0` or 
 `0.0`.
 
     <1? fix-or-float>
 
-evaluates to `T` only if its argument is identically equal to `1` or 
+\index{\texttt{1?}|textbf} evaluates to `T` only if its argument is identically equal to `1` or 
 `1.0`.
 
     <G? n:fix-or-float m:fix-or-float>
 
-evaluates to `T` only if *n* is algebraically greater than *m*. `L=?` 
+\index{\texttt{G?}|textbf} evaluates to `T` only if *n* is algebraically greater than *m*. `L=?`\index{\texttt{L=?}|textbf} 
 is the Boolean complement of `G?`; that is, it is `T` only if *n* is 
 not algebraically greater than *m*.
 
     <L? n:fix-or-float m:fix-or-float>
 
-evaluates to `T` only if *n* is algebraically less than *m*. `G=?` is 
+\index{\texttt{L?}|textbf} evaluates to `T` only if *n* is algebraically less than *m*. `G=?`\index{\texttt{G=?}|textbf} is 
 the Boolean complement of `L?`.
 
 ### 8.2.2. Equality and Membership [1]
 
     <==? e1:any e2:any>
 
-evaluates to `T` only if *e1* is the **same object** as *e2* (appendix 
+\index{\texttt{==?}|textbf} evaluates to `T` only if *e1* is the **same object** as *e2* (appendix 
 1). Two objects that look the same when `PRINT`ed may not be `==?`. 
 Two `FIX`es of the same "value" are "the same object"; so are two 
 `FLOAT`s of **exactly** the same "value". Empty objects of `PRIMTYPE` 
-`LIST` (and no other structured `PRIMTYPE`) are `==?` if their `TYPE`s 
+`LIST`\index{\texttt{LIST}} (and no other structured `PRIMTYPE`) are `==?` if their `TYPE`s 
 are the same. Example:
 
     <==? <SET X "RANDOM STRING"> <TOP <REST .X 6>>>$
@@ -69,11 +69,11 @@ are the same. Example:
     <==? .X "RANDOM STRING">$
     #FALSE ()
 
-`N==?` is the Boolean complement of `==?`.
+`N==?`\index{\texttt{N==?}|textbf} is the Boolean complement of `==?`.
 
     <=? e1:any e2:any>
 
-evaluates to `T` if *e1* and *e2* have the same `TYPE` and are 
+\index{\texttt{=?}|textbf} evaluates to `T` if *e1* and *e2* have the same `TYPE` and are 
 structurally equal -- that is, they "look the same", their printed 
 representations are the same. `=?` is much slower than `==?`. `=?` 
 should be used only when its characteristics are necessary: they are 
@@ -82,7 +82,7 @@ return the same value for `FIX`es, `FLOAT`s, `ATOM`s, etc.
 (Mnemonically, `==?` tests for "more equality" than `=?`; in fact, it 
 tests for actual physical identity.)
 
-Example, illustrating non-copying of a `SEGMENT` in Direct 
+Example, illustrating non-copying of a `SEGMENT`\index{\texttt{SEGMENT}} in Direct 
 Representation of a `LIST`:
 
     <SET A '(1 2 3)>$
@@ -94,11 +94,11 @@ Representation of a `LIST`:
     <=? .A .B>$
     T
 
-`N=?` is the Boolean complement of `=?`.
+`N=?`\index{\texttt{N=?}|textbf} is the Boolean complement of `=?`.
 
     <MEMBER object:any structured>
 
-runs down *structured* from first to last element, comparing each 
+\index{\texttt{MEMBER}|textbf} runs down *structured* from first to last element, comparing each 
 element of *structured* with *object*. If it finds an element of 
 *structured* which is `=?` to *object*, it returns
 `<REST structured i>` (which is of `TYPE` `<PRIMTYPE structured>`), 
@@ -119,12 +119,12 @@ If *object* and *structured* are of `PRIMTYPE` `STRING` [or `BYTES`],
     <MEMBER "PART" "SUM OF PARTS">$
     "PARTS"
 
-`<MEMQ object:any structured>` ("member quick") is exactly the same as 
+`<MEMQ object:any structured>`\index{\texttt{MEMQ}|textbf} ("member quick") is exactly the same as 
 `MEMBER`, except that the comparison test is `==?`.
 
     <STRCOMP s1 s2>
 
-("string comparison") can be given either two `STRING`s or two `ATOM`s 
+\index{\texttt{STRCOMP}|textbf} ("string comparison") can be given either two `STRING`s or two `ATOM`s 
 as arguments. In the latter case the `PNAME`s are used. It actually 
 isn't a predicate, since it can return three possible values: `0` if 
 *s1* is `=?` to *s2*; `1` if *s1* sorts alphabetically after *s2*; and 
@@ -132,69 +132,69 @@ isn't a predicate, since it can return three possible values: `0` if
 in this case, according to the numeric order of ASCII, with the 
 standard alphabetizing rules.
 
-[A predicate suitable for an ascending `SORT` (which see) is 
+[A predicate suitable for an ascending `SORT`\index{\texttt{SORT}} (which see) is 
 `<G? <STRCOMP .ARG1 .ARG2> 0>`.]
 
 ### 8.2.3. Boolean Operators [1]
 
     <NOT e:false-or-any>
 
-evaluates to `T` only if *e* evaluates to a `FALSE`, and to 
+\index{\texttt{NOT}|textbf} evaluates to `T` only if *e* evaluates to a `FALSE`, and to 
 `#FALSE ()` otherwise.
 
     <AND e1 e2 ... eN>
 
-`AND` is an `FSUBR`. It evaluates its arguments from first to last as 
+`AND` \index{\texttt{AND}|textbf} is an `FSUBR`\index{\texttt{FSUBR}}. It evaluates its arguments from first to last as 
 they appear in the `FORM`. As soon as one of them evaluates to a 
 `FALSE`, it returns that `FALSE`, ignoring any remaining arguments. If 
 none of them evaluate to `FALSE`, it returns `EVAL` of its last 
-argument. `<AND>` returns `T`. `AND?` is the `SUBR` equivalent to 
+argument. `<AND>` returns `T`. `AND?` \index{\texttt{AND?}|textbf} is the `SUBR` equivalent to 
 `AND`, that is, all its arguments are evaluated before any of them is 
 tested.
 
     <OR e1 e2 ... eN>
 
-`OR` is an `FSUBR`. It evaluates its arguments from first to last as 
+\index{\texttt{OR}|textbf} `OR` is an `FSUBR`. It evaluates its arguments from first to last as 
 they appear in the `FORM`. As soon as one of them evaluates to a 
 non-`FALSE`, it returns that non-`FALSE` value, ignoring any remaining 
 arguments. If this never occurs, it returns the last `FALSE` it saw. 
-`<OR>` returns `#FALSE ()`. `OR?` is the `SUBR` equivalent to `OR`.
+`<OR>` returns `#FALSE ()`. `OR?`\index{\texttt{OR?}|textbf} is the `SUBR` equivalent to `OR`.
 
 ### 8.2.4. Object Properties [1]
 
     <TYPE? any type-1 ... type-N>
 
-evaluates to *type-i* only if `<==? type-i <TYPE any>>` is true. It is 
+\index{\texttt{TYPE?}|textbf} evaluates to *type-i* only if `<==? type-i <TYPE any>>`\index{\texttt{TYPE}} is true. It is 
 faster and gives more information than `OR`ing tests for each `TYPE`. 
 If the test fails for all *type-i*'s, `TYPE?` returns `#FALSE ()`.
 
     <APPLICABLE? e>
 
-evaluates to `T` only if *e* is of a `TYPE` that can legally be 
+\index{\texttt{APPLICABLE?}|textbf} evaluates to `T` only if *e* is of a `TYPE` that can legally be 
 applied to arguments in a `FORM`, that is, be (`EVAL` of) the first 
 element of a `FORM` being evaluated (appendix 3).
 
     <MONAD? e>
 
-evaluates to `#FALSE ()` only if `NTH` and `REST` (with non-zero 
+\index{\texttt{MONAD?}|textbf} evaluates to `#FALSE ()` only if `NTH` and `REST`\index{\texttt{REST}} (with non-zero 
 second argument) can be performed on its argument without error. An 
 unstructured or empty structured object will cause `MONAD?` to return 
 `T`.
 
     <STRUCTURED? e>
 
-evaluates to `T` only if *e* is a structured object. It is **not** the 
+\index{\texttt{STRUCTURED?}|textbf} evaluates to `T` only if *e* is a structured object. It is **not** the 
 inverse of `MONAD?`, since each returns `T` if its argument is an 
 empty structure.
 
     <EMPTY? structured>
 
-evaluates to `T` only if its argument, which must be a structured 
+\index{\texttt{EMPTY?}|textbf} evaluates to `T` only if its argument, which must be a structured 
 object, has no elements.
 
     <LENGTH? structured fix>
 
-evaluates to `<LENGTH structured>` only if that is less than or equal 
+\index{\texttt{LENGTH?}|textbf} evaluates to `<LENGTH structured>`\index{\texttt{LENGTH}} only if that is less than or equal 
 to *fix*; otherwise, it evaluates to `#FALSE ()`. Mnemonically, you 
 can think of the first two letters of `LENGTH?` as signifying the 
 "less than or equal to" sense of the test.
@@ -213,7 +213,7 @@ can do `<REST structured <+ 1 fix>>` without error, do the test
 ## 8.3. COND [1]
 
 The MDL Subroutine which is most used for varying evaluation depending 
-on a truth value is the `FSUBR` `COND` ("conditional"). A call to 
+on a truth value is the `FSUBR`\index{\texttt{FSUBR}} `COND`\index{\texttt{COND}|textbf} ("conditional"). A call to 
 `COND` has this format:
 
     <COND clause-1:list ... clause-N:list>
@@ -266,7 +266,7 @@ it returns the last `FALSE` it saw.
 
 ### 8.4.1. AND and OR as Short CONDs
 
-Since `AND` and `OR` are `FSUBR`s, they can be used as miniature 
+Since `AND` \index{\texttt{AND}} and `OR`\index{\texttt{OR}} are `FSUBR`s, they can be used as miniature 
 `COND`s. A construct of the form
 
     <AND pre-conditions action(s)>
@@ -280,18 +280,18 @@ will allow *action(s)* to be evaluated only if all the
 false, respectively. By nesting and using both `AND` and `OR`, fairly 
 powerful constructs can be made. Of course, if *action(s)* are more 
 than one thing, you must be careful that none but the last returns 
-false or true, respectively. Watch out especially for `TERPRI` 
+false or true, respectively. Watch out especially for `TERPRI`\index{\texttt{TERPRI}} 
 (chapter 11). Examples:
 
     <AND <ASSIGNED? FLAG> .FLAG <FCN .ARG>>
 
-applies `FCN` only if someone else has `SET` `FLAG` to true. 
+\index{\texttt{ASSIGNED?}} applies `FCN` only if someone else has `SET` `FLAG` to true. 
 (`ASSIGNED?` is true if its argument `ATOM` has an `LVAL`.) No error 
 can occur in the testing of `FLAG` because of the order of evaluation.
 
     <AND <SET C <OPEN "READ" "A FILE">> <LOAD .C> <CLOSE .C>>
 
-effectively `FLOAD`s the file (chapter 11) without the possibility of 
+effectively `FLOAD`s\index{\texttt{FLOAD}} the file (chapter 11) without the possibility of 
 getting an error if the file cannot be opened.
 
 ### 8.4.2. Embedded Unconditionals
