@@ -23,7 +23,7 @@ The conversion was done on Windows but should be possible on Linux with minor sc
 ## Prerequisites
 
 * `perl`
-  - On Widnows I use [ActivePerl](https://www.activestate.com/products/perl/downloads/)
+  - On Windows I use [ActivePerl](https://www.activestate.com/products/perl/downloads/)
 * `pandoc`, the universal document converter
   - I use https://pandoc.org/releases.html
 * A `TeX` distribution
