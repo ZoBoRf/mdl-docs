@@ -591,7 +591,7 @@ the normal `ERROR`.
 
 If an error occurs at an `INT-LEVEL` greater than or equal to that of
 the `"ERROR"` interrupt, real `ERROR` will be called, because
-`"ERROR"`interrupts cannot be queued.
+`"ERROR"` interrupts cannot be queued.
 
 ### 21.8.12. "IPC"
 
@@ -605,7 +605,7 @@ process. It is not available in the Tenex\index{\texttt{Tenex}} and Tops-20\inde
 handler takes one argument: A `FIX` between `0` and `7` inclusive,
 telling which inferior process is interrupting.
 
-### 21.8.14. "RUNT and "REALT"
+### 21.8.14. "RUNT" and "REALT"
 
 These are not available in the Tenex\index{\texttt{Tenex}} and Tops-20\index{\texttt{Tops-20}} versions.
 

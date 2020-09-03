@@ -4,7 +4,7 @@ copy /b/y mdl-raw.tex mdl.tex
 perl -i.bak -pe "s/a4paper,\]\{article/a4paper\]\{scrbook/g" mdl.tex
 perl -i.bak -pe "s/\\setcounter\{secnumdepth\}\{0\}/\\setcounter\{secnumdepth\}\{4\}\n\\setcounter\{tocdepth\}\{4\}\n/g" mdl.tex
 perl -i.bak -pe "s/\\section{The MDL Programming/\\title{The MDL Programming/g" mdl.tex
-perl -i.bak -pe "s/S\. W\. Galley and Greg Pfister/\\author\{S. W. Galley and Greg Pfister\}\n\\lowertitleback{Version of PDF conversion: 1.0\\\\\nDate: 2020-08-23 19:22:00}\n\\maketitle\n\\tableofcontents\{\}\n/g" mdl.tex
+perl -i.bak -pe "s/S\. W\. Galley and Greg Pfister/\\author\{S. W. Galley and Greg Pfister\}\n\\lowertitleback{Version of PDF conversion: 1.1\\\\\nDate: 2020-09-03 10:25:00}\n\\maketitle\n\\tableofcontents\{\}\n/g" mdl.tex
 perl -i.bak -pe "s/\\section\{Appendix ([0-9])/\\addchap\{Appendix \1/g" mdl.tex
 perl -i.bak -pe "s/\\section\{/\\chapter\{/g" mdl.tex
 perl -i.bak -pe "s/\\subsection{/\\section\{/g" mdl.tex
