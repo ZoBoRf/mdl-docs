@@ -716,7 +716,7 @@ The representation of an object of `TYPE` `SEGMENT` is the following:
     !< func arg-1 arg-2 ... arg-N !>
 
 \index{\texttt{"!<}|textbf}\index{\texttt{"!>}|textbf}
-where the second `!` (exclamation-point) is optional, and *fun* and 
+where the second `!` (exclamation-point) is optional, and *func* and 
 *arg-1* through *arg-N* are any legal constituents of a `FORM` (that 
 is, anything). The pointed brackets can be implicit, as in the period 
 and comma notation for `LVAL` and `GVAL`.

@@ -88,7 +88,7 @@ A `FRAME` is an anomalous `TYPE` in the following ways:
 1. It cannot be typed in. It can be generated only by applying a
 Subroutine.
 2. It does not type out in any standard format, but rather as `#FRAME`
-followed by the `PNAME `of the Subroutine applied.
+followed by the `PNAME` of the Subroutine applied.
 
 ### 16.3.1. ARGS
 

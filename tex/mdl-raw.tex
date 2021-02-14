@@ -2569,7 +2569,7 @@ The representation of an object of \texttt{TYPE} \texttt{SEGMENT} is the followi
 \end{verbatim}
 
 \index{\texttt{"!<}|textbf}\index{\texttt{"!>}|textbf} where the second \texttt{!} (exclamation-point) is optional, and
-\emph{fun} and \emph{arg-1} through \emph{arg-N} are any legal constituents of a \texttt{FORM} (that is, anything). The
+\emph{func} and \emph{arg-1} through \emph{arg-N} are any legal constituents of a \texttt{FORM} (that is, anything). The
 pointed brackets can be implicit, as in the period and comma notation for \texttt{LVAL} and \texttt{GVAL}.
 
 All of the following are \texttt{SEGMENT}s:
@@ -6348,23 +6348,21 @@ systematic way to accomplish the same thing and more.
 
 INC!-INCO
         ;"Put your external symbols into that OBLIST.
-    If you have many, just write them successively."
+        If you have many, just write them successively."
 
 <BLOCK (<MOBLIST INCI!-INCO 1> <GET INCO OBLIST> <ROOT>)>
-    ;"Create a local OBLIST, naming it INCI!-INCO, and set up
-    .OBLIST for reading in your program. The OBLIST INCO is
-    included in the BLOCK so that as your external symbols are
-    used, they will be found in the right place. Note that the
-    ATOM INCO is not in any OBLIST of the BLOCK; therefore,
-    trailer notation of !-INCO will not work within the current
-    BLOCK-ENDBLOCK pair."
+        ;"Create a local OBLIST, naming it INCI!-INCO, and set up
+        .OBLIST for reading in your program. The OBLIST INCO is
+        included in the BLOCK so that as your external symbols are
+        used, they will be found in the right place. Note that the
+        ATOM INCO is not in any OBLIST of the BLOCK; therefore,
+        trailer notation of !-INCO will not work within the current
+        BLOCK-ENDBLOCK pair."
 
-<DEFINE INC ;"INC is found in the INCO OBLIST."
-    (A) ;"A is not found and is therefore put into INCI by
-READ."
-    #DECL ((VALUE A) <OR FIX FLOAT>)
-    <SET .A <+ ..A 1>>> ;"All other ATOMs are found in the
-ROOT."
+<DEFINE INC     ;"INC is found in the INCO OBLIST."
+        (A)     ;"A is not found and is therefore put into INCI by READ."
+        #DECL ((VALUE A) <OR FIX FLOAT>)
+        <SET .A <+ ..A 1>>>     ;"All other ATOMs are found in the ROOT."
 <ENDBLOCK>
 \end{verbatim}
 
@@ -6495,7 +6493,7 @@ A \texttt{FRAME} is an anomalous \texttt{TYPE} in the following ways:
 \item
   It cannot be typed in. It can be generated only by applying a Subroutine.
 \item
-  It does not type out in any standard format, but rather as \texttt{\#FRAME} followed by the \texttt{PNAME}of the
+  It does not type out in any standard format, but rather as \texttt{\#FRAME} followed by the \texttt{PNAME} of the
   Subroutine applied.
 \end{enumerate}
 
@@ -8292,17 +8290,17 @@ arguments: the locative and the \texttt{FRAME} of the function application that 
 <SET B <AT .A 2>>$
 #LOCL 2
 <ON "WRITE" <FUNCTION (OBJ VAL FRM)
-        #DECL ((VALUE VAL ANY (OBJ) LOCATIVE (FRM) FRAME)
+        #DECL ((VALUE VAL) ANY (OBJ) LOCATIVE (FRM) FRAME)
         <CRLF>
         <PRINC "Program changed ">
         <PRIN1 .OBJ>
         <PRINC " to ">
         <PRIN1 .VAL>
         <PRINC " via ">
-        <PRINC .FRM>
+        <PRIN1 .FRM>
         <CRLF>>
         4 0 .B>$
-#HANDLER FUNCTION (...)
+#HANDLER #FUNCTION (...)
 <1 .A 10>$
 (10 2 3)
 <2 .A 20>$

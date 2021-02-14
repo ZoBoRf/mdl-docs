@@ -2527,7 +2527,7 @@ The representation of an object of `TYPE` `SEGMENT` is the following:
     !< func arg-1 arg-2 ... arg-N !>
 
 \index{\texttt{"!<}|textbf}\index{\texttt{"!>}|textbf}
-where the second `!` (exclamation-point) is optional, and *fun* and 
+where the second `!` (exclamation-point) is optional, and *func* and 
 *arg-1* through *arg-N* are any legal constituents of a `FORM` (that 
 is, anything). The pointed brackets can be implicit, as in the period 
 and comma notation for `LVAL` and `GVAL`.
@@ -6190,23 +6190,21 @@ systematic way to accomplish the same thing and more.
 
 INC!-INCO
         ;"Put your external symbols into that OBLIST.
-	If you have many, just write them successively."
+        If you have many, just write them successively."
 
 <BLOCK (<MOBLIST INCI!-INCO 1> <GET INCO OBLIST> <ROOT>)>
-	;"Create a local OBLIST, naming it INCI!-INCO, and set up
-	.OBLIST for reading in your program. The OBLIST INCO is
-	included in the BLOCK so that as your external symbols are
-	used, they will be found in the right place. Note that the
-	ATOM INCO is not in any OBLIST of the BLOCK; therefore,
-	trailer notation of !-INCO will not work within the current
-	BLOCK-ENDBLOCK pair."
+        ;"Create a local OBLIST, naming it INCI!-INCO, and set up
+        .OBLIST for reading in your program. The OBLIST INCO is
+        included in the BLOCK so that as your external symbols are
+        used, they will be found in the right place. Note that the
+        ATOM INCO is not in any OBLIST of the BLOCK; therefore,
+        trailer notation of !-INCO will not work within the current
+        BLOCK-ENDBLOCK pair."
 
-<DEFINE INC	;"INC is found in the INCO OBLIST."
-	(A)	;"A is not found and is therefore put into INCI by
-READ."
-	#DECL ((VALUE A) <OR FIX FLOAT>)
-	<SET .A <+ ..A 1>>>	;"All other ATOMs are found in the
-ROOT."
+<DEFINE INC     ;"INC is found in the INCO OBLIST."
+        (A)     ;"A is not found and is therefore put into INCI by READ."
+        #DECL ((VALUE A) <OR FIX FLOAT>)
+        <SET .A <+ ..A 1>>>     ;"All other ATOMs are found in the ROOT."
 <ENDBLOCK>
 ```
 
@@ -6335,7 +6333,7 @@ A `FRAME` is an anomalous `TYPE` in the following ways:
 1. It cannot be typed in. It can be generated only by applying a
 Subroutine.
 2. It does not type out in any standard format, but rather as `#FRAME`
-followed by the `PNAME `of the Subroutine applied.
+followed by the `PNAME` of the Subroutine applied.
 
 ### 16.3.1. ARGS
 
@@ -8155,17 +8153,17 @@ arguments: the locative, the new value, and the `FRAME`. For example:
 <SET B <AT .A 2>>$
 #LOCL 2
 <ON "WRITE" <FUNCTION (OBJ VAL FRM)
-        #DECL ((VALUE VAL ANY (OBJ) LOCATIVE (FRM) FRAME)
+        #DECL ((VALUE VAL) ANY (OBJ) LOCATIVE (FRM) FRAME)
         <CRLF>
         <PRINC "Program changed ">
         <PRIN1 .OBJ>
         <PRINC " to ">
         <PRIN1 .VAL>
         <PRINC " via ">
-        <PRINC .FRM>
+        <PRIN1 .FRM>
         <CRLF>>
         4 0 .B>$
-#HANDLER FUNCTION (...)
+#HANDLER #FUNCTION (...)
 <1 .A 10>$
 (10 2 3)
 <2 .A 20>$

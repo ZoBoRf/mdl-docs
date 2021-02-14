@@ -547,17 +547,17 @@ arguments: the locative, the new value, and the `FRAME`. For example:
 <SET B <AT .A 2>>$
 #LOCL 2
 <ON "WRITE" <FUNCTION (OBJ VAL FRM)
-        #DECL ((VALUE VAL ANY (OBJ) LOCATIVE (FRM) FRAME)
+        #DECL ((VALUE VAL) ANY (OBJ) LOCATIVE (FRM) FRAME)
         <CRLF>
         <PRINC "Program changed ">
         <PRIN1 .OBJ>
         <PRINC " to ">
         <PRIN1 .VAL>
         <PRINC " via ">
-        <PRINC .FRM>
+        <PRIN1 .FRM>
         <CRLF>>
         4 0 .B>$
-#HANDLER FUNCTION (...)
+#HANDLER #FUNCTION (...)
 <1 .A 10>$
 (10 2 3)
 <2 .A 20>$

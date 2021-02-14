@@ -330,23 +330,21 @@ systematic way to accomplish the same thing and more.
 
 INC!-INCO
         ;"Put your external symbols into that OBLIST.
-	If you have many, just write them successively."
+        If you have many, just write them successively."
 
 <BLOCK (<MOBLIST INCI!-INCO 1> <GET INCO OBLIST> <ROOT>)>
-	;"Create a local OBLIST, naming it INCI!-INCO, and set up
-	.OBLIST for reading in your program. The OBLIST INCO is
-	included in the BLOCK so that as your external symbols are
-	used, they will be found in the right place. Note that the
-	ATOM INCO is not in any OBLIST of the BLOCK; therefore,
-	trailer notation of !-INCO will not work within the current
-	BLOCK-ENDBLOCK pair."
+        ;"Create a local OBLIST, naming it INCI!-INCO, and set up
+        .OBLIST for reading in your program. The OBLIST INCO is
+        included in the BLOCK so that as your external symbols are
+        used, they will be found in the right place. Note that the
+        ATOM INCO is not in any OBLIST of the BLOCK; therefore,
+        trailer notation of !-INCO will not work within the current
+        BLOCK-ENDBLOCK pair."
 
-<DEFINE INC	;"INC is found in the INCO OBLIST."
-	(A)	;"A is not found and is therefore put into INCI by
-READ."
-	#DECL ((VALUE A) <OR FIX FLOAT>)
-	<SET .A <+ ..A 1>>>	;"All other ATOMs are found in the
-ROOT."
+<DEFINE INC     ;"INC is found in the INCO OBLIST."
+        (A)     ;"A is not found and is therefore put into INCI by READ."
+        #DECL ((VALUE A) <OR FIX FLOAT>)
+        <SET .A <+ ..A 1>>>     ;"All other ATOMs are found in the ROOT."
 <ENDBLOCK>
 ```
 
